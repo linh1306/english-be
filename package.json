@@ -30,6 +30,7 @@
     "@nestjs/platform-fastify": "^11.1.9",
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
+    "firebase-admin": "^13.6.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typia": "^10.1.0"

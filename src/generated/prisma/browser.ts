@@ -22,3 +22,23 @@ export * from './enums.js';
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model VocabularyCategory
+ * 
+ */
+export type VocabularyCategory = Prisma.VocabularyCategoryModel
+/**
+ * Model Vocabulary
+ * 
+ */
+export type Vocabulary = Prisma.VocabularyModel
+/**
+ * Model UserVocabularyProgress
+ * 
+ */
+export type UserVocabularyProgress = Prisma.UserVocabularyProgressModel
+/**
+ * Model UserCategoryProgress
+ * 
+ */
+export type UserCategoryProgress = Prisma.UserCategoryProgressModel

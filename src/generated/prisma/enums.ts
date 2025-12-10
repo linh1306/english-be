@@ -16,3 +16,22 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const ProficiencyLevel = {
+  NEW: 'NEW',
+  LEARNING: 'LEARNING',
+  REVIEWING: 'REVIEWING',
+  MASTERED: 'MASTERED'
+} as const
+
+export type ProficiencyLevel = (typeof ProficiencyLevel)[keyof typeof ProficiencyLevel]
+
+
+export const DifficultyLevel = {
+  BEGINNER: 'BEGINNER',
+  INTERMEDIATE: 'INTERMEDIATE',
+  ADVANCED: 'ADVANCED'
+} as const
+
+export type DifficultyLevel = (typeof DifficultyLevel)[keyof typeof DifficultyLevel]

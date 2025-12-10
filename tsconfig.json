@@ -30,6 +30,14 @@
       {
         "transform": "@nestia/sdk/lib/transform"
       }
-    ]
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@prisma/*": [
+        "generated/prisma/*"
+      ],
+    }
   }
 }

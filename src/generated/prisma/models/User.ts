@@ -20,25 +20,16 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
 
-export type UserAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type UserSumAggregateOutputType = {
-  id: number | null
-}
-
 export type UserMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   name: string | null
   email: string | null
   password: string | null
+  avatar: string | null
   role: $Enums.UserRole | null
   isActive: boolean | null
   isVerified: boolean | null
@@ -47,10 +38,11 @@ export type UserMinAggregateOutputType = {
 }
 
 export type UserMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   name: string | null
   email: string | null
   password: string | null
+  avatar: string | null
   role: $Enums.UserRole | null
   isActive: boolean | null
   isVerified: boolean | null
@@ -63,6 +55,7 @@ export type UserCountAggregateOutputType = {
   name: number
   email: number
   password: number
+  avatar: number
   role: number
   isActive: number
   isVerified: number
@@ -72,19 +65,12 @@ export type UserCountAggregateOutputType = {
 }
 
 
-export type UserAvgAggregateInputType = {
-  id?: true
-}
-
-export type UserSumAggregateInputType = {
-  id?: true
-}
-
 export type UserMinAggregateInputType = {
   id?: true
   name?: true
   email?: true
   password?: true
+  avatar?: true
   role?: true
   isActive?: true
   isVerified?: true
@@ -97,6 +83,7 @@ export type UserMaxAggregateInputType = {
   name?: true
   email?: true
   password?: true
+  avatar?: true
   role?: true
   isActive?: true
   isVerified?: true
@@ -109,6 +96,7 @@ export type UserCountAggregateInputType = {
   name?: true
   email?: true
   password?: true
+  avatar?: true
   role?: true
   isActive?: true
   isVerified?: true
@@ -155,18 +143,6 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: UserAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: UserSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -197,25 +173,22 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
-  _avg?: UserAvgAggregateInputType
-  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
 
 export type UserGroupByOutputType = {
-  id: number
+  id: string
   name: string
   email: string
   password: string
+  avatar: string | null
   role: $Enums.UserRole
   isActive: boolean
   isVerified: boolean
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -239,15 +212,18 @@ export type UserWhereInput = {
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  id?: Prisma.IntFilter<"User"> | number
+  id?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  avatar?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressListRelationFilter
+  userCategories?: Prisma.UserCategoryProgressListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -255,26 +231,32 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  vocabularyProgress?: Prisma.UserVocabularyProgressOrderByRelationAggregateInput
+  userCategories?: Prisma.UserCategoryProgressOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  avatar?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressListRelationFilter
+  userCategories?: Prisma.UserCategoryProgressListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -282,26 +264,26 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
-  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
-  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
   AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"User"> | number
+  id?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  avatar?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -310,56 +292,71 @@ export type UserScalarWhereWithAggregatesInput = {
 }
 
 export type UserCreateInput = {
+  id?: string
   name: string
   email: string
   password: string
+  avatar?: string | null
   role?: $Enums.UserRole
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressCreateNestedManyWithoutUserInput
+  userCategories?: Prisma.UserCategoryProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
-  id?: number
+  id?: string
   name: string
   email: string
   password: string
+  avatar?: string | null
   role?: $Enums.UserRole
   isActive?: boolean
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressUncheckedCreateNestedManyWithoutUserInput
+  userCategories?: Prisma.UserCategoryProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressUpdateManyWithoutUserNestedInput
+  userCategories?: Prisma.UserCategoryProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressUncheckedUpdateManyWithoutUserNestedInput
+  userCategories?: Prisma.UserCategoryProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
-  id?: number
+  id?: string
   name: string
   email: string
   password: string
+  avatar?: string | null
   role?: $Enums.UserRole
   isActive?: boolean
   isVerified?: boolean
@@ -368,9 +365,11 @@ export type UserCreateManyInput = {
 }
 
 export type UserUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -379,10 +378,11 @@ export type UserUpdateManyMutationInput = {
 }
 
 export type UserUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -395,6 +395,7 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -402,15 +403,12 @@ export type UserCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type UserAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-}
-
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -423,6 +421,7 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -430,12 +429,17 @@ export type UserMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type UserSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type EnumUserRoleFieldUpdateOperationsInput = {
@@ -450,14 +454,216 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type UserCreateNestedOneWithoutVocabularyProgressInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVocabularyProgressInput, Prisma.UserUncheckedCreateWithoutVocabularyProgressInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVocabularyProgressInput
+  connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserUpdateOneRequiredWithoutVocabularyProgressNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVocabularyProgressInput, Prisma.UserUncheckedCreateWithoutVocabularyProgressInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVocabularyProgressInput
+  upsert?: Prisma.UserUpsertWithoutVocabularyProgressInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVocabularyProgressInput, Prisma.UserUpdateWithoutVocabularyProgressInput>, Prisma.UserUncheckedUpdateWithoutVocabularyProgressInput>
+}
+
+export type UserCreateNestedOneWithoutUserCategoriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserCategoriesInput, Prisma.UserUncheckedCreateWithoutUserCategoriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserCategoriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserCategoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserCategoriesInput, Prisma.UserUncheckedCreateWithoutUserCategoriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserCategoriesInput
+  upsert?: Prisma.UserUpsertWithoutUserCategoriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserCategoriesInput, Prisma.UserUpdateWithoutUserCategoriesInput>, Prisma.UserUncheckedUpdateWithoutUserCategoriesInput>
+}
+
+export type UserCreateWithoutVocabularyProgressInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  avatar?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userCategories?: Prisma.UserCategoryProgressCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutVocabularyProgressInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  avatar?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userCategories?: Prisma.UserCategoryProgressUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutVocabularyProgressInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutVocabularyProgressInput, Prisma.UserUncheckedCreateWithoutVocabularyProgressInput>
+}
+
+export type UserUpsertWithoutVocabularyProgressInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVocabularyProgressInput, Prisma.UserUncheckedUpdateWithoutVocabularyProgressInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVocabularyProgressInput, Prisma.UserUncheckedCreateWithoutVocabularyProgressInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutVocabularyProgressInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVocabularyProgressInput, Prisma.UserUncheckedUpdateWithoutVocabularyProgressInput>
+}
+
+export type UserUpdateWithoutVocabularyProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userCategories?: Prisma.UserCategoryProgressUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutVocabularyProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userCategories?: Prisma.UserCategoryProgressUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUserCategoriesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  avatar?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUserCategoriesInput = {
+  id?: string
+  name: string
+  email: string
+  password: string
+  avatar?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUserCategoriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserCategoriesInput, Prisma.UserUncheckedCreateWithoutUserCategoriesInput>
+}
+
+export type UserUpsertWithoutUserCategoriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserCategoriesInput, Prisma.UserUncheckedUpdateWithoutUserCategoriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserCategoriesInput, Prisma.UserUncheckedCreateWithoutUserCategoriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserCategoriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserCategoriesInput, Prisma.UserUncheckedUpdateWithoutUserCategoriesInput>
+}
+
+export type UserUpdateWithoutUserCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vocabularyProgress?: Prisma.UserVocabularyProgressUncheckedUpdateManyWithoutUserNestedInput
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  vocabularyProgress: number
+  userCategories: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  vocabularyProgress?: boolean | UserCountOutputTypeCountVocabularyProgressArgs
+  userCategories?: boolean | UserCountOutputTypeCountUserCategoriesArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountVocabularyProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserVocabularyProgressWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserCategoryProgressWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -465,11 +671,15 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   email?: boolean
   password?: boolean
+  avatar?: boolean
   role?: boolean
   isActive?: boolean
   isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  vocabularyProgress?: boolean | Prisma.User$vocabularyProgressArgs<ExtArgs>
+  userCategories?: boolean | Prisma.User$userCategoriesArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -477,6 +687,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   email?: boolean
   password?: boolean
+  avatar?: boolean
   role?: boolean
   isActive?: boolean
   isVerified?: boolean
@@ -489,6 +700,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   email?: boolean
   password?: boolean
+  avatar?: boolean
   role?: boolean
   isActive?: boolean
   isVerified?: boolean
@@ -501,6 +713,7 @@ export type UserSelectScalar = {
   name?: boolean
   email?: boolean
   password?: boolean
+  avatar?: boolean
   role?: boolean
   isActive?: boolean
   isVerified?: boolean
@@ -508,16 +721,27 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "isActive" | "isVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "avatar" | "role" | "isActive" | "isVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  vocabularyProgress?: boolean | Prisma.User$vocabularyProgressArgs<ExtArgs>
+  userCategories?: boolean | Prisma.User$userCategoriesArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
-  objects: {}
+  objects: {
+    vocabularyProgress: Prisma.$UserVocabularyProgressPayload<ExtArgs>[]
+    userCategories: Prisma.$UserCategoryProgressPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     name: string
     email: string
     password: string
+    avatar: string | null
     role: $Enums.UserRole
     isActive: boolean
     isVerified: boolean
@@ -917,6 +1141,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  vocabularyProgress<T extends Prisma.User$vocabularyProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vocabularyProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserVocabularyProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userCategories<T extends Prisma.User$userCategoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserCategoryProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -946,10 +1172,11 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the User model
  */
 export interface UserFieldRefs {
-  readonly id: Prisma.FieldRef<"User", 'Int'>
+  readonly id: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly avatar: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
@@ -972,6 +1199,10 @@ export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -990,6 +1221,10 @@ export type UserFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1007,6 +1242,10 @@ export type UserFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -1056,6 +1295,10 @@ export type UserFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -1104,6 +1347,10 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which Users to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -1146,6 +1393,10 @@ export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The data needed to create a User.
    */
@@ -1194,6 +1445,10 @@ export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The data needed to update a User.
    */
@@ -1261,6 +1516,10 @@ export type UserUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * The filter to search for the User to update in case it exists.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1287,6 +1546,10 @@ export type UserDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter which User to delete.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1307,6 +1570,54 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.vocabularyProgress
+ */
+export type User$vocabularyProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserVocabularyProgress
+   */
+  select?: Prisma.UserVocabularyProgressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserVocabularyProgress
+   */
+  omit?: Prisma.UserVocabularyProgressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserVocabularyProgressInclude<ExtArgs> | null
+  where?: Prisma.UserVocabularyProgressWhereInput
+  orderBy?: Prisma.UserVocabularyProgressOrderByWithRelationInput | Prisma.UserVocabularyProgressOrderByWithRelationInput[]
+  cursor?: Prisma.UserVocabularyProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserVocabularyProgressScalarFieldEnum | Prisma.UserVocabularyProgressScalarFieldEnum[]
+}
+
+/**
+ * User.userCategories
+ */
+export type User$userCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCategoryProgress
+   */
+  select?: Prisma.UserCategoryProgressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserCategoryProgress
+   */
+  omit?: Prisma.UserCategoryProgressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserCategoryProgressInclude<ExtArgs> | null
+  where?: Prisma.UserCategoryProgressWhereInput
+  orderBy?: Prisma.UserCategoryProgressOrderByWithRelationInput | Prisma.UserCategoryProgressOrderByWithRelationInput[]
+  cursor?: Prisma.UserCategoryProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserCategoryProgressScalarFieldEnum | Prisma.UserCategoryProgressScalarFieldEnum[]
+}
+
+/**
  * User without action
  */
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1318,4 +1629,8 @@ export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
 }

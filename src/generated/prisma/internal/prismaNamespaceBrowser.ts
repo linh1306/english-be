@@ -51,7 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  VocabularyCategory: 'VocabularyCategory',
+  Vocabulary: 'Vocabulary',
+  UserVocabularyProgress: 'UserVocabularyProgress',
+  UserCategoryProgress: 'UserCategoryProgress'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -75,6 +79,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  avatar: 'avatar',
   role: 'role',
   isActive: 'isActive',
   isVerified: 'isVerified',
@@ -83,6 +88,83 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const VocabularyCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  nameVi: 'nameVi',
+  description: 'description',
+  thumbnail: 'thumbnail',
+  difficulty: 'difficulty',
+  order: 'order',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VocabularyCategoryScalarFieldEnum = (typeof VocabularyCategoryScalarFieldEnum)[keyof typeof VocabularyCategoryScalarFieldEnum]
+
+
+export const VocabularyScalarFieldEnum = {
+  id: 'id',
+  word: 'word',
+  pronunciation: 'pronunciation',
+  audioUrl: 'audioUrl',
+  meaning: 'meaning',
+  partOfSpeech: 'partOfSpeech',
+  exampleEn: 'exampleEn',
+  exampleVi: 'exampleVi',
+  imageUrl: 'imageUrl',
+  synonyms: 'synonyms',
+  antonyms: 'antonyms',
+  difficulty: 'difficulty',
+  categoryId: 'categoryId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VocabularyScalarFieldEnum = (typeof VocabularyScalarFieldEnum)[keyof typeof VocabularyScalarFieldEnum]
+
+
+export const UserVocabularyProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  vocabularyId: 'vocabularyId',
+  proficiency: 'proficiency',
+  easeFactor: 'easeFactor',
+  interval: 'interval',
+  repetitions: 'repetitions',
+  correctCount: 'correctCount',
+  incorrectCount: 'incorrectCount',
+  streak: 'streak',
+  bestStreak: 'bestStreak',
+  lastReviewedAt: 'lastReviewedAt',
+  nextReviewAt: 'nextReviewAt',
+  firstLearnedAt: 'firstLearnedAt',
+  masteredAt: 'masteredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserVocabularyProgressScalarFieldEnum = (typeof UserVocabularyProgressScalarFieldEnum)[keyof typeof UserVocabularyProgressScalarFieldEnum]
+
+
+export const UserCategoryProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  categoryId: 'categoryId',
+  totalWords: 'totalWords',
+  learnedWords: 'learnedWords',
+  masteredWords: 'masteredWords',
+  lastStudiedAt: 'lastStudiedAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserCategoryProgressScalarFieldEnum = (typeof UserCategoryProgressScalarFieldEnum)[keyof typeof UserCategoryProgressScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -99,4 +181,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

@@ -4,7 +4,7 @@ import { PrismaModule } from './core/database/prisma.module';
 import { VocabularyCategoryModule } from './modules/vocabulary-category';
 import { VocabularyModule } from './modules/vocabulary';
 import { UserProgressModule } from './modules/user-progress';
-import { AuthModule } from './modules/auth';
+
 import { UserModule } from './modules/user';
 
 @Module({
@@ -14,7 +14,7 @@ import { UserModule } from './modules/user';
     VocabularyCategoryModule,
     VocabularyModule,
     UserProgressModule,
-    AuthModule,
+
     UserModule,
   ],
   controllers: [],

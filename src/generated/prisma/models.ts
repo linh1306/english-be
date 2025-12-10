@@ -8,9 +8,9 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User.js'
-export type * from './models/VocabularyCategory.js'
-export type * from './models/Vocabulary.js'
-export type * from './models/UserVocabularyProgress.js'
-export type * from './models/UserCategoryProgress.js'
-export type * from './commonInputTypes.js'
+export type * from './models/User'
+export type * from './models/VocabularyCategory'
+export type * from './models/Vocabulary'
+export type * from './models/UserVocabularyProgress'
+export type * from './models/UserCategoryProgress'
+export type * from './commonInputTypes'

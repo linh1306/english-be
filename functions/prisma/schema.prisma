@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== ENUMS ====================
+
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+// Mức độ thành thạo từ vựng
+enum ProficiencyLevel {
+  NEW           // Mới học
+  LEARNING      // Đang học
+  REVIEWING     // Đang ôn tập
+  MASTERED      // Đã thành thạo
+}
+
+// Độ khó của từ vựng
+enum DifficultyLevel {
+  BEGINNER      // A1-A2
+  INTERMEDIATE  // B1-B2
+  ADVANCED      // C1-C2
+}
+
+// ==================== USER ====================
+
+model User {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  password   String
+  avatar     String?
+  role       UserRole @default(USER)
+  isActive   Boolean  @default(true)
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  vocabularyProgress UserVocabularyProgress[]
+  userCategories     UserCategoryProgress[]
+
+  @@map("users")
+}
+
+// ==================== VOCABULARY CATEGORY ====================
+
+model VocabularyCategory {
+  id          String          @id @default(cuid())
+  name        String          @unique
+  nameVi      String?         // Tên tiếng Việt
+  description String?
+  thumbnail   String?         // Ảnh đại diện cho category
+  difficulty  DifficultyLevel @default(BEGINNER)
+  order       Int             @default(0)   // Thứ tự hiển thị
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  // Relations
+  vocabularies Vocabulary[]
+  userProgress UserCategoryProgress[]
+
+  @@map("vocabulary_categories")
+}
+
+// ==================== VOCABULARY ====================
+
+model Vocabulary {
+  id            String          @id @default(cuid())
+  word          String          // Từ tiếng Anh
+  pronunciation String?         // Phiên âm IPA
+  audioUrl      String?         // URL file âm thanh phát âm
+  meaning       String          // Nghĩa tiếng Việt
+  partOfSpeech  String?         // Loại từ (noun, verb, adj...)
+  exampleEn     String?         // Ví dụ tiếng Anh
+  exampleVi     String?         // Dịch ví dụ
+  imageUrl      String?         // Hình ảnh minh họa
+  synonyms      String[]        // Từ đồng nghĩa
+  antonyms      String[]        // Từ trái nghĩa
+  difficulty    DifficultyLevel @default(BEGINNER)
+  categoryId    String
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  // Relations
+  category     VocabularyCategory       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  userProgress UserVocabularyProgress[]
+
+  @@unique([word, categoryId])
+  @@index([categoryId])
+  @@index([difficulty])
+  @@map("vocabularies")
+}
+
+// ==================== USER VOCABULARY PROGRESS ====================
+// Theo dõi tiến trình học từng từ vựng của user (Spaced Repetition)
+
+model UserVocabularyProgress {
+  id              String           @id @default(cuid())
+  userId          String
+  vocabularyId    String
+  proficiency     ProficiencyLevel @default(NEW)
+  
+  // Spaced Repetition System (SRS) fields
+  easeFactor      Float            @default(2.5)  // Hệ số dễ (SM-2 algorithm)
+  interval        Int              @default(0)    // Khoảng cách ôn tập (ngày)
+  repetitions     Int              @default(0)    // Số lần ôn tập thành công liên tiếp
+  
+  // Thống kê học tập
+  correctCount    Int              @default(0)    // Số lần trả lời đúng
+  incorrectCount  Int              @default(0)    // Số lần trả lời sai
+  streak          Int              @default(0)    // Chuỗi đúng liên tiếp hiện tại
+  bestStreak      Int              @default(0)    // Chuỗi đúng dài nhất
+  
+  // Thời gian
+  lastReviewedAt  DateTime?                       // Lần ôn tập cuối
+  nextReviewAt    DateTime?                       // Lần ôn tập tiếp theo (SRS)
+  firstLearnedAt  DateTime         @default(now()) // Lần đầu học
+  masteredAt      DateTime?                       // Thời điểm thành thạo
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // Relations
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vocabulary Vocabulary @relation(fields: [vocabularyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, vocabularyId])
+  @@index([userId])
+  @@index([vocabularyId])
+  @@index([nextReviewAt])
+  @@index([proficiency])
+  @@map("user_vocabulary_progress")
+}
+
+// ==================== USER CATEGORY PROGRESS ====================
+// Tiến trình học của user theo từng category
+
+model UserCategoryProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  categoryId      String
+  
+  totalWords      Int      @default(0)     // Tổng số từ trong category
+  learnedWords    Int      @default(0)     // Số từ đã học
+  masteredWords   Int      @default(0)     // Số từ đã thành thạo
+  
+  lastStudiedAt   DateTime?               // Lần học cuối
+  completedAt     DateTime?               // Thời điểm hoàn thành category
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  user     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category VocabularyCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, categoryId])
+  @@index([userId])
+  @@index([categoryId])
+  @@map("user_category_progress")
+}

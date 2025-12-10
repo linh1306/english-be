@@ -8,15 +8,11 @@ import { Reflector } from '@nestjs/core';
 import { FastifyRequest } from 'fastify';
 import { FirebaseService } from '../firebase.service';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
-import { PrismaService } from '../../database/prisma.service';
-import { User } from '../../../generated/prisma/client';
-import * as crypto from 'crypto';
 
 @Injectable()
 export class FirebaseAuthGuard implements CanActivate {
     constructor(
         private readonly firebaseService: FirebaseService,
-        private readonly prismaService: PrismaService,
         private readonly reflector: Reflector,
     ) { }
 
@@ -32,16 +28,16 @@ export class FirebaseAuthGuard implements CanActivate {
         }
 
         const request = context.switchToHttp().getRequest<FastifyRequest>();
-        const authHeader = request.headers.authorization;
 
-        if (!authHeader) {
-            throw new UnauthorizedException('No authorization header provided');
+        let token = this.extractTokenFromHeader(request);
+
+        // If no bearer token, check cookie
+        if (!token && request.cookies && request.cookies['token']) {
+            token = request.cookies['token'];
         }
 
-        const [type, token] = authHeader.split(' ');
-
-        if (type !== 'Bearer' || !token) {
-            throw new UnauthorizedException('Invalid authorization header format');
+        if (!token) {
+            throw new UnauthorizedException('No authorization token provided');
         }
 
         try {
@@ -51,61 +47,18 @@ export class FirebaseAuthGuard implements CanActivate {
                 throw new UnauthorizedException('Token does not contain email');
             }
 
-            // Check if user exists in DB
-            let user = await this.prismaService.user.findUnique({
-                where: { email: decodedToken.email },
-            });
-
-            if (!user) {
-                // Create user if not exists
-                // Use default CUID or Firebase UID? 
-                // Let's rely on default CUID for ID consistency with other tables if needed, 
-                // OR use uid if we want strong link. 
-                // Given "check firebase id", maybe linking is good. 
-                // But schema has @default(cuid()). 
-                // Let's create with default CUID to accept current Schema, 
-                // but we might want to store firebase UID. 
-                // Since schema doesn't have firebaseUid, we rely on email. 
-
-                // Wait, if I change logic to user finding by email, 
-                // I am technically checking if "email is valid".
-                // The prompt says "check firebase id". 
-                // If I rely ONLY on email, I might have issues if email changes.
-                // But without schema change, email is the only unique key I have besides ID. 
-                // If I create new user, I can set ID = UID? 
-                // Cuid is a string format. UID is alphanumeric. It might fit.
-                // Let's try setting ID = UID.
-
-                try {
-                    user = await this.prismaService.user.create({
-                        data: {
-                            // id: decodedToken.uid, // Optionally force ID to be UID. Let's try to match UID for easier debugging? 
-                            // Actually, Prisma might complain if it doesn't look like CUID if verified? No, string is string.
-                            // But let's stick to generating ID to avoid potential collision or format issues if any. 
-                            // Actually, auto-generation is safer unless explicitly asked.
-                            // But user said "check firebase id". 
-                            // I will stick to query by email 
-                            email: decodedToken.email,
-                            name: decodedToken.name || decodedToken.email.split('@')[0],
-                            avatar: decodedToken.picture,
-                            password: crypto.randomUUID(), // Dummy password
-                            isVerified: decodedToken.email_verified || false,
-                            role: 'USER',
-                        },
-                    });
-                } catch (e) {
-                    // Hande race condition or unique constraint
-                    // Retry find
-                    user = await this.prismaService.user.findUnique({
-                        where: { email: decodedToken.email },
-                    });
-                    if (!user) throw e;
-                }
-            }
-
             // Attach user info to request for later use
+            // We map uid to id to maintain compatibility with minimal user interface
             // @ts-ignore
-            request['user'] = user;
+            request['user'] = {
+                id: decodedToken.uid,
+                email: decodedToken.email,
+                name: decodedToken.name || decodedToken.email.split('@')[0],
+                avatar: decodedToken.picture || null,
+                isVerified: decodedToken.email_verified || false,
+                role: 'USER', // Default role assumption since we don't query DB
+                ...decodedToken
+            };
 
             return true;
         } catch (error) {
@@ -114,5 +67,10 @@ export class FirebaseAuthGuard implements CanActivate {
                 `Invalid or expired token: ${error instanceof Error ? error.message : 'Unknown error'}`,
             );
         }
+    }
+
+    private extractTokenFromHeader(request: FastifyRequest): string | undefined {
+        const [type, token] = request.headers.authorization?.split(' ') ?? [];
+        return type === 'Bearer' ? token : undefined;
     }
 }

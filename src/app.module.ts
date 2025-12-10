@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { FirebaseModule, FirebaseAuthGuard } from './core/firebase';
 import { PrismaModule } from './core/database/prisma.module';
 import { VocabularyCategoryModule } from './modules/vocabulary-category';
@@ -9,6 +11,12 @@ import { UserModule } from './modules/user';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
     FirebaseModule,
     PrismaModule,
     VocabularyCategoryModule,
@@ -19,13 +27,10 @@ import { UserModule } from './modules/user';
   ],
   controllers: [],
   providers: [
-    // Uncomment the following to enable global authentication
-    // All routes will require Firebase authentication by default
-    // Use @Public() decorator to make specific routes public
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: FirebaseAuthGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class AppModule { }

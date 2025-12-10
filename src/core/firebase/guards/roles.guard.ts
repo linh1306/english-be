@@ -7,43 +7,48 @@ import {
 import { Reflector } from '@nestjs/core';
 import { FastifyRequest } from 'fastify';
 import { ROLES_KEY } from '../decorators/roles.decorator';
-import { FirebaseUser } from '../decorators/current-user.decorator';
+import { PrismaService } from '../../database/prisma.service';
+import { UserRole } from '../../../generated/prisma/enums';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-    constructor(private readonly reflector: Reflector) { }
+    constructor(
+        private readonly reflector: Reflector,
+        private readonly prisma: PrismaService,
+    ) { }
 
-    canActivate(context: ExecutionContext): boolean {
-        const requiredRoles = this.reflector.getAllAndOverride<string[]>(
+    async canActivate(context: ExecutionContext): Promise<boolean> {
+        const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(
             ROLES_KEY,
             [context.getHandler(), context.getClass()],
         );
 
-        // If no roles are required, allow access
         if (!requiredRoles || requiredRoles.length === 0) {
             return true;
         }
 
         const request = context.switchToHttp().getRequest<FastifyRequest>();
-        const user = (request as FastifyRequest & { user?: FirebaseUser }).user;
+        const user = (request as FastifyRequest & { user?: any }).user;
 
-        if (!user) {
+        if (!user || !user.id || !user.email) {
             throw new ForbiddenException('User not authenticated');
         }
 
-        // Check if user has any of the required roles in their custom claims
-        const userRoles = (user as FirebaseUser & { role?: string }).role;
-        const hasRole = requiredRoles.some((role) => {
-            // Check in custom claims
-            if (userRoles === role) {
-                return true;
-            }
-            // Also check if role exists as a custom claim key with truthy value
-            if ((user as Record<string, unknown>)[role]) {
-                return true;
-            }
-            return false;
+        let dbUser = await this.prisma.user.findUnique({
+            where: { id: user.id },
         });
+
+        if (!dbUser) {
+            dbUser = await this.prisma.user.findUnique({
+                where: { email: user.email },
+            });
+        }
+
+        if (!dbUser) {
+            throw new ForbiddenException('User not found in system');
+        }
+
+        const hasRole = requiredRoles.includes(dbUser.role);
 
         if (!hasRole) {
             throw new ForbiddenException(

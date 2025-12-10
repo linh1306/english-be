@@ -17,7 +17,6 @@ export class FirebaseAuthGuard implements CanActivate {
     ) { }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        // Check if route is marked as public
         const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
             context.getHandler(),
             context.getClass(),
@@ -47,16 +46,13 @@ export class FirebaseAuthGuard implements CanActivate {
                 throw new UnauthorizedException('Token does not contain email');
             }
 
-            // Attach user info to request for later use
-            // We map uid to id to maintain compatibility with minimal user interface
-            // @ts-ignore
             request['user'] = {
                 id: decodedToken.uid,
                 email: decodedToken.email,
                 name: decodedToken.name || decodedToken.email.split('@')[0],
                 avatar: decodedToken.picture || null,
                 isVerified: decodedToken.email_verified || false,
-                role: 'USER', // Default role assumption since we don't query DB
+                role: 'USER',
                 ...decodedToken
             };
 

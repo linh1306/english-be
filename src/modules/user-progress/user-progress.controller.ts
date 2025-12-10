@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Query, Body, HttpCode, HttpStatus, Req } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { UserProgressService } from './user-progress.service';
 import {
     ReviewAnswerDto,
@@ -11,27 +11,34 @@ import {
     SubmitStudyResultDto,
     StudyResultSummary,
 } from './dto/user-progress.dto';
+import { FirebaseAuthGuard } from '../../core/firebase/guards/firebase-auth.guard';
+import { RolesGuard } from '../../core/firebase/guards/roles.guard';
+import { FirebaseId } from '../../core/firebase/decorators/firebase-id.decorator';
+import { Roles } from '../../core/firebase/decorators/roles.decorator';
+import { UserRole } from '../../generated/prisma/enums';
 
+@UseGuards(FirebaseAuthGuard, RolesGuard)
+@Roles(UserRole.USER)
 @Controller('user-progress')
 export class UserProgressController {
     constructor(private readonly userProgressService: UserProgressService) { }
 
     /**
      * Lấy thống kê học tập của user
-     * GET /user-progress/statistics/:userId
+     * GET /user-progress/statistics
      */
-    @Get('statistics/:userId')
-    async getStatistics(@Param('userId') userId: string): Promise<UserLearningStatistics> {
+    @Get('statistics')
+    async getStatistics(@FirebaseId() userId: string): Promise<UserLearningStatistics> {
         return this.userProgressService.getStatistics(userId);
     }
 
     /**
      * Lấy các từ cần ôn tập hôm nay
-     * GET /user-progress/due-review/:userId
+     * GET /user-progress/due-review
      */
-    @Get('due-review/:userId')
+    @Get('due-review')
     async getDueForReview(
-        @Param('userId') userId: string,
+        @FirebaseId() userId: string,
         @Query('limit') limit?: number,
     ): Promise<UserVocabularyProgressResponse[]> {
         return this.userProgressService.getDueForReview(userId, limit ?? 20);
@@ -39,21 +46,21 @@ export class UserProgressController {
 
     /**
      * Lấy tiến trình theo category
-     * GET /user-progress/categories/:userId
+     * GET /user-progress/categories
      */
-    @Get('categories/:userId')
-    async getCategoryProgress(@Param('userId') userId: string) {
+    @Get('categories')
+    async getCategoryProgress(@FirebaseId() userId: string) {
         return this.userProgressService.getCategoryProgress(userId);
     }
 
     /**
      * Bắt đầu phiên học mới
-     * POST /user-progress/study-session/:userId
+     * POST /user-progress/study-session
      */
-    @Post('study-session/:userId')
+    @Post('study-session')
     @HttpCode(HttpStatus.OK)
     async startStudySession(
-        @Param('userId') userId: string,
+        @FirebaseId() userId: string,
         @Body() dto: StartStudySessionDto,
     ): Promise<StudySessionResponse> {
         return this.userProgressService.startStudySession(userId, dto);
@@ -61,12 +68,12 @@ export class UserProgressController {
 
     /**
      * Submit kết quả học tập
-     * POST /user-progress/submit-result/:userId
+     * POST /user-progress/submit-result
      */
-    @Post('submit-result/:userId')
+    @Post('submit-result')
     @HttpCode(HttpStatus.OK)
     async submitStudyResult(
-        @Param('userId') userId: string,
+        @FirebaseId() userId: string,
         @Body() dto: SubmitStudyResultDto,
     ): Promise<StudyResultSummary> {
         return this.userProgressService.submitStudyResult(userId, dto);
@@ -74,12 +81,12 @@ export class UserProgressController {
 
     /**
      * Ghi nhận kết quả ôn tập một từ
-     * POST /user-progress/review/:userId
+     * POST /user-progress/review
      */
-    @Post('review/:userId')
+    @Post('review')
     @HttpCode(HttpStatus.OK)
     async recordReview(
-        @Param('userId') userId: string,
+        @FirebaseId() userId: string,
         @Body() dto: ReviewAnswerDto,
     ): Promise<UserVocabularyProgressResponse> {
         return this.userProgressService.recordReview(userId, dto);
@@ -87,11 +94,11 @@ export class UserProgressController {
 
     /**
      * Lấy danh sách tiến trình của user
-     * GET /user-progress/:userId
+     * GET /user-progress
      */
-    @Get(':userId')
+    @Get()
     async findAll(
-        @Param('userId') userId: string,
+        @FirebaseId() userId: string,
         @Query() query: QueryUserProgressDto,
     ): Promise<PaginatedUserProgressResponse> {
         return this.userProgressService.findAll(userId, query);
@@ -99,11 +106,11 @@ export class UserProgressController {
 
     /**
      * Lấy hoặc tạo progress cho một từ
-     * GET /user-progress/:userId/vocabulary/:vocabularyId
+     * GET /user-progress/vocabulary/:vocabularyId
      */
-    @Get(':userId/vocabulary/:vocabularyId')
+    @Get('vocabulary/:vocabularyId')
     async getOrCreateProgress(
-        @Param('userId') userId: string,
+        @FirebaseId() userId: string,
         @Param('vocabularyId') vocabularyId: string,
     ): Promise<UserVocabularyProgressResponse> {
         return this.userProgressService.getOrCreateProgress(userId, vocabularyId);

@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
+    "@genkit-ai/googleai": "^1.25.0",
     "@nestia/core": "^9.1.1",
     "@nestia/e2e": "^9.1.1",
     "@nestia/fetcher": "^9.1.1",
@@ -33,9 +34,11 @@
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "firebase-admin": "^13.6.0",
+    "genkit": "^1.25.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typia": "^10.1.0"
+    "typia": "^10.1.0",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

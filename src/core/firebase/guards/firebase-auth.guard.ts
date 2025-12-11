@@ -31,8 +31,9 @@ export class FirebaseAuthGuard implements CanActivate {
         let token = this.extractTokenFromHeader(request);
 
         // If no bearer token, check cookie
-        if (!token && request.cookies && request.cookies['token']) {
-            token = request.cookies['token'];
+        const cookies = (request as any).cookies;
+        if (!token && cookies && cookies['token']) {
+            token = cookies['token'];
         }
 
         if (!token) {

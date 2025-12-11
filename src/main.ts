@@ -13,6 +13,11 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   await app.register(cookie);
-  await app.listen(process.env.PORT ?? 3000);
+  await app.register(import('@fastify/cors'), {
+    origin: [process.env.FRONTEND_URL || '*'],
+    credentials: true,
+  });
+  await app.listen(process.env.PORT ?? 8000);
 }
+
 bootstrap();

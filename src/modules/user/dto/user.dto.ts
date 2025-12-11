@@ -8,6 +8,7 @@ export class CreateUserDto {
     password!: string; // Only if we manage password locally
     role?: UserRole;
     avatar?: string;
+    isVerified?: boolean;
 }
 
 // ==================== UPDATE ====================

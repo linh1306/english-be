@@ -9,10 +9,10 @@ import { TypedQuery } from '@nestia/core';
 import { UserService } from './user.service';
 import {
     QueryFindAllUser,
-    ResUser,
     ResFindAllUser,
     BodyUpdateUserStatus,
     ResFindOneUserPublic,
+    ResUpdateUser,
 } from './dto/user.dto';
 import { Roles } from '../../core/firebase/decorators/roles.decorator';
 
@@ -38,7 +38,7 @@ export class UserController {
     async update(
         @Param('id') id: string,
         @Body() dto: BodyUpdateUserStatus,
-    ): Promise<ResUser> {
+    ): Promise<ResUpdateUser> {
         return this.userService.update(id, dto);
     }
 }

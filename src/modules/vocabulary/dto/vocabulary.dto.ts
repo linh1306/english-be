@@ -98,3 +98,10 @@ export interface ResBulkCreateVocabulary {
         error: string;
     }>;
 }
+
+export type ResCreateVocabulary = ResVocabulary;
+export type ResUpdateVocabulary = ResVocabulary;
+export type ResFindOneVocabulary = ResVocabulary;
+export type ResGetRandomByCategory = ResVocabulary[];
+export type ResRemoveVocabulary = ResVocabulary;
+export type ResHardDeleteVocabulary = ResVocabulary;

@@ -9,7 +9,7 @@ export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
     @Get('profile')
-    async getProfile(@CurrentUser() user: FirebaseUser): Promise<ResGetProfile | null> {
+    async getProfile(@CurrentUser() user: FirebaseUser): Promise<ResGetProfile> {
         return this.authService.getProfile(user.uid);
     }
 

@@ -60,3 +60,9 @@ export interface ResFindAllVocabularyCategory {
         totalPages: number;
     };
 }
+
+export type ResCreateVocabularyCategory = ResVocabularyCategory;
+export type ResUpdateVocabularyCategory = ResVocabularyCategory;
+export type ResFindOneVocabularyCategory = ResVocabularyCategory;
+export type ResRemoveVocabularyCategory = ResVocabularyCategory;
+export type ResHardDeleteVocabularyCategory = ResVocabularyCategory;

@@ -11,6 +11,10 @@ import {
     ResStartStudySession,
     BodySubmitStudyResult,
     ResSubmitStudyResult,
+    ResGetDueForReview,
+    ResGetCategoryProgress,
+    ResRecordReview,
+    ResGetOrCreateProgress,
 } from './dto/user-progress.dto';
 import { FirebaseAuthGuard } from '../../core/firebase/guards/firebase-auth.guard';
 import { RolesGuard } from '../../core/firebase/guards/roles.guard';
@@ -41,7 +45,7 @@ export class UserProgressController {
     async getDueForReview(
         @FirebaseId() userId: string,
         @Query('limit', new ParseIntPipe({ optional: true })) limit?: number,
-    ): Promise<ResUserVocabularyProgress[]> {
+    ): Promise<ResGetDueForReview> {
         return this.userProgressService.getDueForReview(userId, limit ?? 20);
     }
 
@@ -50,7 +54,7 @@ export class UserProgressController {
      * GET /user-progress/categories
      */
     @Get('categories')
-    async getCategoryProgress(@FirebaseId() userId: string) {
+    async getCategoryProgress(@FirebaseId() userId: string): Promise<ResGetCategoryProgress> {
         return this.userProgressService.getCategoryProgress(userId);
     }
 
@@ -89,7 +93,7 @@ export class UserProgressController {
     async recordReview(
         @FirebaseId() userId: string,
         @Body() dto: BodyReviewAnswer,
-    ): Promise<ResUserVocabularyProgress> {
+    ): Promise<ResRecordReview> {
         return this.userProgressService.recordReview(userId, dto);
     }
 
@@ -113,7 +117,7 @@ export class UserProgressController {
     async getOrCreateProgress(
         @FirebaseId() userId: string,
         @Param('vocabularyId') vocabularyId: string,
-    ): Promise<ResUserVocabularyProgress> {
+    ): Promise<ResGetOrCreateProgress> {
         return this.userProgressService.getOrCreateProgress(userId, vocabularyId);
     }
 }

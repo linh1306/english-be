@@ -7,6 +7,11 @@ import {
     QueryFindAllVocabularyCategory,
     ResVocabularyCategory,
     ResFindAllVocabularyCategory,
+    ResCreateVocabularyCategory,
+    ResUpdateVocabularyCategory,
+    ResFindOneVocabularyCategory,
+    ResRemoveVocabularyCategory,
+    ResHardDeleteVocabularyCategory,
 } from './dto/vocabulary-category.dto';
 
 @Controller('vocabulary-categories')
@@ -19,7 +24,7 @@ export class VocabularyCategoryController {
      */
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async create(@Body() dto: BodyCreateVocabularyCategory): Promise<ResVocabularyCategory> {
+    async create(@Body() dto: BodyCreateVocabularyCategory): Promise<ResCreateVocabularyCategory> {
         return this.vocabularyCategoryService.create(dto);
     }
 
@@ -37,7 +42,7 @@ export class VocabularyCategoryController {
      * GET /vocabulary-categories/:id
      */
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<ResVocabularyCategory> {
+    async findOne(@Param('id') id: string): Promise<ResFindOneVocabularyCategory> {
         return this.vocabularyCategoryService.findOne(id);
     }
 
@@ -49,7 +54,7 @@ export class VocabularyCategoryController {
     async update(
         @Param('id') id: string,
         @Body() dto: BodyUpdateVocabularyCategory,
-    ): Promise<ResVocabularyCategory> {
+    ): Promise<ResUpdateVocabularyCategory> {
         return this.vocabularyCategoryService.update(id, dto);
     }
 
@@ -58,8 +63,7 @@ export class VocabularyCategoryController {
      * DELETE /vocabulary-categories/:id
      */
     @Delete(':id')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async remove(@Param('id') id: string): Promise<void> {
+    async remove(@Param('id') id: string): Promise<ResRemoveVocabularyCategory> {
         return this.vocabularyCategoryService.remove(id);
     }
 
@@ -68,8 +72,7 @@ export class VocabularyCategoryController {
      * DELETE /vocabulary-categories/:id/hard
      */
     @Delete(':id/hard')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async hardDelete(@Param('id') id: string): Promise<void> {
+    async hardDelete(@Param('id') id: string): Promise<ResHardDeleteVocabularyCategory> {
         return this.vocabularyCategoryService.hardDelete(id);
     }
 }

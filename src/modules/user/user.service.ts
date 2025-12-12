@@ -7,6 +7,11 @@ import {
     ResUser,
     ResFindAllUser,
     ResFindOneUserPublic,
+    ResCreateUser,
+    ResUpdateUser,
+    ResFindOneUser,
+    ResRemoveUser,
+    ResFindByEmailUser,
 } from './dto/user.dto';
 import { User, Prisma } from '../../generated/prisma/client';
 
@@ -14,7 +19,7 @@ import { User, Prisma } from '../../generated/prisma/client';
 export class UserService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async create(dto: BodyCreateUser): Promise<ResUser> {
+    async create(dto: BodyCreateUser): Promise<ResCreateUser> {
         const user = await this.prisma.user.create({
             data: {
                 ...dto,
@@ -71,7 +76,7 @@ export class UserService {
         };
     }
 
-    async findOne(id: string): Promise<ResUser> {
+    async findOne(id: string): Promise<ResFindOneUser> {
         const user = await this.prisma.user.findUnique({
             where: { id },
         });
@@ -83,7 +88,7 @@ export class UserService {
         return this.mapToResponse(user);
     }
 
-    async update(id: string, dto: BodyUpdateUser): Promise<ResUser> {
+    async update(id: string, dto: BodyUpdateUser): Promise<ResUpdateUser> {
         await this.findOne(id); // Ensure exists
 
         const updatedUser = await this.prisma.user.update({
@@ -94,12 +99,14 @@ export class UserService {
         return this.mapToResponse(updatedUser);
     }
 
-    async remove(id: string): Promise<void> {
+    async remove(id: string): Promise<ResRemoveUser> {
         await this.findOne(id); // Ensure exists
 
-        await this.prisma.user.delete({
+        const deletedUser = await this.prisma.user.delete({
             where: { id },
         });
+
+        return this.mapToResponse(deletedUser);
     }
 
     private mapToResponse(user: User): ResUser {
@@ -125,7 +132,7 @@ export class UserService {
         };
     }
 
-    async findByEmail(email: string): Promise<User | null> {
+    async findByEmail(email: string): Promise<ResFindByEmailUser | null> {
         return this.prisma.user.findUnique({
             where: { email },
         });

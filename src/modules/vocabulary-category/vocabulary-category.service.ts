@@ -6,6 +6,11 @@ import {
     QueryFindAllVocabularyCategory,
     ResVocabularyCategory,
     ResFindAllVocabularyCategory,
+    ResCreateVocabularyCategory,
+    ResUpdateVocabularyCategory,
+    ResFindOneVocabularyCategory,
+    ResRemoveVocabularyCategory,
+    ResHardDeleteVocabularyCategory,
 } from './dto/vocabulary-category.dto';
 
 @Injectable()
@@ -15,7 +20,7 @@ export class VocabularyCategoryService {
     /**
      * Tạo danh mục từ vựng mới
      */
-    async create(dto: BodyCreateVocabularyCategory): Promise<ResVocabularyCategory> {
+    async create(dto: BodyCreateVocabularyCategory): Promise<ResCreateVocabularyCategory> {
         // Kiểm tra tên đã tồn tại chưa
         const existing = await this.prisma.vocabularyCategory.findUnique({
             where: { name: dto.name },
@@ -104,7 +109,7 @@ export class VocabularyCategoryService {
     /**
      * Lấy chi tiết một danh mục
      */
-    async findOne(id: string): Promise<ResVocabularyCategory> {
+    async findOne(id: string): Promise<ResFindOneVocabularyCategory> {
         const category = await this.prisma.vocabularyCategory.findUnique({
             where: { id },
             include: {
@@ -124,7 +129,7 @@ export class VocabularyCategoryService {
     /**
      * Cập nhật danh mục
      */
-    async update(id: string, dto: BodyUpdateVocabularyCategory): Promise<ResVocabularyCategory> {
+    async update(id: string, dto: BodyUpdateVocabularyCategory): Promise<ResUpdateVocabularyCategory> {
         // Kiểm tra danh mục tồn tại
         await this.findOne(id);
 
@@ -158,24 +163,38 @@ export class VocabularyCategoryService {
     /**
      * Xóa danh mục (soft delete bằng cách set isActive = false)
      */
-    async remove(id: string): Promise<void> {
+    async remove(id: string): Promise<ResRemoveVocabularyCategory> {
         await this.findOne(id);
 
-        await this.prisma.vocabularyCategory.update({
+        const updated = await this.prisma.vocabularyCategory.update({
             where: { id },
             data: { isActive: false },
+            include: {
+                _count: {
+                    select: { vocabularies: true },
+                },
+            },
         });
+
+        return this.toResponse(updated);
     }
 
     /**
      * Xóa vĩnh viễn danh mục
      */
-    async hardDelete(id: string): Promise<void> {
+    async hardDelete(id: string): Promise<ResHardDeleteVocabularyCategory> {
         await this.findOne(id);
 
-        await this.prisma.vocabularyCategory.delete({
+        const deleted = await this.prisma.vocabularyCategory.delete({
             where: { id },
+            include: {
+                _count: {
+                    select: { vocabularies: true },
+                },
+            },
         });
+
+        return this.toResponse(deleted);
     }
 
     /**

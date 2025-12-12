@@ -127,3 +127,8 @@ export interface ResSubmitStudyResult {
     newWordsMastered: number;
     xpEarned: number;
 }
+
+export type ResGetOrCreateProgress = ResUserVocabularyProgress;
+export type ResRecordReview = ResUserVocabularyProgress;
+export type ResGetDueForReview = ResUserVocabularyProgress[];
+export type ResGetCategoryProgress = ResCategoryProgressItem[];

@@ -1,4 +1,5 @@
 import { UserRole } from '../../../generated/prisma/enums';
+import { User } from '../../../generated/prisma/client';
 
 // ==================== CREATE ====================
 // Often users are created via Auth, but admin might create users
@@ -64,3 +65,9 @@ export class QueryFindAllUser {
     sortBy?: 'name' | 'createdAt';
     sortOrder?: 'asc' | 'desc';
 }
+
+export type ResCreateUser = ResUser;
+export type ResUpdateUser = ResUser;
+export type ResFindOneUser = ResUser;
+export type ResFindByEmailUser = User;
+export type ResRemoveUser = ResUser; // Returning the deleted user

@@ -13,6 +13,10 @@ import {
     ResStudyWordItem,
     BodySubmitStudyResult,
     ResSubmitStudyResult,
+    ResGetOrCreateProgress,
+    ResRecordReview,
+    ResGetDueForReview,
+    ResGetCategoryProgress,
 } from './dto/user-progress.dto';
 
 @Injectable()
@@ -78,7 +82,7 @@ export class UserProgressService {
     /**
      * Lấy hoặc tạo progress cho một từ vựng
      */
-    async getOrCreateProgress(userId: string, vocabularyId: string): Promise<ResUserVocabularyProgress> {
+    async getOrCreateProgress(userId: string, vocabularyId: string): Promise<ResGetOrCreateProgress> {
         let progress = await this.prisma.userVocabularyProgress.findUnique({
             where: {
                 userId_vocabularyId: { userId, vocabularyId },
@@ -137,7 +141,7 @@ export class UserProgressService {
     /**
      * Ghi nhận kết quả ôn tập một từ
      */
-    async recordReview(userId: string, dto: BodyReviewAnswer): Promise<ResUserVocabularyProgress> {
+    async recordReview(userId: string, dto: BodyReviewAnswer): Promise<ResRecordReview> {
         const progress = await this.getOrCreateProgress(userId, dto.vocabularyId);
 
         // Tính quality score (0-5)
@@ -266,7 +270,7 @@ export class UserProgressService {
     /**
      * Lấy các từ cần ôn tập hôm nay
      */
-    async getDueForReview(userId: string, limit: number = 20): Promise<ResUserVocabularyProgress[]> {
+    async getDueForReview(userId: string, limit: number = 20): Promise<ResGetDueForReview> {
         const progresses = await this.prisma.userVocabularyProgress.findMany({
             where: {
                 userId,
@@ -364,7 +368,7 @@ export class UserProgressService {
     /**
      * Lấy tiến trình theo từng category
      */
-    async getCategoryProgress(userId: string): Promise<ResCategoryProgressItem[]> {
+    async getCategoryProgress(userId: string): Promise<ResGetCategoryProgress> {
         const categoryProgresses = await this.prisma.userCategoryProgress.findMany({
             where: { userId },
             include: {

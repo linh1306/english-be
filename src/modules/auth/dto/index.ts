@@ -1,4 +1,4 @@
-import { User } from '../../../generated/prisma/client';
+import { ResUser } from '../../user/dto/user.dto';
 
-export type ResGetProfile = User;
-export type ResRevokeRefreshToken = User;
+export type ResGetProfile = ResUser;
+export type ResRevokeRefreshToken = ResUser;

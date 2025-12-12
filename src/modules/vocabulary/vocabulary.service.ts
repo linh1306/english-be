@@ -8,6 +8,12 @@ import {
     ResFindAllVocabulary,
     BodyBulkCreateVocabulary,
     ResBulkCreateVocabulary,
+    ResCreateVocabulary,
+    ResUpdateVocabulary,
+    ResFindOneVocabulary,
+    ResGetRandomByCategory,
+    ResRemoveVocabulary,
+    ResHardDeleteVocabulary,
 } from './dto/vocabulary.dto';
 
 @Injectable()
@@ -17,7 +23,7 @@ export class VocabularyService {
     /**
      * Tạo từ vựng mới
      */
-    async create(dto: BodyCreateVocabulary): Promise<ResVocabulary> {
+    async create(dto: BodyCreateVocabulary): Promise<ResCreateVocabulary> {
         // Kiểm tra category tồn tại
         const category = await this.prisma.vocabularyCategory.findUnique({
             where: { id: dto.categoryId },
@@ -162,7 +168,7 @@ export class VocabularyService {
     /**
      * Lấy chi tiết một từ vựng
      */
-    async findOne(id: string): Promise<ResVocabulary> {
+    async findOne(id: string): Promise<ResFindOneVocabulary> {
         const vocabulary = await this.prisma.vocabulary.findUnique({
             where: { id },
             include: {
@@ -182,7 +188,7 @@ export class VocabularyService {
     /**
      * Lấy từ vựng ngẫu nhiên theo category
      */
-    async getRandomByCategory(categoryId: string, count: number = 10): Promise<ResVocabulary[]> {
+    async getRandomByCategory(categoryId: string, count: number = 10): Promise<ResGetRandomByCategory> {
         const vocabularies = await this.prisma.$queryRaw`
       SELECT * FROM vocabularies 
       WHERE "categoryId" = ${categoryId} AND "isActive" = true
@@ -196,7 +202,7 @@ export class VocabularyService {
     /**
      * Cập nhật từ vựng
      */
-    async update(id: string, dto: BodyUpdateVocabulary): Promise<ResVocabulary> {
+    async update(id: string, dto: BodyUpdateVocabulary): Promise<ResUpdateVocabulary> {
         // Kiểm tra từ vựng tồn tại
         const existing = await this.findOne(id);
 
@@ -234,24 +240,38 @@ export class VocabularyService {
     /**
      * Xóa từ vựng (soft delete)
      */
-    async remove(id: string): Promise<void> {
+    async remove(id: string): Promise<ResRemoveVocabulary> {
         await this.findOne(id);
 
-        await this.prisma.vocabulary.update({
+        const updated = await this.prisma.vocabulary.update({
             where: { id },
             data: { isActive: false },
+            include: {
+                category: {
+                    select: { id: true, name: true, nameVi: true },
+                },
+            },
         });
+
+        return this.toResponse(updated);
     }
 
     /**
      * Xóa vĩnh viễn từ vựng
      */
-    async hardDelete(id: string): Promise<void> {
+    async hardDelete(id: string): Promise<ResHardDeleteVocabulary> {
         await this.findOne(id);
 
-        await this.prisma.vocabulary.delete({
+        const deleted = await this.prisma.vocabulary.delete({
             where: { id },
+            include: {
+                category: {
+                    select: { id: true, name: true, nameVi: true },
+                },
+            },
         });
+
+        return this.toResponse(deleted);
     }
 
     /**

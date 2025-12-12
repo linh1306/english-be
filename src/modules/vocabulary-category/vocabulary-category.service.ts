@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../core/database/prisma.service';
 import {
-    CreateVocabularyCategoryDto,
-    UpdateVocabularyCategoryDto,
-    QueryVocabularyCategoryDto,
-    VocabularyCategoryResponse,
-    PaginatedVocabularyCategoryResponse,
+    BodyCreateVocabularyCategory,
+    BodyUpdateVocabularyCategory,
+    QueryFindAllVocabularyCategory,
+    ResVocabularyCategory,
+    ResFindAllVocabularyCategory,
 } from './dto/vocabulary-category.dto';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class VocabularyCategoryService {
     /**
      * Tạo danh mục từ vựng mới
      */
-    async create(dto: CreateVocabularyCategoryDto): Promise<VocabularyCategoryResponse> {
+    async create(dto: BodyCreateVocabularyCategory): Promise<ResVocabularyCategory> {
         // Kiểm tra tên đã tồn tại chưa
         const existing = await this.prisma.vocabularyCategory.findUnique({
             where: { name: dto.name },
@@ -47,7 +47,7 @@ export class VocabularyCategoryService {
     /**
      * Lấy danh sách danh mục với phân trang và filter
      */
-    async findAll(query: QueryVocabularyCategoryDto): Promise<PaginatedVocabularyCategoryResponse> {
+    async findAll(query: QueryFindAllVocabularyCategory): Promise<ResFindAllVocabularyCategory> {
         const {
             search,
             difficulty,
@@ -104,7 +104,7 @@ export class VocabularyCategoryService {
     /**
      * Lấy chi tiết một danh mục
      */
-    async findOne(id: string): Promise<VocabularyCategoryResponse> {
+    async findOne(id: string): Promise<ResVocabularyCategory> {
         const category = await this.prisma.vocabularyCategory.findUnique({
             where: { id },
             include: {
@@ -124,7 +124,7 @@ export class VocabularyCategoryService {
     /**
      * Cập nhật danh mục
      */
-    async update(id: string, dto: UpdateVocabularyCategoryDto): Promise<VocabularyCategoryResponse> {
+    async update(id: string, dto: BodyUpdateVocabularyCategory): Promise<ResVocabularyCategory> {
         // Kiểm tra danh mục tồn tại
         await this.findOne(id);
 
@@ -181,7 +181,7 @@ export class VocabularyCategoryService {
     /**
      * Convert entity to response
      */
-    private toResponse(category: any): VocabularyCategoryResponse {
+    private toResponse(category: any): ResVocabularyCategory {
         return {
             id: category.id,
             name: category.name,

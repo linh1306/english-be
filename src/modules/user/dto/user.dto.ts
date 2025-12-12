@@ -2,7 +2,9 @@ import { UserRole } from '../../../generated/prisma/enums';
 
 // ==================== CREATE ====================
 // Often users are created via Auth, but admin might create users
-export class CreateUserDto {
+// ==================== CREATE ====================
+// Often users are created via Auth, but admin might create users
+export class BodyCreateUser {
     name!: string;
     email!: string;
     password!: string; // Only if we manage password locally
@@ -12,13 +14,13 @@ export class CreateUserDto {
 }
 
 // ==================== UPDATE ====================
-export class UpdateUserDto {
+export class BodyUpdateUser {
     isActive?: boolean;
     role?: UserRole; // Typically admin only
 }
 
 // ==================== RESPONSE ====================
-export interface UserResponse {
+export interface ResUser {
     id: string;
     name: string;
     email: string;
@@ -30,8 +32,8 @@ export interface UserResponse {
     updatedAt: Date;
 }
 
-export interface PaginatedUserResponse {
-    data: UserResponse[];
+export interface ResFindAllUser {
+    data: ResUser[];
     meta: {
         total: number;
         page: number;
@@ -40,20 +42,20 @@ export interface PaginatedUserResponse {
     };
 }
 
-export interface UserPublicResponse {
+export interface ResFindOneUserPublic {
     id: string;
     name: string;
     email: string;
     avatar: string | null;
 }
 
-export class UpdateUserStatusDto {
+export class BodyUpdateUserStatus {
     isActive?: boolean;
     role?: UserRole;
 }
 
 // ==================== QUERY ====================
-export class QueryUserDto {
+export class QueryFindAllUser {
     search?: string;
     role?: UserRole;
     isActive?: boolean;

@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../core/database/prisma.service';
 import {
-    CreateUserDto,
-    UpdateUserDto,
-    QueryUserDto,
-    UserResponse,
-    PaginatedUserResponse,
-    UserPublicResponse,
+    BodyCreateUser,
+    BodyUpdateUser,
+    QueryFindAllUser,
+    ResUser,
+    ResFindAllUser,
+    ResFindOneUserPublic,
 } from './dto/user.dto';
 import { User, Prisma } from '../../generated/prisma/client';
 
@@ -14,7 +14,7 @@ import { User, Prisma } from '../../generated/prisma/client';
 export class UserService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async create(dto: CreateUserDto): Promise<UserResponse> {
+    async create(dto: BodyCreateUser): Promise<ResUser> {
         const user = await this.prisma.user.create({
             data: {
                 ...dto,
@@ -24,7 +24,7 @@ export class UserService {
         return this.mapToResponse(user);
     }
 
-    async findAll(query: QueryUserDto): Promise<PaginatedUserResponse> {
+    async findAll(query: QueryFindAllUser): Promise<ResFindAllUser> {
         const {
             search,
             role,
@@ -71,7 +71,7 @@ export class UserService {
         };
     }
 
-    async findOne(id: string): Promise<UserResponse> {
+    async findOne(id: string): Promise<ResUser> {
         const user = await this.prisma.user.findUnique({
             where: { id },
         });
@@ -83,7 +83,7 @@ export class UserService {
         return this.mapToResponse(user);
     }
 
-    async update(id: string, dto: UpdateUserDto): Promise<UserResponse> {
+    async update(id: string, dto: BodyUpdateUser): Promise<ResUser> {
         await this.findOne(id); // Ensure exists
 
         const updatedUser = await this.prisma.user.update({
@@ -102,7 +102,7 @@ export class UserService {
         });
     }
 
-    private mapToResponse(user: User): UserResponse {
+    private mapToResponse(user: User): ResUser {
         return {
             id: user.id,
             name: user.name,
@@ -116,7 +116,7 @@ export class UserService {
         };
     }
 
-    mapToPublicResponse(user: User): UserPublicResponse {
+    mapToPublicResponse(user: User): ResFindOneUserPublic {
         return {
             id: user.id,
             name: user.name,

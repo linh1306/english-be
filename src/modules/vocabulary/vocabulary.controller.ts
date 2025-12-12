@@ -2,13 +2,13 @@ import { Controller, Get, Post, Put, Delete, Param, Query, Body, HttpCode, HttpS
 import { TypedQuery } from '@nestia/core';
 import { VocabularyService } from './vocabulary.service';
 import {
-    CreateVocabularyDto,
-    UpdateVocabularyDto,
-    QueryVocabularyDto,
-    VocabularyResponse,
-    PaginatedVocabularyResponse,
-    BulkCreateVocabularyDto,
-    BulkCreateResult,
+    BodyCreateVocabulary,
+    BodyUpdateVocabulary,
+    QueryFindAllVocabulary,
+    ResVocabulary,
+    ResFindAllVocabulary,
+    BodyBulkCreateVocabulary,
+    ResBulkCreateVocabulary,
 } from './dto/vocabulary.dto';
 
 @Controller('vocabularies')
@@ -21,7 +21,7 @@ export class VocabularyController {
      */
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async create(@Body() dto: CreateVocabularyDto): Promise<VocabularyResponse> {
+    async create(@Body() dto: BodyCreateVocabulary): Promise<ResVocabulary> {
         return this.vocabularyService.create(dto);
     }
 
@@ -31,7 +31,7 @@ export class VocabularyController {
      */
     @Post('bulk')
     @HttpCode(HttpStatus.CREATED)
-    async bulkCreate(@Body() dto: BulkCreateVocabularyDto): Promise<BulkCreateResult> {
+    async bulkCreate(@Body() dto: BodyBulkCreateVocabulary): Promise<ResBulkCreateVocabulary> {
         return this.vocabularyService.bulkCreate(dto);
     }
 
@@ -40,7 +40,7 @@ export class VocabularyController {
      * GET /vocabularies
      */
     @Get()
-    async findAll(@TypedQuery() query: QueryVocabularyDto): Promise<PaginatedVocabularyResponse> {
+    async findAll(@TypedQuery() query: QueryFindAllVocabulary): Promise<ResFindAllVocabulary> {
         return this.vocabularyService.findAll(query);
     }
 
@@ -52,7 +52,7 @@ export class VocabularyController {
     async getRandomByCategory(
         @Param('categoryId') categoryId: string,
         @Query('count', new ParseIntPipe({ optional: true })) count?: number,
-    ): Promise<VocabularyResponse[]> {
+    ): Promise<ResVocabulary[]> {
         return this.vocabularyService.getRandomByCategory(categoryId, count ?? 10);
     }
 
@@ -61,7 +61,7 @@ export class VocabularyController {
      * GET /vocabularies/:id
      */
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<VocabularyResponse> {
+    async findOne(@Param('id') id: string): Promise<ResVocabulary> {
         return this.vocabularyService.findOne(id);
     }
 
@@ -72,8 +72,8 @@ export class VocabularyController {
     @Put(':id')
     async update(
         @Param('id') id: string,
-        @Body() dto: UpdateVocabularyDto,
-    ): Promise<VocabularyResponse> {
+        @Body() dto: BodyUpdateVocabulary,
+    ): Promise<ResVocabulary> {
         return this.vocabularyService.update(id, dto);
     }
 

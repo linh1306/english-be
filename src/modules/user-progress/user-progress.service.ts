@@ -2,17 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../core/database/prisma.service';
 import { ProficiencyLevel } from '../../generated/prisma/enums';
 import {
-    ReviewAnswerDto,
-    QueryUserProgressDto,
-    UserVocabularyProgressResponse,
-    PaginatedUserProgressResponse,
-    UserLearningStatistics,
-    CategoryProgressItem,
-    StartStudySessionDto,
-    StudySessionResponse,
-    StudyWordItem,
-    SubmitStudyResultDto,
-    StudyResultSummary,
+    BodyReviewAnswer,
+    QueryFindAllUserProgress,
+    ResUserVocabularyProgress,
+    ResFindAllUserProgress,
+    ResGetStatistics,
+    ResCategoryProgressItem,
+    BodyStartStudySession,
+    ResStartStudySession,
+    ResStudyWordItem,
+    BodySubmitStudyResult,
+    ResSubmitStudyResult,
 } from './dto/user-progress.dto';
 
 @Injectable()
@@ -78,7 +78,7 @@ export class UserProgressService {
     /**
      * Lấy hoặc tạo progress cho một từ vựng
      */
-    async getOrCreateProgress(userId: string, vocabularyId: string): Promise<UserVocabularyProgressResponse> {
+    async getOrCreateProgress(userId: string, vocabularyId: string): Promise<ResUserVocabularyProgress> {
         let progress = await this.prisma.userVocabularyProgress.findUnique({
             where: {
                 userId_vocabularyId: { userId, vocabularyId },
@@ -137,7 +137,7 @@ export class UserProgressService {
     /**
      * Ghi nhận kết quả ôn tập một từ
      */
-    async recordReview(userId: string, dto: ReviewAnswerDto): Promise<UserVocabularyProgressResponse> {
+    async recordReview(userId: string, dto: BodyReviewAnswer): Promise<ResUserVocabularyProgress> {
         const progress = await this.getOrCreateProgress(userId, dto.vocabularyId);
 
         // Tính quality score (0-5)
@@ -204,7 +204,7 @@ export class UserProgressService {
     /**
      * Lấy danh sách progress của user
      */
-    async findAll(userId: string, query: QueryUserProgressDto): Promise<PaginatedUserProgressResponse> {
+    async findAll(userId: string, query: QueryFindAllUserProgress): Promise<ResFindAllUserProgress> {
         const {
             categoryId,
             proficiency,
@@ -266,7 +266,7 @@ export class UserProgressService {
     /**
      * Lấy các từ cần ôn tập hôm nay
      */
-    async getDueForReview(userId: string, limit: number = 20): Promise<UserVocabularyProgressResponse[]> {
+    async getDueForReview(userId: string, limit: number = 20): Promise<ResUserVocabularyProgress[]> {
         const progresses = await this.prisma.userVocabularyProgress.findMany({
             where: {
                 userId,
@@ -297,7 +297,7 @@ export class UserProgressService {
     /**
      * Lấy thống kê học tập của user
      */
-    async getStatistics(userId: string): Promise<UserLearningStatistics> {
+    async getStatistics(userId: string): Promise<ResGetStatistics> {
         const [progressStats, categoryProgress, dueCount] = await Promise.all([
             this.prisma.userVocabularyProgress.groupBy({
                 by: ['proficiency'],
@@ -364,7 +364,7 @@ export class UserProgressService {
     /**
      * Lấy tiến trình theo từng category
      */
-    async getCategoryProgress(userId: string): Promise<CategoryProgressItem[]> {
+    async getCategoryProgress(userId: string): Promise<ResCategoryProgressItem[]> {
         const categoryProgresses = await this.prisma.userCategoryProgress.findMany({
             where: { userId },
             include: {
@@ -451,7 +451,7 @@ export class UserProgressService {
     /**
      * Bắt đầu phiên học mới
      */
-    async startStudySession(userId: string, dto: StartStudySessionDto): Promise<StudySessionResponse> {
+    async startStudySession(userId: string, dto: BodyStartStudySession): Promise<ResStartStudySession> {
         const { categoryId, mode, wordCount = 10 } = dto;
 
         let words: any[] = [];
@@ -575,7 +575,7 @@ export class UserProgressService {
     /**
      * Submit kết quả học tập
      */
-    async submitStudyResult(userId: string, dto: SubmitStudyResultDto): Promise<StudyResultSummary> {
+    async submitStudyResult(userId: string, dto: BodySubmitStudyResult): Promise<ResSubmitStudyResult> {
         let correctCount = 0;
         let incorrectCount = 0;
         let newWordsMastered = 0;
@@ -634,7 +634,7 @@ export class UserProgressService {
     /**
      * Convert entity to response
      */
-    private toProgressResponse(progress: any): UserVocabularyProgressResponse {
+    private toProgressResponse(progress: any): ResUserVocabularyProgress {
         return {
             id: progress.id,
             userId: progress.userId,

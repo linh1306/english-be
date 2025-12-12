@@ -2,15 +2,15 @@ import { Controller, Get, Post, Param, Query, Body, HttpCode, HttpStatus, UseGua
 import { TypedQuery } from '@nestia/core';
 import { UserProgressService } from './user-progress.service';
 import {
-    ReviewAnswerDto,
-    QueryUserProgressDto,
-    UserVocabularyProgressResponse,
-    PaginatedUserProgressResponse,
-    UserLearningStatistics,
-    StartStudySessionDto,
-    StudySessionResponse,
-    SubmitStudyResultDto,
-    StudyResultSummary,
+    BodyReviewAnswer,
+    QueryFindAllUserProgress,
+    ResUserVocabularyProgress,
+    ResFindAllUserProgress,
+    ResGetStatistics,
+    BodyStartStudySession,
+    ResStartStudySession,
+    BodySubmitStudyResult,
+    ResSubmitStudyResult,
 } from './dto/user-progress.dto';
 import { FirebaseAuthGuard } from '../../core/firebase/guards/firebase-auth.guard';
 import { RolesGuard } from '../../core/firebase/guards/roles.guard';
@@ -29,7 +29,7 @@ export class UserProgressController {
      * GET /user-progress/statistics
      */
     @Get('statistics')
-    async getStatistics(@FirebaseId() userId: string): Promise<UserLearningStatistics> {
+    async getStatistics(@FirebaseId() userId: string): Promise<ResGetStatistics> {
         return this.userProgressService.getStatistics(userId);
     }
 
@@ -41,7 +41,7 @@ export class UserProgressController {
     async getDueForReview(
         @FirebaseId() userId: string,
         @Query('limit', new ParseIntPipe({ optional: true })) limit?: number,
-    ): Promise<UserVocabularyProgressResponse[]> {
+    ): Promise<ResUserVocabularyProgress[]> {
         return this.userProgressService.getDueForReview(userId, limit ?? 20);
     }
 
@@ -62,8 +62,8 @@ export class UserProgressController {
     @HttpCode(HttpStatus.OK)
     async startStudySession(
         @FirebaseId() userId: string,
-        @Body() dto: StartStudySessionDto,
-    ): Promise<StudySessionResponse> {
+        @Body() dto: BodyStartStudySession,
+    ): Promise<ResStartStudySession> {
         return this.userProgressService.startStudySession(userId, dto);
     }
 
@@ -75,8 +75,8 @@ export class UserProgressController {
     @HttpCode(HttpStatus.OK)
     async submitStudyResult(
         @FirebaseId() userId: string,
-        @Body() dto: SubmitStudyResultDto,
-    ): Promise<StudyResultSummary> {
+        @Body() dto: BodySubmitStudyResult,
+    ): Promise<ResSubmitStudyResult> {
         return this.userProgressService.submitStudyResult(userId, dto);
     }
 
@@ -88,8 +88,8 @@ export class UserProgressController {
     @HttpCode(HttpStatus.OK)
     async recordReview(
         @FirebaseId() userId: string,
-        @Body() dto: ReviewAnswerDto,
-    ): Promise<UserVocabularyProgressResponse> {
+        @Body() dto: BodyReviewAnswer,
+    ): Promise<ResUserVocabularyProgress> {
         return this.userProgressService.recordReview(userId, dto);
     }
 
@@ -100,8 +100,8 @@ export class UserProgressController {
     @Get()
     async findAll(
         @FirebaseId() userId: string,
-        @TypedQuery() query: QueryUserProgressDto,
-    ): Promise<PaginatedUserProgressResponse> {
+        @TypedQuery() query: QueryFindAllUserProgress,
+    ): Promise<ResFindAllUserProgress> {
         return this.userProgressService.findAll(userId, query);
     }
 
@@ -113,7 +113,7 @@ export class UserProgressController {
     async getOrCreateProgress(
         @FirebaseId() userId: string,
         @Param('vocabularyId') vocabularyId: string,
-    ): Promise<UserVocabularyProgressResponse> {
+    ): Promise<ResUserVocabularyProgress> {
         return this.userProgressService.getOrCreateProgress(userId, vocabularyId);
     }
 }

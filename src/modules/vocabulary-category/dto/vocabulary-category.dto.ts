@@ -1,7 +1,8 @@
 import { DifficultyLevel } from '../../../generated/prisma/enums';
 
 // ==================== CREATE ====================
-export class CreateVocabularyCategoryDto {
+// ==================== CREATE ====================
+export class BodyCreateVocabularyCategory {
     name!: string;
     nameVi?: string;
     description?: string;
@@ -11,7 +12,8 @@ export class CreateVocabularyCategoryDto {
 }
 
 // ==================== UPDATE ====================
-export class UpdateVocabularyCategoryDto {
+// ==================== UPDATE ====================
+export class BodyUpdateVocabularyCategory {
     name?: string;
     nameVi?: string;
     description?: string;
@@ -22,7 +24,8 @@ export class UpdateVocabularyCategoryDto {
 }
 
 // ==================== QUERY ====================
-export class QueryVocabularyCategoryDto {
+// ==================== QUERY ====================
+export class QueryFindAllVocabularyCategory {
     search?: string;
     difficulty?: DifficultyLevel;
     isActive?: boolean;
@@ -33,7 +36,8 @@ export class QueryVocabularyCategoryDto {
 }
 
 // ==================== RESPONSE ====================
-export interface VocabularyCategoryResponse {
+// ==================== RESPONSE ====================
+export interface ResVocabularyCategory {
     id: string;
     name: string;
     nameVi: string | null;
@@ -47,8 +51,8 @@ export interface VocabularyCategoryResponse {
     updatedAt: Date;
 }
 
-export interface PaginatedVocabularyCategoryResponse {
-    data: VocabularyCategoryResponse[];
+export interface ResFindAllVocabularyCategory {
+    data: ResVocabularyCategory[];
     meta: {
         total: number;
         page: number;

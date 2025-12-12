@@ -1,7 +1,8 @@
 import { DifficultyLevel } from '../../../generated/prisma/enums';
 
 // ==================== CREATE ====================
-export class CreateVocabularyDto {
+// ==================== CREATE ====================
+export class BodyCreateVocabulary {
     word!: string;
     meaning!: string;
     categoryId!: string;
@@ -17,7 +18,8 @@ export class CreateVocabularyDto {
 }
 
 // ==================== UPDATE ====================
-export class UpdateVocabularyDto {
+// ==================== UPDATE ====================
+export class BodyUpdateVocabulary {
     word?: string;
     meaning?: string;
     categoryId?: string;
@@ -34,7 +36,8 @@ export class UpdateVocabularyDto {
 }
 
 // ==================== QUERY ====================
-export class QueryVocabularyDto {
+// ==================== QUERY ====================
+export class QueryFindAllVocabulary {
     search?: string;
     categoryId?: string;
     difficulty?: DifficultyLevel;
@@ -47,7 +50,8 @@ export class QueryVocabularyDto {
 }
 
 // ==================== RESPONSE ====================
-export interface VocabularyResponse {
+// ==================== RESPONSE ====================
+export interface ResVocabulary {
     id: string;
     word: string;
     pronunciation: string | null;
@@ -71,8 +75,8 @@ export interface VocabularyResponse {
     updatedAt: Date;
 }
 
-export interface PaginatedVocabularyResponse {
-    data: VocabularyResponse[];
+export interface ResFindAllVocabulary {
+    data: ResVocabulary[];
     meta: {
         total: number;
         page: number;
@@ -82,11 +86,11 @@ export interface PaginatedVocabularyResponse {
 }
 
 // ==================== BULK OPERATIONS ====================
-export class BulkCreateVocabularyDto {
-    vocabularies!: CreateVocabularyDto[];
+export class BodyBulkCreateVocabulary {
+    vocabularies!: BodyCreateVocabulary[];
 }
 
-export interface BulkCreateResult {
+export interface ResBulkCreateVocabulary {
     created: number;
     failed: number;
     errors: Array<{

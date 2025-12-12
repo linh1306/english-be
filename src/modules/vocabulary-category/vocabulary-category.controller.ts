@@ -2,11 +2,11 @@ import { Controller, Get, Post, Put, Delete, Param, Query, Body, HttpCode, HttpS
 import { TypedQuery } from '@nestia/core';
 import { VocabularyCategoryService } from './vocabulary-category.service';
 import {
-    CreateVocabularyCategoryDto,
-    UpdateVocabularyCategoryDto,
-    QueryVocabularyCategoryDto,
-    VocabularyCategoryResponse,
-    PaginatedVocabularyCategoryResponse,
+    BodyCreateVocabularyCategory,
+    BodyUpdateVocabularyCategory,
+    QueryFindAllVocabularyCategory,
+    ResVocabularyCategory,
+    ResFindAllVocabularyCategory,
 } from './dto/vocabulary-category.dto';
 
 @Controller('vocabulary-categories')
@@ -19,7 +19,7 @@ export class VocabularyCategoryController {
      */
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async create(@Body() dto: CreateVocabularyCategoryDto): Promise<VocabularyCategoryResponse> {
+    async create(@Body() dto: BodyCreateVocabularyCategory): Promise<ResVocabularyCategory> {
         return this.vocabularyCategoryService.create(dto);
     }
 
@@ -28,7 +28,7 @@ export class VocabularyCategoryController {
      * GET /vocabulary-categories
      */
     @Get()
-    async findAll(@TypedQuery() query: QueryVocabularyCategoryDto): Promise<PaginatedVocabularyCategoryResponse> {
+    async findAll(@TypedQuery() query: QueryFindAllVocabularyCategory): Promise<ResFindAllVocabularyCategory> {
         return this.vocabularyCategoryService.findAll(query);
     }
 
@@ -37,7 +37,7 @@ export class VocabularyCategoryController {
      * GET /vocabulary-categories/:id
      */
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<VocabularyCategoryResponse> {
+    async findOne(@Param('id') id: string): Promise<ResVocabularyCategory> {
         return this.vocabularyCategoryService.findOne(id);
     }
 
@@ -48,8 +48,8 @@ export class VocabularyCategoryController {
     @Put(':id')
     async update(
         @Param('id') id: string,
-        @Body() dto: UpdateVocabularyCategoryDto,
-    ): Promise<VocabularyCategoryResponse> {
+        @Body() dto: BodyUpdateVocabularyCategory,
+    ): Promise<ResVocabularyCategory> {
         return this.vocabularyCategoryService.update(id, dto);
     }
 

@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../core/database/prisma.service';
 import {
-    CreateVocabularyDto,
-    UpdateVocabularyDto,
-    QueryVocabularyDto,
-    VocabularyResponse,
-    PaginatedVocabularyResponse,
-    BulkCreateVocabularyDto,
-    BulkCreateResult,
+    BodyCreateVocabulary,
+    BodyUpdateVocabulary,
+    QueryFindAllVocabulary,
+    ResVocabulary,
+    ResFindAllVocabulary,
+    BodyBulkCreateVocabulary,
+    ResBulkCreateVocabulary,
 } from './dto/vocabulary.dto';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class VocabularyService {
     /**
      * Tạo từ vựng mới
      */
-    async create(dto: CreateVocabularyDto): Promise<VocabularyResponse> {
+    async create(dto: BodyCreateVocabulary): Promise<ResVocabulary> {
         // Kiểm tra category tồn tại
         const category = await this.prisma.vocabularyCategory.findUnique({
             where: { id: dto.categoryId },
@@ -69,8 +69,8 @@ export class VocabularyService {
     /**
      * Tạo nhiều từ vựng cùng lúc
      */
-    async bulkCreate(dto: BulkCreateVocabularyDto): Promise<BulkCreateResult> {
-        const result: BulkCreateResult = {
+    async bulkCreate(dto: BodyBulkCreateVocabulary): Promise<ResBulkCreateVocabulary> {
+        const result: ResBulkCreateVocabulary = {
             created: 0,
             failed: 0,
             errors: [],
@@ -95,7 +95,7 @@ export class VocabularyService {
     /**
      * Lấy danh sách từ vựng với phân trang và filter
      */
-    async findAll(query: QueryVocabularyDto): Promise<PaginatedVocabularyResponse> {
+    async findAll(query: QueryFindAllVocabulary): Promise<ResFindAllVocabulary> {
         const {
             search,
             categoryId,
@@ -162,7 +162,7 @@ export class VocabularyService {
     /**
      * Lấy chi tiết một từ vựng
      */
-    async findOne(id: string): Promise<VocabularyResponse> {
+    async findOne(id: string): Promise<ResVocabulary> {
         const vocabulary = await this.prisma.vocabulary.findUnique({
             where: { id },
             include: {
@@ -182,7 +182,7 @@ export class VocabularyService {
     /**
      * Lấy từ vựng ngẫu nhiên theo category
      */
-    async getRandomByCategory(categoryId: string, count: number = 10): Promise<VocabularyResponse[]> {
+    async getRandomByCategory(categoryId: string, count: number = 10): Promise<ResVocabulary[]> {
         const vocabularies = await this.prisma.$queryRaw`
       SELECT * FROM vocabularies 
       WHERE "categoryId" = ${categoryId} AND "isActive" = true
@@ -196,7 +196,7 @@ export class VocabularyService {
     /**
      * Cập nhật từ vựng
      */
-    async update(id: string, dto: UpdateVocabularyDto): Promise<VocabularyResponse> {
+    async update(id: string, dto: BodyUpdateVocabulary): Promise<ResVocabulary> {
         // Kiểm tra từ vựng tồn tại
         const existing = await this.findOne(id);
 
@@ -257,7 +257,7 @@ export class VocabularyService {
     /**
      * Convert entity to response
      */
-    private toResponse(vocabulary: any): VocabularyResponse {
+    private toResponse(vocabulary: any): ResVocabulary {
         return {
             id: vocabulary.id,
             word: vocabulary.word,

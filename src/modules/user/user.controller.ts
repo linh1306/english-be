@@ -8,11 +8,11 @@ import {
 import { TypedQuery } from '@nestia/core';
 import { UserService } from './user.service';
 import {
-    QueryUserDto,
-    UserResponse,
-    PaginatedUserResponse,
-    UpdateUserStatusDto,
-    UserPublicResponse,
+    QueryFindAllUser,
+    ResUser,
+    ResFindAllUser,
+    BodyUpdateUserStatus,
+    ResFindOneUserPublic,
 } from './dto/user.dto';
 import { Roles } from '../../core/firebase/decorators/roles.decorator';
 
@@ -22,12 +22,12 @@ export class UserController {
 
     @Get()
     @Roles('ADMIN')
-    async findAll(@TypedQuery() query: QueryUserDto): Promise<PaginatedUserResponse> {
+    async findAll(@TypedQuery() query: QueryFindAllUser): Promise<ResFindAllUser> {
         return this.userService.findAll(query);
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<UserPublicResponse> {
+    async findOne(@Param('id') id: string): Promise<ResFindOneUserPublic> {
         const user = await this.userService.findOne(id);
         // Manually map to public response
         return this.userService.mapToPublicResponse(user as any); // Type assertion if needed or just object
@@ -37,8 +37,8 @@ export class UserController {
     @Roles('ADMIN')
     async update(
         @Param('id') id: string,
-        @Body() dto: UpdateUserStatusDto,
-    ): Promise<UserResponse> {
+        @Body() dto: BodyUpdateUserStatus,
+    ): Promise<ResUser> {
         return this.userService.update(id, dto);
     }
 }

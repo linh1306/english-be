@@ -1,14 +1,16 @@
 import { ProficiencyLevel } from '../../../generated/prisma/enums';
 
 // ==================== REVIEW ANSWER ====================
-export class ReviewAnswerDto {
+// ==================== REVIEW ANSWER ====================
+export class BodyReviewAnswer {
     vocabularyId!: string;
     isCorrect!: boolean;
     responseTimeMs?: number;
 }
 
 // ==================== QUERY ====================
-export class QueryUserProgressDto {
+// ==================== QUERY ====================
+export class QueryFindAllUserProgress {
     userId?: string;
     categoryId?: string;
     proficiency?: ProficiencyLevel;
@@ -20,7 +22,8 @@ export class QueryUserProgressDto {
 }
 
 // ==================== RESPONSE ====================
-export interface UserVocabularyProgressResponse {
+// ==================== RESPONSE ====================
+export interface ResUserVocabularyProgress {
     id: string;
     userId: string;
     vocabularyId: string;
@@ -46,8 +49,8 @@ export interface UserVocabularyProgressResponse {
     masteredAt: Date | null;
 }
 
-export interface PaginatedUserProgressResponse {
-    data: UserVocabularyProgressResponse[];
+export interface ResFindAllUserProgress {
+    data: ResUserVocabularyProgress[];
     meta: {
         total: number;
         page: number;
@@ -57,7 +60,8 @@ export interface PaginatedUserProgressResponse {
 }
 
 // ==================== STATISTICS ====================
-export interface UserLearningStatistics {
+// ==================== STATISTICS ====================
+export interface ResGetStatistics {
     userId: string;
     totalWordsLearned: number;
     totalWordsMastered: number;
@@ -68,10 +72,10 @@ export interface UserLearningStatistics {
     totalReviews: number;
     currentStreak: number;
     longestStreak: number;
-    categoryProgress: CategoryProgressItem[];
+    categoryProgress: ResCategoryProgressItem[];
 }
 
-export interface CategoryProgressItem {
+export interface ResCategoryProgressItem {
     categoryId: string;
     categoryName: string;
     categoryNameVi: string | null;
@@ -83,20 +87,21 @@ export interface CategoryProgressItem {
 }
 
 // ==================== STUDY SESSION ====================
-export class StartStudySessionDto {
+// ==================== STUDY SESSION ====================
+export class BodyStartStudySession {
     categoryId?: string;
     mode!: 'new' | 'review' | 'mixed';
     wordCount?: number; // Số từ muốn học, default 10
 }
 
-export interface StudySessionResponse {
+export interface ResStartStudySession {
     sessionId: string;
-    words: StudyWordItem[];
+    words: ResStudyWordItem[];
     mode: 'new' | 'review' | 'mixed';
     totalWords: number;
 }
 
-export interface StudyWordItem {
+export interface ResStudyWordItem {
     vocabularyId: string;
     word: string;
     meaning: string;
@@ -110,11 +115,11 @@ export interface StudyWordItem {
     proficiency: ProficiencyLevel;
 }
 
-export class SubmitStudyResultDto {
-    results!: ReviewAnswerDto[];
+export class BodySubmitStudyResult {
+    results!: BodyReviewAnswer[];
 }
 
-export interface StudyResultSummary {
+export interface ResSubmitStudyResult {
     totalWords: number;
     correctCount: number;
     incorrectCount: number;

@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Put, Delete, Param, Query, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { TypedQuery } from '@nestia/core';
 import { VocabularyCategoryService } from './vocabulary-category.service';
 import {
     CreateVocabularyCategoryDto,
@@ -27,7 +28,7 @@ export class VocabularyCategoryController {
      * GET /vocabulary-categories
      */
     @Get()
-    async findAll(@Query() query: QueryVocabularyCategoryDto): Promise<PaginatedVocabularyCategoryResponse> {
+    async findAll(@TypedQuery() query: QueryVocabularyCategoryDto): Promise<PaginatedVocabularyCategoryResponse> {
         return this.vocabularyCategoryService.findAll(query);
     }
 

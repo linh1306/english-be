@@ -9,9 +9,11 @@ import { UserProgressModule } from './modules/user-progress';
 
 import { UserModule } from './modules/user';
 import { AuthModule } from './modules/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     ThrottlerModule.forRoot([
       {
         ttl: 60000,

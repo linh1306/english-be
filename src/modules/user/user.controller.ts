@@ -10,6 +10,7 @@ import {
     HttpCode,
     HttpStatus,
 } from '@nestjs/common';
+import { TypedQuery } from '@nestia/core';
 import { UserService } from './user.service';
 import {
     CreateUserDto,
@@ -30,7 +31,7 @@ export class UserController {
     }
 
     @Get()
-    async findAll(@Query() query: QueryUserDto): Promise<PaginatedUserResponse> {
+    async findAll(@TypedQuery() query: QueryUserDto): Promise<PaginatedUserResponse> {
         return this.userService.findAll(query);
     }
 

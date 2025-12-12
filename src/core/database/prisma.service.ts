@@ -6,7 +6,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
     constructor() {
         const adapter = new PrismaPg({
-            connectionString: process.env.DATABASE_URL || 'postgresql://nhan:nhan@localhost:5432/db_demo_security',
+            connectionString: process.env.DATABASE_URL || '',
         });
         console.log('Prisma adapter created');
         super({ adapter }); // Truyền adapter vào Prisma Client

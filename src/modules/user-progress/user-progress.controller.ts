@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Param, Query, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, HttpCode, HttpStatus, UseGuards, ParseIntPipe } from '@nestjs/common';
+import { TypedQuery } from '@nestia/core';
 import { UserProgressService } from './user-progress.service';
 import {
     ReviewAnswerDto,
@@ -39,7 +40,7 @@ export class UserProgressController {
     @Get('due-review')
     async getDueForReview(
         @FirebaseId() userId: string,
-        @Query('limit') limit?: number,
+        @Query('limit', new ParseIntPipe({ optional: true })) limit?: number,
     ): Promise<UserVocabularyProgressResponse[]> {
         return this.userProgressService.getDueForReview(userId, limit ?? 20);
     }
@@ -99,7 +100,7 @@ export class UserProgressController {
     @Get()
     async findAll(
         @FirebaseId() userId: string,
-        @Query() query: QueryUserProgressDto,
+        @TypedQuery() query: QueryUserProgressDto,
     ): Promise<PaginatedUserProgressResponse> {
         return this.userProgressService.findAll(userId, query);
     }

@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, HttpCode, HttpStatus, ParseIntPipe } from '@nestjs/common';
+import { TypedQuery } from '@nestia/core';
 import { VocabularyService } from './vocabulary.service';
 import {
     CreateVocabularyDto,
@@ -39,7 +40,7 @@ export class VocabularyController {
      * GET /vocabularies
      */
     @Get()
-    async findAll(@Query() query: QueryVocabularyDto): Promise<PaginatedVocabularyResponse> {
+    async findAll(@TypedQuery() query: QueryVocabularyDto): Promise<PaginatedVocabularyResponse> {
         return this.vocabularyService.findAll(query);
     }
 
@@ -50,7 +51,7 @@ export class VocabularyController {
     @Get('random/:categoryId')
     async getRandomByCategory(
         @Param('categoryId') categoryId: string,
-        @Query('count') count?: number,
+        @Query('count', new ParseIntPipe({ optional: true })) count?: number,
     ): Promise<VocabularyResponse[]> {
         return this.vocabularyService.getRandomByCategory(categoryId, count ?? 10);
     }

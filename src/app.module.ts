@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { FirebaseModule, FirebaseAuthGuard } from './core/firebase';
+import { FirebaseModule, FirebaseAuthGuard, RolesGuard } from './core/firebase';
 import { PrismaModule } from './core/database/prisma.module';
 import { VocabularyCategoryModule } from './modules/vocabulary-category';
 import { VocabularyModule } from './modules/vocabulary';
@@ -34,6 +34,14 @@ import { ConfigModule } from '@nestjs/config';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: FirebaseAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })

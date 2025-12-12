@@ -1,56 +1,44 @@
 import {
     Controller,
     Get,
-    Post,
     Put,
-    Delete,
     Param,
-    Query,
     Body,
-    HttpCode,
-    HttpStatus,
 } from '@nestjs/common';
 import { TypedQuery } from '@nestia/core';
 import { UserService } from './user.service';
 import {
-    CreateUserDto,
-    UpdateUserDto,
     QueryUserDto,
     UserResponse,
     PaginatedUserResponse,
+    UpdateUserStatusDto,
+    UserPublicResponse,
 } from './dto/user.dto';
+import { Roles } from '../../core/firebase/decorators/roles.decorator';
 
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
-    @Post()
-    @HttpCode(HttpStatus.CREATED)
-    async create(@Body() dto: CreateUserDto): Promise<UserResponse> {
-        return this.userService.create(dto);
-    }
-
     @Get()
+    @Roles('ADMIN')
     async findAll(@TypedQuery() query: QueryUserDto): Promise<PaginatedUserResponse> {
         return this.userService.findAll(query);
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<UserResponse> {
-        return this.userService.findOne(id);
+    async findOne(@Param('id') id: string): Promise<UserPublicResponse> {
+        const user = await this.userService.findOne(id);
+        // Manually map to public response
+        return this.userService.mapToPublicResponse(user as any); // Type assertion if needed or just object
     }
 
     @Put(':id')
+    @Roles('ADMIN')
     async update(
         @Param('id') id: string,
-        @Body() dto: UpdateUserDto,
+        @Body() dto: UpdateUserStatusDto,
     ): Promise<UserResponse> {
         return this.userService.update(id, dto);
-    }
-
-    @Delete(':id')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async remove(@Param('id') id: string): Promise<void> {
-        return this.userService.remove(id);
     }
 }

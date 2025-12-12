@@ -6,6 +6,7 @@ import {
     QueryUserDto,
     UserResponse,
     PaginatedUserResponse,
+    UserPublicResponse,
 } from './dto/user.dto';
 import { User, Prisma } from '../../generated/prisma/client';
 
@@ -109,9 +110,18 @@ export class UserService {
             avatar: user.avatar,
             role: user.role,
             isActive: user.isActive,
-            isVerified: user.isVerified,
+            canRefreshToken: user.canRefreshToken,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
+        };
+    }
+
+    mapToPublicResponse(user: User): UserPublicResponse {
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,
         };
     }
 

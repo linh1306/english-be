@@ -821,11 +821,10 @@ export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
-  password: 'password',
   avatar: 'avatar',
   role: 'role',
   isActive: 'isActive',
-  isVerified: 'isVerified',
+  canRefreshToken: 'canRefreshToken',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

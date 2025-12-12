@@ -7,15 +7,11 @@ import {
 import { Reflector } from '@nestjs/core';
 import { FastifyRequest } from 'fastify';
 import { ROLES_KEY } from '../decorators/roles.decorator';
-import { PrismaService } from '../../database/prisma.service';
 import { UserRole } from '../../../generated/prisma/enums';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-    constructor(
-        private readonly reflector: Reflector,
-        private readonly prisma: PrismaService,
-    ) { }
+    constructor(private readonly reflector: Reflector) { }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(
@@ -34,21 +30,14 @@ export class RolesGuard implements CanActivate {
             throw new ForbiddenException('User not authenticated');
         }
 
-        let dbUser = await this.prisma.user.findUnique({
-            where: { id: user.id },
-        });
+        // User role is already attached by FirebaseAuthGuard
+        const userRole = user.role;
 
-        if (!dbUser) {
-            dbUser = await this.prisma.user.findUnique({
-                where: { email: user.email },
-            });
+        if (!userRole) {
+            throw new ForbiddenException('User role not found');
         }
 
-        if (!dbUser) {
-            throw new ForbiddenException('User not found in system');
-        }
-
-        const hasRole = requiredRoles.includes(dbUser.role);
+        const hasRole = requiredRoles.includes(userRole);
 
         if (!hasRole) {
             throw new ForbiddenException(

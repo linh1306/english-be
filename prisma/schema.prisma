@@ -37,11 +37,10 @@ model User {
   id         String   @id @default(cuid())
   name       String
   email      String   @unique
-  password   String
   avatar     String?
   role       UserRole @default(USER)
   isActive   Boolean  @default(true)
-  isVerified Boolean  @default(false)
+  canRefreshToken Boolean @default(true)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

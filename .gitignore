@@ -29,6 +29,7 @@ swagger.json
 *.launch
 .settings/
 *.sublime-workspace
+.agent
 
 # IDE - VSCode
 .vscode/*

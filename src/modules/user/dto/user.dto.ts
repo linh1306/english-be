@@ -13,8 +13,6 @@ export class CreateUserDto {
 
 // ==================== UPDATE ====================
 export class UpdateUserDto {
-    name?: string;
-    avatar?: string;
     isActive?: boolean;
     role?: UserRole; // Typically admin only
 }
@@ -27,7 +25,7 @@ export interface UserResponse {
     avatar: string | null;
     role: UserRole;
     isActive: boolean;
-    isVerified: boolean;
+    canRefreshToken: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -40,6 +38,18 @@ export interface PaginatedUserResponse {
         limit: number;
         totalPages: number;
     };
+}
+
+export interface UserPublicResponse {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string | null;
+}
+
+export class UpdateUserStatusDto {
+    isActive?: boolean;
+    role?: UserRole;
 }
 
 // ==================== QUERY ====================

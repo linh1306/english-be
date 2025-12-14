@@ -35,7 +35,7 @@ export type VocabularyMinAggregateOutputType = {
   exampleVi: string | null
   imageUrl: string | null
   difficulty: $Enums.DifficultyLevel | null
-  categoryId: string | null
+  topicId: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,7 +52,7 @@ export type VocabularyMaxAggregateOutputType = {
   exampleVi: string | null
   imageUrl: string | null
   difficulty: $Enums.DifficultyLevel | null
-  categoryId: string | null
+  topicId: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -71,7 +71,7 @@ export type VocabularyCountAggregateOutputType = {
   synonyms: number
   antonyms: number
   difficulty: number
-  categoryId: number
+  topicId: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -90,7 +90,7 @@ export type VocabularyMinAggregateInputType = {
   exampleVi?: true
   imageUrl?: true
   difficulty?: true
-  categoryId?: true
+  topicId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -107,7 +107,7 @@ export type VocabularyMaxAggregateInputType = {
   exampleVi?: true
   imageUrl?: true
   difficulty?: true
-  categoryId?: true
+  topicId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -126,7 +126,7 @@ export type VocabularyCountAggregateInputType = {
   synonyms?: true
   antonyms?: true
   difficulty?: true
-  categoryId?: true
+  topicId?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -218,7 +218,7 @@ export type VocabularyGroupByOutputType = {
   synonyms: string[]
   antonyms: string[]
   difficulty: $Enums.DifficultyLevel
-  categoryId: string
+  topicId: string
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -258,11 +258,11 @@ export type VocabularyWhereInput = {
   synonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   antonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   difficulty?: Prisma.EnumDifficultyLevelFilter<"Vocabulary"> | $Enums.DifficultyLevel
-  categoryId?: Prisma.StringFilter<"Vocabulary"> | string
+  topicId?: Prisma.StringFilter<"Vocabulary"> | string
   isActive?: Prisma.BoolFilter<"Vocabulary"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
-  category?: Prisma.XOR<Prisma.VocabularyCategoryScalarRelationFilter, Prisma.VocabularyCategoryWhereInput>
+  topic?: Prisma.XOR<Prisma.TopicScalarRelationFilter, Prisma.TopicWhereInput>
   userProgress?: Prisma.UserVocabularyProgressListRelationFilter
 }
 
@@ -279,17 +279,17 @@ export type VocabularyOrderByWithRelationInput = {
   synonyms?: Prisma.SortOrder
   antonyms?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  category?: Prisma.VocabularyCategoryOrderByWithRelationInput
+  topic?: Prisma.TopicOrderByWithRelationInput
   userProgress?: Prisma.UserVocabularyProgressOrderByRelationAggregateInput
 }
 
 export type VocabularyWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  word_categoryId?: Prisma.VocabularyWordCategoryIdCompoundUniqueInput
+  word_topicId?: Prisma.VocabularyWordTopicIdCompoundUniqueInput
   AND?: Prisma.VocabularyWhereInput | Prisma.VocabularyWhereInput[]
   OR?: Prisma.VocabularyWhereInput[]
   NOT?: Prisma.VocabularyWhereInput | Prisma.VocabularyWhereInput[]
@@ -304,13 +304,13 @@ export type VocabularyWhereUniqueInput = Prisma.AtLeast<{
   synonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   antonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   difficulty?: Prisma.EnumDifficultyLevelFilter<"Vocabulary"> | $Enums.DifficultyLevel
-  categoryId?: Prisma.StringFilter<"Vocabulary"> | string
+  topicId?: Prisma.StringFilter<"Vocabulary"> | string
   isActive?: Prisma.BoolFilter<"Vocabulary"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
-  category?: Prisma.XOR<Prisma.VocabularyCategoryScalarRelationFilter, Prisma.VocabularyCategoryWhereInput>
+  topic?: Prisma.XOR<Prisma.TopicScalarRelationFilter, Prisma.TopicWhereInput>
   userProgress?: Prisma.UserVocabularyProgressListRelationFilter
-}, "id" | "word_categoryId">
+}, "id" | "word_topicId">
 
 export type VocabularyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -325,7 +325,7 @@ export type VocabularyOrderByWithAggregationInput = {
   synonyms?: Prisma.SortOrder
   antonyms?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -350,7 +350,7 @@ export type VocabularyScalarWhereWithAggregatesInput = {
   synonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   antonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   difficulty?: Prisma.EnumDifficultyLevelWithAggregatesFilter<"Vocabulary"> | $Enums.DifficultyLevel
-  categoryId?: Prisma.StringWithAggregatesFilter<"Vocabulary"> | string
+  topicId?: Prisma.StringWithAggregatesFilter<"Vocabulary"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Vocabulary"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Vocabulary"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Vocabulary"> | Date | string
@@ -372,7 +372,7 @@ export type VocabularyCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.VocabularyCategoryCreateNestedOneWithoutVocabulariesInput
+  topic: Prisma.TopicCreateNestedOneWithoutVocabulariesInput
   userProgress?: Prisma.UserVocabularyProgressCreateNestedManyWithoutVocabularyInput
 }
 
@@ -389,7 +389,7 @@ export type VocabularyUncheckedCreateInput = {
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
   difficulty?: $Enums.DifficultyLevel
-  categoryId: string
+  topicId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -412,7 +412,7 @@ export type VocabularyUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.VocabularyCategoryUpdateOneRequiredWithoutVocabulariesNestedInput
+  topic?: Prisma.TopicUpdateOneRequiredWithoutVocabulariesNestedInput
   userProgress?: Prisma.UserVocabularyProgressUpdateManyWithoutVocabularyNestedInput
 }
 
@@ -429,7 +429,7 @@ export type VocabularyUncheckedUpdateInput = {
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
   difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  topicId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -449,7 +449,7 @@ export type VocabularyCreateManyInput = {
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
   difficulty?: $Enums.DifficultyLevel
-  categoryId: string
+  topicId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -486,7 +486,7 @@ export type VocabularyUncheckedUpdateManyInput = {
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
   difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  topicId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -510,9 +510,9 @@ export type StringNullableListFilter<$PrismaModel = never> = {
   isEmpty?: boolean
 }
 
-export type VocabularyWordCategoryIdCompoundUniqueInput = {
+export type VocabularyWordTopicIdCompoundUniqueInput = {
   word: string
-  categoryId: string
+  topicId: string
 }
 
 export type VocabularyCountOrderByAggregateInput = {
@@ -528,7 +528,7 @@ export type VocabularyCountOrderByAggregateInput = {
   synonyms?: Prisma.SortOrder
   antonyms?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -545,7 +545,7 @@ export type VocabularyMaxOrderByAggregateInput = {
   exampleVi?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -562,7 +562,7 @@ export type VocabularyMinOrderByAggregateInput = {
   exampleVi?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -573,45 +573,45 @@ export type VocabularyScalarRelationFilter = {
   isNot?: Prisma.VocabularyWhereInput
 }
 
-export type VocabularyCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.VocabularyCreateWithoutCategoryInput, Prisma.VocabularyUncheckedCreateWithoutCategoryInput> | Prisma.VocabularyCreateWithoutCategoryInput[] | Prisma.VocabularyUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.VocabularyCreateOrConnectWithoutCategoryInput | Prisma.VocabularyCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.VocabularyCreateManyCategoryInputEnvelope
+export type VocabularyCreateNestedManyWithoutTopicInput = {
+  create?: Prisma.XOR<Prisma.VocabularyCreateWithoutTopicInput, Prisma.VocabularyUncheckedCreateWithoutTopicInput> | Prisma.VocabularyCreateWithoutTopicInput[] | Prisma.VocabularyUncheckedCreateWithoutTopicInput[]
+  connectOrCreate?: Prisma.VocabularyCreateOrConnectWithoutTopicInput | Prisma.VocabularyCreateOrConnectWithoutTopicInput[]
+  createMany?: Prisma.VocabularyCreateManyTopicInputEnvelope
   connect?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
 }
 
-export type VocabularyUncheckedCreateNestedManyWithoutCategoryInput = {
-  create?: Prisma.XOR<Prisma.VocabularyCreateWithoutCategoryInput, Prisma.VocabularyUncheckedCreateWithoutCategoryInput> | Prisma.VocabularyCreateWithoutCategoryInput[] | Prisma.VocabularyUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.VocabularyCreateOrConnectWithoutCategoryInput | Prisma.VocabularyCreateOrConnectWithoutCategoryInput[]
-  createMany?: Prisma.VocabularyCreateManyCategoryInputEnvelope
+export type VocabularyUncheckedCreateNestedManyWithoutTopicInput = {
+  create?: Prisma.XOR<Prisma.VocabularyCreateWithoutTopicInput, Prisma.VocabularyUncheckedCreateWithoutTopicInput> | Prisma.VocabularyCreateWithoutTopicInput[] | Prisma.VocabularyUncheckedCreateWithoutTopicInput[]
+  connectOrCreate?: Prisma.VocabularyCreateOrConnectWithoutTopicInput | Prisma.VocabularyCreateOrConnectWithoutTopicInput[]
+  createMany?: Prisma.VocabularyCreateManyTopicInputEnvelope
   connect?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
 }
 
-export type VocabularyUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.VocabularyCreateWithoutCategoryInput, Prisma.VocabularyUncheckedCreateWithoutCategoryInput> | Prisma.VocabularyCreateWithoutCategoryInput[] | Prisma.VocabularyUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.VocabularyCreateOrConnectWithoutCategoryInput | Prisma.VocabularyCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.VocabularyUpsertWithWhereUniqueWithoutCategoryInput | Prisma.VocabularyUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.VocabularyCreateManyCategoryInputEnvelope
+export type VocabularyUpdateManyWithoutTopicNestedInput = {
+  create?: Prisma.XOR<Prisma.VocabularyCreateWithoutTopicInput, Prisma.VocabularyUncheckedCreateWithoutTopicInput> | Prisma.VocabularyCreateWithoutTopicInput[] | Prisma.VocabularyUncheckedCreateWithoutTopicInput[]
+  connectOrCreate?: Prisma.VocabularyCreateOrConnectWithoutTopicInput | Prisma.VocabularyCreateOrConnectWithoutTopicInput[]
+  upsert?: Prisma.VocabularyUpsertWithWhereUniqueWithoutTopicInput | Prisma.VocabularyUpsertWithWhereUniqueWithoutTopicInput[]
+  createMany?: Prisma.VocabularyCreateManyTopicInputEnvelope
   set?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
   disconnect?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
   delete?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
   connect?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
-  update?: Prisma.VocabularyUpdateWithWhereUniqueWithoutCategoryInput | Prisma.VocabularyUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.VocabularyUpdateManyWithWhereWithoutCategoryInput | Prisma.VocabularyUpdateManyWithWhereWithoutCategoryInput[]
+  update?: Prisma.VocabularyUpdateWithWhereUniqueWithoutTopicInput | Prisma.VocabularyUpdateWithWhereUniqueWithoutTopicInput[]
+  updateMany?: Prisma.VocabularyUpdateManyWithWhereWithoutTopicInput | Prisma.VocabularyUpdateManyWithWhereWithoutTopicInput[]
   deleteMany?: Prisma.VocabularyScalarWhereInput | Prisma.VocabularyScalarWhereInput[]
 }
 
-export type VocabularyUncheckedUpdateManyWithoutCategoryNestedInput = {
-  create?: Prisma.XOR<Prisma.VocabularyCreateWithoutCategoryInput, Prisma.VocabularyUncheckedCreateWithoutCategoryInput> | Prisma.VocabularyCreateWithoutCategoryInput[] | Prisma.VocabularyUncheckedCreateWithoutCategoryInput[]
-  connectOrCreate?: Prisma.VocabularyCreateOrConnectWithoutCategoryInput | Prisma.VocabularyCreateOrConnectWithoutCategoryInput[]
-  upsert?: Prisma.VocabularyUpsertWithWhereUniqueWithoutCategoryInput | Prisma.VocabularyUpsertWithWhereUniqueWithoutCategoryInput[]
-  createMany?: Prisma.VocabularyCreateManyCategoryInputEnvelope
+export type VocabularyUncheckedUpdateManyWithoutTopicNestedInput = {
+  create?: Prisma.XOR<Prisma.VocabularyCreateWithoutTopicInput, Prisma.VocabularyUncheckedCreateWithoutTopicInput> | Prisma.VocabularyCreateWithoutTopicInput[] | Prisma.VocabularyUncheckedCreateWithoutTopicInput[]
+  connectOrCreate?: Prisma.VocabularyCreateOrConnectWithoutTopicInput | Prisma.VocabularyCreateOrConnectWithoutTopicInput[]
+  upsert?: Prisma.VocabularyUpsertWithWhereUniqueWithoutTopicInput | Prisma.VocabularyUpsertWithWhereUniqueWithoutTopicInput[]
+  createMany?: Prisma.VocabularyCreateManyTopicInputEnvelope
   set?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
   disconnect?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
   delete?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
   connect?: Prisma.VocabularyWhereUniqueInput | Prisma.VocabularyWhereUniqueInput[]
-  update?: Prisma.VocabularyUpdateWithWhereUniqueWithoutCategoryInput | Prisma.VocabularyUpdateWithWhereUniqueWithoutCategoryInput[]
-  updateMany?: Prisma.VocabularyUpdateManyWithWhereWithoutCategoryInput | Prisma.VocabularyUpdateManyWithWhereWithoutCategoryInput[]
+  update?: Prisma.VocabularyUpdateWithWhereUniqueWithoutTopicInput | Prisma.VocabularyUpdateWithWhereUniqueWithoutTopicInput[]
+  updateMany?: Prisma.VocabularyUpdateManyWithWhereWithoutTopicInput | Prisma.VocabularyUpdateManyWithWhereWithoutTopicInput[]
   deleteMany?: Prisma.VocabularyScalarWhereInput | Prisma.VocabularyScalarWhereInput[]
 }
 
@@ -647,7 +647,7 @@ export type VocabularyUpdateOneRequiredWithoutUserProgressNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.VocabularyUpdateToOneWithWhereWithoutUserProgressInput, Prisma.VocabularyUpdateWithoutUserProgressInput>, Prisma.VocabularyUncheckedUpdateWithoutUserProgressInput>
 }
 
-export type VocabularyCreateWithoutCategoryInput = {
+export type VocabularyCreateWithoutTopicInput = {
   id?: string
   word: string
   pronunciation?: string | null
@@ -666,7 +666,7 @@ export type VocabularyCreateWithoutCategoryInput = {
   userProgress?: Prisma.UserVocabularyProgressCreateNestedManyWithoutVocabularyInput
 }
 
-export type VocabularyUncheckedCreateWithoutCategoryInput = {
+export type VocabularyUncheckedCreateWithoutTopicInput = {
   id?: string
   word: string
   pronunciation?: string | null
@@ -685,30 +685,30 @@ export type VocabularyUncheckedCreateWithoutCategoryInput = {
   userProgress?: Prisma.UserVocabularyProgressUncheckedCreateNestedManyWithoutVocabularyInput
 }
 
-export type VocabularyCreateOrConnectWithoutCategoryInput = {
+export type VocabularyCreateOrConnectWithoutTopicInput = {
   where: Prisma.VocabularyWhereUniqueInput
-  create: Prisma.XOR<Prisma.VocabularyCreateWithoutCategoryInput, Prisma.VocabularyUncheckedCreateWithoutCategoryInput>
+  create: Prisma.XOR<Prisma.VocabularyCreateWithoutTopicInput, Prisma.VocabularyUncheckedCreateWithoutTopicInput>
 }
 
-export type VocabularyCreateManyCategoryInputEnvelope = {
-  data: Prisma.VocabularyCreateManyCategoryInput | Prisma.VocabularyCreateManyCategoryInput[]
+export type VocabularyCreateManyTopicInputEnvelope = {
+  data: Prisma.VocabularyCreateManyTopicInput | Prisma.VocabularyCreateManyTopicInput[]
   skipDuplicates?: boolean
 }
 
-export type VocabularyUpsertWithWhereUniqueWithoutCategoryInput = {
+export type VocabularyUpsertWithWhereUniqueWithoutTopicInput = {
   where: Prisma.VocabularyWhereUniqueInput
-  update: Prisma.XOR<Prisma.VocabularyUpdateWithoutCategoryInput, Prisma.VocabularyUncheckedUpdateWithoutCategoryInput>
-  create: Prisma.XOR<Prisma.VocabularyCreateWithoutCategoryInput, Prisma.VocabularyUncheckedCreateWithoutCategoryInput>
+  update: Prisma.XOR<Prisma.VocabularyUpdateWithoutTopicInput, Prisma.VocabularyUncheckedUpdateWithoutTopicInput>
+  create: Prisma.XOR<Prisma.VocabularyCreateWithoutTopicInput, Prisma.VocabularyUncheckedCreateWithoutTopicInput>
 }
 
-export type VocabularyUpdateWithWhereUniqueWithoutCategoryInput = {
+export type VocabularyUpdateWithWhereUniqueWithoutTopicInput = {
   where: Prisma.VocabularyWhereUniqueInput
-  data: Prisma.XOR<Prisma.VocabularyUpdateWithoutCategoryInput, Prisma.VocabularyUncheckedUpdateWithoutCategoryInput>
+  data: Prisma.XOR<Prisma.VocabularyUpdateWithoutTopicInput, Prisma.VocabularyUncheckedUpdateWithoutTopicInput>
 }
 
-export type VocabularyUpdateManyWithWhereWithoutCategoryInput = {
+export type VocabularyUpdateManyWithWhereWithoutTopicInput = {
   where: Prisma.VocabularyScalarWhereInput
-  data: Prisma.XOR<Prisma.VocabularyUpdateManyMutationInput, Prisma.VocabularyUncheckedUpdateManyWithoutCategoryInput>
+  data: Prisma.XOR<Prisma.VocabularyUpdateManyMutationInput, Prisma.VocabularyUncheckedUpdateManyWithoutTopicInput>
 }
 
 export type VocabularyScalarWhereInput = {
@@ -727,7 +727,7 @@ export type VocabularyScalarWhereInput = {
   synonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   antonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   difficulty?: Prisma.EnumDifficultyLevelFilter<"Vocabulary"> | $Enums.DifficultyLevel
-  categoryId?: Prisma.StringFilter<"Vocabulary"> | string
+  topicId?: Prisma.StringFilter<"Vocabulary"> | string
   isActive?: Prisma.BoolFilter<"Vocabulary"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
@@ -749,7 +749,7 @@ export type VocabularyCreateWithoutUserProgressInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.VocabularyCategoryCreateNestedOneWithoutVocabulariesInput
+  topic: Prisma.TopicCreateNestedOneWithoutVocabulariesInput
 }
 
 export type VocabularyUncheckedCreateWithoutUserProgressInput = {
@@ -765,7 +765,7 @@ export type VocabularyUncheckedCreateWithoutUserProgressInput = {
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
   difficulty?: $Enums.DifficultyLevel
-  categoryId: string
+  topicId: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -803,7 +803,7 @@ export type VocabularyUpdateWithoutUserProgressInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.VocabularyCategoryUpdateOneRequiredWithoutVocabulariesNestedInput
+  topic?: Prisma.TopicUpdateOneRequiredWithoutVocabulariesNestedInput
 }
 
 export type VocabularyUncheckedUpdateWithoutUserProgressInput = {
@@ -819,13 +819,13 @@ export type VocabularyUncheckedUpdateWithoutUserProgressInput = {
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
   difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  topicId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type VocabularyCreateManyCategoryInput = {
+export type VocabularyCreateManyTopicInput = {
   id?: string
   word: string
   pronunciation?: string | null
@@ -843,7 +843,7 @@ export type VocabularyCreateManyCategoryInput = {
   updatedAt?: Date | string
 }
 
-export type VocabularyUpdateWithoutCategoryInput = {
+export type VocabularyUpdateWithoutTopicInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   word?: Prisma.StringFieldUpdateOperationsInput | string
   pronunciation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -862,7 +862,7 @@ export type VocabularyUpdateWithoutCategoryInput = {
   userProgress?: Prisma.UserVocabularyProgressUpdateManyWithoutVocabularyNestedInput
 }
 
-export type VocabularyUncheckedUpdateWithoutCategoryInput = {
+export type VocabularyUncheckedUpdateWithoutTopicInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   word?: Prisma.StringFieldUpdateOperationsInput | string
   pronunciation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -881,7 +881,7 @@ export type VocabularyUncheckedUpdateWithoutCategoryInput = {
   userProgress?: Prisma.UserVocabularyProgressUncheckedUpdateManyWithoutVocabularyNestedInput
 }
 
-export type VocabularyUncheckedUpdateManyWithoutCategoryInput = {
+export type VocabularyUncheckedUpdateManyWithoutTopicInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   word?: Prisma.StringFieldUpdateOperationsInput | string
   pronunciation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -943,11 +943,11 @@ export type VocabularySelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   synonyms?: boolean
   antonyms?: boolean
   difficulty?: boolean
-  categoryId?: boolean
+  topicId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.VocabularyCategoryDefaultArgs<ExtArgs>
+  topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
   userProgress?: boolean | Prisma.Vocabulary$userProgressArgs<ExtArgs>
   _count?: boolean | Prisma.VocabularyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vocabulary"]>
@@ -965,11 +965,11 @@ export type VocabularySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   synonyms?: boolean
   antonyms?: boolean
   difficulty?: boolean
-  categoryId?: boolean
+  topicId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.VocabularyCategoryDefaultArgs<ExtArgs>
+  topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vocabulary"]>
 
 export type VocabularySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -985,11 +985,11 @@ export type VocabularySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   synonyms?: boolean
   antonyms?: boolean
   difficulty?: boolean
-  categoryId?: boolean
+  topicId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.VocabularyCategoryDefaultArgs<ExtArgs>
+  topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vocabulary"]>
 
 export type VocabularySelectScalar = {
@@ -1005,29 +1005,29 @@ export type VocabularySelectScalar = {
   synonyms?: boolean
   antonyms?: boolean
   difficulty?: boolean
-  categoryId?: boolean
+  topicId?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VocabularyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "word" | "pronunciation" | "audioUrl" | "meaning" | "partOfSpeech" | "exampleEn" | "exampleVi" | "imageUrl" | "synonyms" | "antonyms" | "difficulty" | "categoryId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vocabulary"]>
+export type VocabularyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "word" | "pronunciation" | "audioUrl" | "meaning" | "partOfSpeech" | "exampleEn" | "exampleVi" | "imageUrl" | "synonyms" | "antonyms" | "difficulty" | "topicId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vocabulary"]>
 export type VocabularyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.VocabularyCategoryDefaultArgs<ExtArgs>
+  topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
   userProgress?: boolean | Prisma.Vocabulary$userProgressArgs<ExtArgs>
   _count?: boolean | Prisma.VocabularyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type VocabularyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.VocabularyCategoryDefaultArgs<ExtArgs>
+  topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
 }
 export type VocabularyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.VocabularyCategoryDefaultArgs<ExtArgs>
+  topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
 }
 
 export type $VocabularyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Vocabulary"
   objects: {
-    category: Prisma.$VocabularyCategoryPayload<ExtArgs>
+    topic: Prisma.$TopicPayload<ExtArgs>
     userProgress: Prisma.$UserVocabularyProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1043,7 +1043,7 @@ export type $VocabularyPayload<ExtArgs extends runtime.Types.Extensions.Internal
     synonyms: string[]
     antonyms: string[]
     difficulty: $Enums.DifficultyLevel
-    categoryId: string
+    topicId: string
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1441,7 +1441,7 @@ readonly fields: VocabularyFieldRefs;
  */
 export interface Prisma__VocabularyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  category<T extends Prisma.VocabularyCategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VocabularyCategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__VocabularyCategoryClient<runtime.Types.Result.GetResult<Prisma.$VocabularyCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  topic<T extends Prisma.TopicDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TopicDefaultArgs<ExtArgs>>): Prisma.Prisma__TopicClient<runtime.Types.Result.GetResult<Prisma.$TopicPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   userProgress<T extends Prisma.Vocabulary$userProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vocabulary$userProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserVocabularyProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1484,7 +1484,7 @@ export interface VocabularyFieldRefs {
   readonly synonyms: Prisma.FieldRef<"Vocabulary", 'String[]'>
   readonly antonyms: Prisma.FieldRef<"Vocabulary", 'String[]'>
   readonly difficulty: Prisma.FieldRef<"Vocabulary", 'DifficultyLevel'>
-  readonly categoryId: Prisma.FieldRef<"Vocabulary", 'String'>
+  readonly topicId: Prisma.FieldRef<"Vocabulary", 'String'>
   readonly isActive: Prisma.FieldRef<"Vocabulary", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Vocabulary", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Vocabulary", 'DateTime'>

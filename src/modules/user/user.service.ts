@@ -19,7 +19,7 @@ import { User, Prisma } from '../../generated/prisma/client';
 export class UserService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async create(dto: BodyCreateUser): Promise<ResCreateUser> {
+    async createUser(dto: BodyCreateUser): Promise<ResCreateUser> {
         const user = await this.prisma.user.create({
             data: {
                 ...dto,
@@ -29,7 +29,7 @@ export class UserService {
         return this.mapToResponse(user);
     }
 
-    async findAll(query: QueryFindAllUser): Promise<ResFindAllUser> {
+    async getUsers(query: QueryFindAllUser): Promise<ResFindAllUser> {
         const {
             search,
             role,
@@ -76,7 +76,7 @@ export class UserService {
         };
     }
 
-    async findOne(id: string): Promise<ResFindOneUser> {
+    async getUser(id: string): Promise<ResFindOneUser> {
         const user = await this.prisma.user.findUnique({
             where: { id },
         });
@@ -88,8 +88,8 @@ export class UserService {
         return this.mapToResponse(user);
     }
 
-    async update(id: string, dto: BodyUpdateUser): Promise<ResUpdateUser> {
-        await this.findOne(id); // Ensure exists
+    async updateUser(id: string, dto: BodyUpdateUser): Promise<ResUpdateUser> {
+        await this.getUser(id); // Ensure exists
 
         const updatedUser = await this.prisma.user.update({
             where: { id },
@@ -99,8 +99,8 @@ export class UserService {
         return this.mapToResponse(updatedUser);
     }
 
-    async remove(id: string): Promise<ResRemoveUser> {
-        await this.findOne(id); // Ensure exists
+    async deleteUser(id: string): Promise<ResRemoveUser> {
+        await this.getUser(id); // Ensure exists
 
         const deletedUser = await this.prisma.user.delete({
             where: { id },

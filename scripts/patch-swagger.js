@@ -42,10 +42,7 @@ if (swagger.paths) {
 
             // Add OperationId from x-samchon-accessor
             if (operation['x-samchon-accessor'] && Array.isArray(operation['x-samchon-accessor'])) {
-                const accessor = operation['x-samchon-accessor'];
-                // Join with underscore
-                const operationId = accessor.join('_');
-                operation.operationId = operationId;
+                operation.operationId = "api_" + operation['x-samchon-accessor'][1];
             }
         }
     }

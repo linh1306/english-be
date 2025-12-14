@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
-export type * from './models/VocabularyCategory'
+export type * from './models/Topic'
 export type * from './models/Vocabulary'
 export type * from './models/UserVocabularyProgress'
-export type * from './models/UserCategoryProgress'
+export type * from './models/UserTopicProgress'
 export type * from './commonInputTypes'

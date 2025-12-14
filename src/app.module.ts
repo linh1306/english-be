@@ -3,7 +3,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { FirebaseModule, FirebaseAuthGuard, RolesGuard } from './core/firebase';
 import { PrismaModule } from './core/database/prisma.module';
-import { VocabularyCategoryModule } from './modules/vocabulary-category';
+import { TopicModule } from './modules/topic';
 import { VocabularyModule } from './modules/vocabulary';
 import { UserProgressModule } from './modules/user-progress';
 
@@ -22,7 +22,7 @@ import { ConfigModule } from '@nestjs/config';
     ]),
     FirebaseModule,
     PrismaModule,
-    VocabularyCategoryModule,
+    TopicModule,
     VocabularyModule,
     UserProgressModule,
 

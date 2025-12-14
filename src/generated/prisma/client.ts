@@ -43,10 +43,10 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model VocabularyCategory
+ * Model Topic
  * 
  */
-export type VocabularyCategory = Prisma.VocabularyCategoryModel
+export type Topic = Prisma.TopicModel
 /**
  * Model Vocabulary
  * 
@@ -58,7 +58,7 @@ export type Vocabulary = Prisma.VocabularyModel
  */
 export type UserVocabularyProgress = Prisma.UserVocabularyProgressModel
 /**
- * Model UserCategoryProgress
+ * Model UserTopicProgress
  * 
  */
-export type UserCategoryProgress = Prisma.UserCategoryProgressModel
+export type UserTopicProgress = Prisma.UserTopicProgressModel

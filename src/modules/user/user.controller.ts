@@ -22,23 +22,23 @@ export class UserController {
 
     @Get()
     @Roles('ADMIN')
-    async findAll(@TypedQuery() query: QueryFindAllUser): Promise<ResFindAllUser> {
-        return this.userService.findAll(query);
+    async getUsers(@TypedQuery() query: QueryFindAllUser): Promise<ResFindAllUser> {
+        return this.userService.getUsers(query);
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<ResFindOneUserPublic> {
-        const user = await this.userService.findOne(id);
+    async getUser(@Param('id') id: string): Promise<ResFindOneUserPublic> {
+        const user = await this.userService.getUser(id);
         // Manually map to public response
         return this.userService.mapToPublicResponse(user as any); // Type assertion if needed or just object
     }
 
     @Put(':id')
     @Roles('ADMIN')
-    async update(
+    async updateUser(
         @Param('id') id: string,
         @Body() dto: BodyUpdateUserStatus,
     ): Promise<ResUpdateUser> {
-        return this.userService.update(id, dto);
+        return this.userService.updateUser(id, dto);
     }
 }

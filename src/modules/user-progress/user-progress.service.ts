@@ -7,7 +7,7 @@ import {
     ResUserVocabularyProgress,
     ResFindAllUserProgress,
     ResGetStatistics,
-    ResCategoryProgressItem,
+    ResTopicProgressItem,
     BodyStartStudySession,
     ResStartStudySession,
     ResStudyWordItem,
@@ -16,7 +16,7 @@ import {
     ResGetOrCreateProgress,
     ResRecordReview,
     ResGetDueForReview,
-    ResGetCategoryProgress,
+    ResGetTopicProgress,
 } from './dto/user-progress.dto';
 
 @Injectable()
@@ -131,8 +131,8 @@ export class UserProgressService {
                 },
             });
 
-            // Update category progress
-            await this.updateCategoryProgress(userId, vocabulary.categoryId);
+            // Update topic progress
+            await this.updateTopicProgress(userId, vocabulary.topicId);
         }
 
         return this.toProgressResponse(progress);
@@ -193,14 +193,14 @@ export class UserProgressService {
                         pronunciation: true,
                         imageUrl: true,
                         audioUrl: true,
-                        categoryId: true,
+                        topicId: true,
                     },
                 },
             },
         });
 
-        // Update category progress
-        await this.updateCategoryProgress(userId, (updated.vocabulary as any).categoryId);
+        // Update topic progress
+        await this.updateTopicProgress(userId, (updated.vocabulary as any).topicId);
 
         return this.toProgressResponse(updated);
     }
@@ -208,9 +208,9 @@ export class UserProgressService {
     /**
      * Lấy danh sách progress của user
      */
-    async findAll(userId: string, query: QueryFindAllUserProgress): Promise<ResFindAllUserProgress> {
+    async getUserProgresses(userId: string, query: QueryFindAllUserProgress): Promise<ResFindAllUserProgress> {
         const {
-            categoryId,
+            topicId,
             proficiency,
             dueForReview,
             page = 1,
@@ -221,8 +221,8 @@ export class UserProgressService {
 
         const where: any = { userId };
 
-        if (categoryId) {
-            where.vocabulary = { categoryId };
+        if (topicId) {
+            where.vocabulary = { topicId };
         }
 
         if (proficiency) {
@@ -301,14 +301,14 @@ export class UserProgressService {
     /**
      * Lấy thống kê học tập của user
      */
-    async getStatistics(userId: string): Promise<ResGetStatistics> {
-        const [progressStats, categoryProgress, dueCount] = await Promise.all([
+    async getUserStatistics(userId: string): Promise<ResGetStatistics> {
+        const [progressStats, topicProgress, dueCount] = await Promise.all([
             this.prisma.userVocabularyProgress.groupBy({
                 by: ['proficiency'],
                 where: { userId },
                 _count: true,
             }),
-            this.getCategoryProgress(userId),
+            this.getUserTopicProgress(userId),
             this.prisma.userVocabularyProgress.count({
                 where: {
                     userId,
@@ -361,18 +361,18 @@ export class UserProgressService {
             totalReviews,
             currentStreak: aggregated._max.streak ?? 0,
             longestStreak: aggregated._max.bestStreak ?? 0,
-            categoryProgress,
+            topicProgress,
         };
     }
 
     /**
-     * Lấy tiến trình theo từng category
+     * Lấy tiến trình theo từng topic
      */
-    async getCategoryProgress(userId: string): Promise<ResGetCategoryProgress> {
-        const categoryProgresses = await this.prisma.userCategoryProgress.findMany({
+    async getUserTopicProgress(userId: string): Promise<ResGetTopicProgress> {
+        const topicProgresses = await this.prisma.userTopicProgress.findMany({
             where: { userId },
             include: {
-                category: {
+                topic: {
                     select: {
                         id: true,
                         name: true,
@@ -385,29 +385,29 @@ export class UserProgressService {
             },
         });
 
-        return categoryProgresses.map((cp) => ({
-            categoryId: cp.categoryId,
-            categoryName: cp.category.name,
-            categoryNameVi: cp.category.nameVi,
-            totalWords: cp.category._count.vocabularies,
+        return topicProgresses.map((cp) => ({
+            topicId: cp.topicId,
+            topicName: cp.topic.name,
+            topicNameVi: cp.topic.nameVi,
+            totalWords: cp.topic._count.vocabularies,
             learnedWords: cp.learnedWords,
             masteredWords: cp.masteredWords,
-            progressPercent: cp.category._count.vocabularies > 0
-                ? Math.round((cp.learnedWords / cp.category._count.vocabularies) * 100)
+            progressPercent: cp.topic._count.vocabularies > 0
+                ? Math.round((cp.learnedWords / cp.topic._count.vocabularies) * 100)
                 : 0,
             lastStudiedAt: cp.lastStudiedAt,
         }));
     }
 
     /**
-     * Cập nhật tiến trình category của user
+     * Cập nhật tiến trình topic của user
      */
-    private async updateCategoryProgress(userId: string, categoryId: string): Promise<void> {
+    private async updateTopicProgress(userId: string, topicId: string): Promise<void> {
         const stats = await this.prisma.userVocabularyProgress.groupBy({
             by: ['proficiency'],
             where: {
                 userId,
-                vocabulary: { categoryId },
+                vocabulary: { topicId },
             },
             _count: true,
         });
@@ -425,16 +425,16 @@ export class UserProgressService {
         });
 
         const totalWords = await this.prisma.vocabulary.count({
-            where: { categoryId, isActive: true },
+            where: { topicId, isActive: true },
         });
 
-        await this.prisma.userCategoryProgress.upsert({
+        await this.prisma.userTopicProgress.upsert({
             where: {
-                userId_categoryId: { userId, categoryId },
+                userId_topicId: { userId, topicId },
             },
             create: {
                 userId,
-                categoryId,
+                topicId,
                 totalWords,
                 learnedWords,
                 masteredWords,
@@ -456,19 +456,19 @@ export class UserProgressService {
      * Bắt đầu phiên học mới
      */
     async startStudySession(userId: string, dto: BodyStartStudySession): Promise<ResStartStudySession> {
-        const { categoryId, mode, wordCount = 10 } = dto;
+        const { topicId, mode, wordCount = 10 } = dto;
 
         let words: any[] = [];
 
         if (mode === 'new' || mode === 'mixed') {
             // Lấy từ mới chưa học
-            const newWords = await this.getNewWords(userId, categoryId, mode === 'new' ? wordCount : Math.ceil(wordCount / 2));
+            const newWords = await this.getNewWords(userId, topicId, mode === 'new' ? wordCount : Math.ceil(wordCount / 2));
             words = words.concat(newWords);
         }
 
         if (mode === 'review' || mode === 'mixed') {
             // Lấy từ cần ôn tập
-            const reviewWords = await this.getReviewWords(userId, categoryId, mode === 'review' ? wordCount : Math.floor(wordCount / 2));
+            const reviewWords = await this.getReviewWords(userId, topicId, mode === 'review' ? wordCount : Math.floor(wordCount / 2));
             words = words.concat(reviewWords);
         }
 
@@ -501,7 +501,7 @@ export class UserProgressService {
     /**
      * Lấy từ mới chưa học
      */
-    private async getNewWords(userId: string, categoryId?: string, limit: number = 10): Promise<any[]> {
+    private async getNewWords(userId: string, topicId?: string, limit: number = 10): Promise<any[]> {
         const where: any = {
             isActive: true,
             NOT: {
@@ -511,8 +511,8 @@ export class UserProgressService {
             },
         };
 
-        if (categoryId) {
-            where.categoryId = categoryId;
+        if (topicId) {
+            where.topicId = topicId;
         }
 
         const words = await this.prisma.vocabulary.findMany({
@@ -537,15 +537,15 @@ export class UserProgressService {
     /**
      * Lấy từ cần ôn tập
      */
-    private async getReviewWords(userId: string, categoryId?: string, limit: number = 10): Promise<any[]> {
+    private async getReviewWords(userId: string, topicId?: string, limit: number = 10): Promise<any[]> {
         const where: any = {
             userId,
             nextReviewAt: { lte: new Date() },
             proficiency: { not: 'NEW' },
         };
 
-        if (categoryId) {
-            where.vocabulary = { categoryId };
+        if (topicId) {
+            where.vocabulary = { topicId };
         }
 
         const progresses = await this.prisma.userVocabularyProgress.findMany({

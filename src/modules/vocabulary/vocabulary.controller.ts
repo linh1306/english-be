@@ -12,9 +12,11 @@ import {
     ResCreateVocabulary,
     ResUpdateVocabulary,
     ResFindOneVocabulary,
-    ResGetRandomByCategory,
+    ResGetRandomByTopic,
     ResRemoveVocabulary,
     ResHardDeleteVocabulary,
+    BodyGenerateVocabulary,
+    ResGenerateVocabulary,
 } from './dto/vocabulary.dto';
 
 @Controller('vocabularies')
@@ -27,8 +29,8 @@ export class VocabularyController {
      */
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async create(@Body() dto: BodyCreateVocabulary): Promise<ResCreateVocabulary> {
-        return this.vocabularyService.create(dto);
+    async createVocabulary(@Body() dto: BodyCreateVocabulary): Promise<ResCreateVocabulary> {
+        return this.vocabularyService.createVocabulary(dto);
     }
 
     /**
@@ -37,8 +39,18 @@ export class VocabularyController {
      */
     @Post('bulk')
     @HttpCode(HttpStatus.CREATED)
-    async bulkCreate(@Body() dto: BodyBulkCreateVocabulary): Promise<ResBulkCreateVocabulary> {
-        return this.vocabularyService.bulkCreate(dto);
+    async bulkCreateVocabularies(@Body() dto: BodyBulkCreateVocabulary): Promise<ResBulkCreateVocabulary> {
+        return this.vocabularyService.bulkCreateVocabularies(dto);
+    }
+
+    /**
+     * Generate vocabularies using AI
+     * POST /vocabularies/generate/:topicId
+     */
+    @Post('generate/:topicId')
+    @HttpCode(HttpStatus.OK)
+    async generateVocabularies(@Param('topicId') topicId: string, @Body() dto: BodyGenerateVocabulary): Promise<ResGenerateVocabulary> {
+        return this.vocabularyService.generateVocabularies(topicId, dto);
     }
 
     /**
@@ -46,20 +58,20 @@ export class VocabularyController {
      * GET /vocabularies
      */
     @Get()
-    async findAll(@TypedQuery() query: QueryFindAllVocabulary): Promise<ResFindAllVocabulary> {
-        return this.vocabularyService.findAll(query);
+    async getVocabularies(@TypedQuery() query: QueryFindAllVocabulary): Promise<ResFindAllVocabulary> {
+        return this.vocabularyService.getVocabularies(query);
     }
 
     /**
-     * Lấy từ vựng ngẫu nhiên theo category
-     * GET /vocabularies/random/:categoryId
+     * Lấy từ vựng ngẫu nhiên theo topic
+     * GET /vocabularies/random/:topicId
      */
-    @Get('random/:categoryId')
-    async getRandomByCategory(
-        @Param('categoryId') categoryId: string,
+    @Get('random/:topicId')
+    async getRandomVocabulariesByTopic(
+        @Param('topicId') topicId: string,
         @Query('count', new ParseIntPipe({ optional: true })) count?: number,
-    ): Promise<ResGetRandomByCategory> {
-        return this.vocabularyService.getRandomByCategory(categoryId, count ?? 10);
+    ): Promise<ResGetRandomByTopic> {
+        return this.vocabularyService.getRandomVocabulariesByTopic(topicId, count ?? 10);
     }
 
     /**
@@ -67,8 +79,8 @@ export class VocabularyController {
      * GET /vocabularies/:id
      */
     @Get(':id')
-    async findOne(@Param('id') id: string): Promise<ResFindOneVocabulary> {
-        return this.vocabularyService.findOne(id);
+    async getVocabulary(@Param('id') id: string): Promise<ResFindOneVocabulary> {
+        return this.vocabularyService.getVocabulary(id);
     }
 
     /**
@@ -76,11 +88,11 @@ export class VocabularyController {
      * PUT /vocabularies/:id
      */
     @Put(':id')
-    async update(
+    async updateVocabulary(
         @Param('id') id: string,
         @Body() dto: BodyUpdateVocabulary,
     ): Promise<ResUpdateVocabulary> {
-        return this.vocabularyService.update(id, dto);
+        return this.vocabularyService.updateVocabulary(id, dto);
     }
 
     /**
@@ -88,8 +100,8 @@ export class VocabularyController {
      * DELETE /vocabularies/:id
      */
     @Delete(':id')
-    async remove(@Param('id') id: string): Promise<ResRemoveVocabulary> {
-        return this.vocabularyService.remove(id);
+    async deleteVocabulary(@Param('id') id: string): Promise<ResRemoveVocabulary> {
+        return this.vocabularyService.deleteVocabulary(id);
     }
 
     /**
@@ -97,7 +109,7 @@ export class VocabularyController {
      * DELETE /vocabularies/:id/hard
      */
     @Delete(':id/hard')
-    async hardDelete(@Param('id') id: string): Promise<ResHardDeleteVocabulary> {
-        return this.vocabularyService.hardDelete(id);
+    async hardDeleteVocabulary(@Param('id') id: string): Promise<ResHardDeleteVocabulary> {
+        return this.vocabularyService.hardDeleteVocabulary(id);
     }
 }

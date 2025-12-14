@@ -12,7 +12,7 @@ import {
     BodySubmitStudyResult,
     ResSubmitStudyResult,
     ResGetDueForReview,
-    ResGetCategoryProgress,
+    ResGetTopicProgress,
     ResRecordReview,
     ResGetOrCreateProgress,
 } from './dto/user-progress.dto';
@@ -33,8 +33,8 @@ export class UserProgressController {
      * GET /user-progress/statistics
      */
     @Get('statistics')
-    async getStatistics(@FirebaseId() userId: string): Promise<ResGetStatistics> {
-        return this.userProgressService.getStatistics(userId);
+    async getUserStatistics(@FirebaseId() userId: string): Promise<ResGetStatistics> {
+        return this.userProgressService.getUserStatistics(userId);
     }
 
     /**
@@ -50,12 +50,12 @@ export class UserProgressController {
     }
 
     /**
-     * Lấy tiến trình theo category
-     * GET /user-progress/categories
+     * Lấy tiến trình theo topic
+     * GET /user-progress/topics
      */
-    @Get('categories')
-    async getCategoryProgress(@FirebaseId() userId: string): Promise<ResGetCategoryProgress> {
-        return this.userProgressService.getCategoryProgress(userId);
+    @Get('topics')
+    async getUserTopicProgress(@FirebaseId() userId: string): Promise<ResGetTopicProgress> {
+        return this.userProgressService.getUserTopicProgress(userId);
     }
 
     /**
@@ -102,11 +102,11 @@ export class UserProgressController {
      * GET /user-progress
      */
     @Get()
-    async findAll(
+    async getUserProgresses(
         @FirebaseId() userId: string,
         @TypedQuery() query: QueryFindAllUserProgress,
     ): Promise<ResFindAllUserProgress> {
-        return this.userProgressService.findAll(userId, query);
+        return this.userProgressService.getUserProgresses(userId, query);
     }
 
     /**

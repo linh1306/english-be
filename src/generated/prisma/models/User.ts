@@ -215,7 +215,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   vocabularyProgress?: Prisma.UserVocabularyProgressListRelationFilter
-  userCategories?: Prisma.UserCategoryProgressListRelationFilter
+  userTopics?: Prisma.UserTopicProgressListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -229,7 +229,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   vocabularyProgress?: Prisma.UserVocabularyProgressOrderByRelationAggregateInput
-  userCategories?: Prisma.UserCategoryProgressOrderByRelationAggregateInput
+  userTopics?: Prisma.UserTopicProgressOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -246,7 +246,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   vocabularyProgress?: Prisma.UserVocabularyProgressListRelationFilter
-  userCategories?: Prisma.UserCategoryProgressListRelationFilter
+  userTopics?: Prisma.UserTopicProgressListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -290,7 +290,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   vocabularyProgress?: Prisma.UserVocabularyProgressCreateNestedManyWithoutUserInput
-  userCategories?: Prisma.UserCategoryProgressCreateNestedManyWithoutUserInput
+  userTopics?: Prisma.UserTopicProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -304,7 +304,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   vocabularyProgress?: Prisma.UserVocabularyProgressUncheckedCreateNestedManyWithoutUserInput
-  userCategories?: Prisma.UserCategoryProgressUncheckedCreateNestedManyWithoutUserInput
+  userTopics?: Prisma.UserTopicProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -318,7 +318,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vocabularyProgress?: Prisma.UserVocabularyProgressUpdateManyWithoutUserNestedInput
-  userCategories?: Prisma.UserCategoryProgressUpdateManyWithoutUserNestedInput
+  userTopics?: Prisma.UserTopicProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -332,7 +332,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vocabularyProgress?: Prisma.UserVocabularyProgressUncheckedUpdateManyWithoutUserNestedInput
-  userCategories?: Prisma.UserCategoryProgressUncheckedUpdateManyWithoutUserNestedInput
+  userTopics?: Prisma.UserTopicProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -446,18 +446,18 @@ export type UserUpdateOneRequiredWithoutVocabularyProgressNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVocabularyProgressInput, Prisma.UserUpdateWithoutVocabularyProgressInput>, Prisma.UserUncheckedUpdateWithoutVocabularyProgressInput>
 }
 
-export type UserCreateNestedOneWithoutUserCategoriesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUserCategoriesInput, Prisma.UserUncheckedCreateWithoutUserCategoriesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserCategoriesInput
+export type UserCreateNestedOneWithoutUserTopicsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserTopicsInput, Prisma.UserUncheckedCreateWithoutUserTopicsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserTopicsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutUserCategoriesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUserCategoriesInput, Prisma.UserUncheckedCreateWithoutUserCategoriesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserCategoriesInput
-  upsert?: Prisma.UserUpsertWithoutUserCategoriesInput
+export type UserUpdateOneRequiredWithoutUserTopicsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserTopicsInput, Prisma.UserUncheckedCreateWithoutUserTopicsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserTopicsInput
+  upsert?: Prisma.UserUpsertWithoutUserTopicsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserCategoriesInput, Prisma.UserUpdateWithoutUserCategoriesInput>, Prisma.UserUncheckedUpdateWithoutUserCategoriesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserTopicsInput, Prisma.UserUpdateWithoutUserTopicsInput>, Prisma.UserUncheckedUpdateWithoutUserTopicsInput>
 }
 
 export type UserCreateWithoutVocabularyProgressInput = {
@@ -470,7 +470,7 @@ export type UserCreateWithoutVocabularyProgressInput = {
   canRefreshToken?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  userCategories?: Prisma.UserCategoryProgressCreateNestedManyWithoutUserInput
+  userTopics?: Prisma.UserTopicProgressCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVocabularyProgressInput = {
@@ -483,7 +483,7 @@ export type UserUncheckedCreateWithoutVocabularyProgressInput = {
   canRefreshToken?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  userCategories?: Prisma.UserCategoryProgressUncheckedCreateNestedManyWithoutUserInput
+  userTopics?: Prisma.UserTopicProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVocabularyProgressInput = {
@@ -512,7 +512,7 @@ export type UserUpdateWithoutVocabularyProgressInput = {
   canRefreshToken?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userCategories?: Prisma.UserCategoryProgressUpdateManyWithoutUserNestedInput
+  userTopics?: Prisma.UserTopicProgressUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVocabularyProgressInput = {
@@ -525,10 +525,10 @@ export type UserUncheckedUpdateWithoutVocabularyProgressInput = {
   canRefreshToken?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userCategories?: Prisma.UserCategoryProgressUncheckedUpdateManyWithoutUserNestedInput
+  userTopics?: Prisma.UserTopicProgressUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutUserCategoriesInput = {
+export type UserCreateWithoutUserTopicsInput = {
   id?: string
   name: string
   email: string
@@ -541,7 +541,7 @@ export type UserCreateWithoutUserCategoriesInput = {
   vocabularyProgress?: Prisma.UserVocabularyProgressCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutUserCategoriesInput = {
+export type UserUncheckedCreateWithoutUserTopicsInput = {
   id?: string
   name: string
   email: string
@@ -554,23 +554,23 @@ export type UserUncheckedCreateWithoutUserCategoriesInput = {
   vocabularyProgress?: Prisma.UserVocabularyProgressUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutUserCategoriesInput = {
+export type UserCreateOrConnectWithoutUserTopicsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutUserCategoriesInput, Prisma.UserUncheckedCreateWithoutUserCategoriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserTopicsInput, Prisma.UserUncheckedCreateWithoutUserTopicsInput>
 }
 
-export type UserUpsertWithoutUserCategoriesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutUserCategoriesInput, Prisma.UserUncheckedUpdateWithoutUserCategoriesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutUserCategoriesInput, Prisma.UserUncheckedCreateWithoutUserCategoriesInput>
+export type UserUpsertWithoutUserTopicsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserTopicsInput, Prisma.UserUncheckedUpdateWithoutUserTopicsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserTopicsInput, Prisma.UserUncheckedCreateWithoutUserTopicsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutUserCategoriesInput = {
+export type UserUpdateToOneWithWhereWithoutUserTopicsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutUserCategoriesInput, Prisma.UserUncheckedUpdateWithoutUserCategoriesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserTopicsInput, Prisma.UserUncheckedUpdateWithoutUserTopicsInput>
 }
 
-export type UserUpdateWithoutUserCategoriesInput = {
+export type UserUpdateWithoutUserTopicsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -583,7 +583,7 @@ export type UserUpdateWithoutUserCategoriesInput = {
   vocabularyProgress?: Prisma.UserVocabularyProgressUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutUserCategoriesInput = {
+export type UserUncheckedUpdateWithoutUserTopicsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -603,12 +603,12 @@ export type UserUncheckedUpdateWithoutUserCategoriesInput = {
 
 export type UserCountOutputType = {
   vocabularyProgress: number
-  userCategories: number
+  userTopics: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vocabularyProgress?: boolean | UserCountOutputTypeCountVocabularyProgressArgs
-  userCategories?: boolean | UserCountOutputTypeCountUserCategoriesArgs
+  userTopics?: boolean | UserCountOutputTypeCountUserTopicsArgs
 }
 
 /**
@@ -631,8 +631,8 @@ export type UserCountOutputTypeCountVocabularyProgressArgs<ExtArgs extends runti
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountUserCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserCategoryProgressWhereInput
+export type UserCountOutputTypeCountUserTopicsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserTopicProgressWhereInput
 }
 
 
@@ -647,7 +647,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   vocabularyProgress?: boolean | Prisma.User$vocabularyProgressArgs<ExtArgs>
-  userCategories?: boolean | Prisma.User$userCategoriesArgs<ExtArgs>
+  userTopics?: boolean | Prisma.User$userTopicsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -690,7 +690,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "avatar" | "role" | "isActive" | "canRefreshToken" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vocabularyProgress?: boolean | Prisma.User$vocabularyProgressArgs<ExtArgs>
-  userCategories?: boolean | Prisma.User$userCategoriesArgs<ExtArgs>
+  userTopics?: boolean | Prisma.User$userTopicsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -700,7 +700,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     vocabularyProgress: Prisma.$UserVocabularyProgressPayload<ExtArgs>[]
-    userCategories: Prisma.$UserCategoryProgressPayload<ExtArgs>[]
+    userTopics: Prisma.$UserTopicProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1107,7 +1107,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   vocabularyProgress<T extends Prisma.User$vocabularyProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vocabularyProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserVocabularyProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  userCategories<T extends Prisma.User$userCategoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserCategoryProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userTopics<T extends Prisma.User$userTopicsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userTopicsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserTopicProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1558,27 +1558,27 @@ export type User$vocabularyProgressArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * User.userCategories
+ * User.userTopics
  */
-export type User$userCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$userTopicsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the UserCategoryProgress
+   * Select specific fields to fetch from the UserTopicProgress
    */
-  select?: Prisma.UserCategoryProgressSelect<ExtArgs> | null
+  select?: Prisma.UserTopicProgressSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the UserCategoryProgress
+   * Omit specific fields from the UserTopicProgress
    */
-  omit?: Prisma.UserCategoryProgressOmit<ExtArgs> | null
+  omit?: Prisma.UserTopicProgressOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserCategoryProgressInclude<ExtArgs> | null
-  where?: Prisma.UserCategoryProgressWhereInput
-  orderBy?: Prisma.UserCategoryProgressOrderByWithRelationInput | Prisma.UserCategoryProgressOrderByWithRelationInput[]
-  cursor?: Prisma.UserCategoryProgressWhereUniqueInput
+  include?: Prisma.UserTopicProgressInclude<ExtArgs> | null
+  where?: Prisma.UserTopicProgressWhereInput
+  orderBy?: Prisma.UserTopicProgressOrderByWithRelationInput | Prisma.UserTopicProgressOrderByWithRelationInput[]
+  cursor?: Prisma.UserTopicProgressWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.UserCategoryProgressScalarFieldEnum | Prisma.UserCategoryProgressScalarFieldEnum[]
+  distinct?: Prisma.UserTopicProgressScalarFieldEnum | Prisma.UserTopicProgressScalarFieldEnum[]
 }
 
 /**

@@ -1,36 +1,36 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../core/database/prisma.service';
 import {
-    BodyCreateVocabularyCategory,
-    BodyUpdateVocabularyCategory,
-    QueryFindAllVocabularyCategory,
-    ResVocabularyCategory,
-    ResFindAllVocabularyCategory,
-    ResCreateVocabularyCategory,
-    ResUpdateVocabularyCategory,
-    ResFindOneVocabularyCategory,
-    ResRemoveVocabularyCategory,
-    ResHardDeleteVocabularyCategory,
-} from './dto/vocabulary-category.dto';
+    BodyCreateTopic,
+    BodyUpdateTopic,
+    QueryFindAllTopic,
+    ResTopic,
+    ResFindAllTopic,
+    ResCreateTopic,
+    ResUpdateTopic,
+    ResFindOneTopic,
+    ResRemoveTopic,
+    ResHardDeleteTopic,
+} from './dto/topic.dto';
 
 @Injectable()
-export class VocabularyCategoryService {
+export class TopicService {
     constructor(private readonly prisma: PrismaService) { }
 
     /**
      * Tạo danh mục từ vựng mới
      */
-    async create(dto: BodyCreateVocabularyCategory): Promise<ResCreateVocabularyCategory> {
+    async createTopic(dto: BodyCreateTopic): Promise<ResCreateTopic> {
         // Kiểm tra tên đã tồn tại chưa
-        const existing = await this.prisma.vocabularyCategory.findUnique({
+        const existing = await this.prisma.topic.findUnique({
             where: { name: dto.name },
         });
 
         if (existing) {
-            throw new ConflictException(`Category with name "${dto.name}" already exists`);
+            throw new ConflictException(`Topic with name "${dto.name}" already exists`);
         }
 
-        const category = await this.prisma.vocabularyCategory.create({
+        const topic = await this.prisma.topic.create({
             data: {
                 name: dto.name,
                 nameVi: dto.nameVi,
@@ -46,13 +46,13 @@ export class VocabularyCategoryService {
             },
         });
 
-        return this.toResponse(category);
+        return this.toResponse(topic);
     }
 
     /**
      * Lấy danh sách danh mục với phân trang và filter
      */
-    async findAll(query: QueryFindAllVocabularyCategory): Promise<ResFindAllVocabularyCategory> {
+    async getTopics(query: QueryFindAllTopic): Promise<ResFindAllTopic> {
         const {
             search,
             difficulty,
@@ -80,8 +80,8 @@ export class VocabularyCategoryService {
             where.isActive = isActive;
         }
 
-        const [categories, total] = await Promise.all([
-            this.prisma.vocabularyCategory.findMany({
+        const [topics, total] = await Promise.all([
+            this.prisma.topic.findMany({
                 where,
                 skip: (page - 1) * limit,
                 take: limit,
@@ -92,11 +92,11 @@ export class VocabularyCategoryService {
                     },
                 },
             }),
-            this.prisma.vocabularyCategory.count({ where }),
+            this.prisma.topic.count({ where }),
         ]);
 
         return {
-            data: categories.map((c) => this.toResponse(c)),
+            data: topics.map((c) => this.toResponse(c)),
             meta: {
                 total,
                 page,
@@ -109,8 +109,8 @@ export class VocabularyCategoryService {
     /**
      * Lấy chi tiết một danh mục
      */
-    async findOne(id: string): Promise<ResFindOneVocabularyCategory> {
-        const category = await this.prisma.vocabularyCategory.findUnique({
+    async getTopic(id: string): Promise<ResFindOneTopic> {
+        const topic = await this.prisma.topic.findUnique({
             where: { id },
             include: {
                 _count: {
@@ -119,23 +119,23 @@ export class VocabularyCategoryService {
             },
         });
 
-        if (!category) {
-            throw new NotFoundException(`Category with id "${id}" not found`);
+        if (!topic) {
+            throw new NotFoundException(`Topic with id "${id}" not found`);
         }
 
-        return this.toResponse(category);
+        return this.toResponse(topic);
     }
 
     /**
      * Cập nhật danh mục
      */
-    async update(id: string, dto: BodyUpdateVocabularyCategory): Promise<ResUpdateVocabularyCategory> {
+    async updateTopic(id: string, dto: BodyUpdateTopic): Promise<ResUpdateTopic> {
         // Kiểm tra danh mục tồn tại
-        await this.findOne(id);
+        await this.getTopic(id);
 
         // Kiểm tra tên trùng lặp nếu đổi tên
         if (dto.name) {
-            const existing = await this.prisma.vocabularyCategory.findFirst({
+            const existing = await this.prisma.topic.findFirst({
                 where: {
                     name: dto.name,
                     NOT: { id },
@@ -143,11 +143,11 @@ export class VocabularyCategoryService {
             });
 
             if (existing) {
-                throw new ConflictException(`Category with name "${dto.name}" already exists`);
+                throw new ConflictException(`Topic with name "${dto.name}" already exists`);
             }
         }
 
-        const category = await this.prisma.vocabularyCategory.update({
+        const topic = await this.prisma.topic.update({
             where: { id },
             data: dto,
             include: {
@@ -157,16 +157,16 @@ export class VocabularyCategoryService {
             },
         });
 
-        return this.toResponse(category);
+        return this.toResponse(topic);
     }
 
     /**
      * Xóa danh mục (soft delete bằng cách set isActive = false)
      */
-    async remove(id: string): Promise<ResRemoveVocabularyCategory> {
-        await this.findOne(id);
+    async deleteTopic(id: string): Promise<ResRemoveTopic> {
+        await this.getTopic(id);
 
-        const updated = await this.prisma.vocabularyCategory.update({
+        const updated = await this.prisma.topic.update({
             where: { id },
             data: { isActive: false },
             include: {
@@ -182,10 +182,10 @@ export class VocabularyCategoryService {
     /**
      * Xóa vĩnh viễn danh mục
      */
-    async hardDelete(id: string): Promise<ResHardDeleteVocabularyCategory> {
-        await this.findOne(id);
+    async hardDeleteTopic(id: string): Promise<ResHardDeleteTopic> {
+        await this.getTopic(id);
 
-        const deleted = await this.prisma.vocabularyCategory.delete({
+        const deleted = await this.prisma.topic.delete({
             where: { id },
             include: {
                 _count: {
@@ -200,19 +200,19 @@ export class VocabularyCategoryService {
     /**
      * Convert entity to response
      */
-    private toResponse(category: any): ResVocabularyCategory {
+    private toResponse(topic: any): ResTopic {
         return {
-            id: category.id,
-            name: category.name,
-            nameVi: category.nameVi,
-            description: category.description,
-            thumbnail: category.thumbnail,
-            difficulty: category.difficulty,
-            order: category.order,
-            isActive: category.isActive,
-            vocabularyCount: category._count?.vocabularies ?? 0,
-            createdAt: category.createdAt,
-            updatedAt: category.updatedAt,
+            id: topic.id,
+            name: topic.name,
+            nameVi: topic.nameVi,
+            description: topic.description,
+            thumbnail: topic.thumbnail,
+            difficulty: topic.difficulty,
+            order: topic.order,
+            isActive: topic.isActive,
+            vocabularyCount: topic._count?.vocabularies ?? 0,
+            createdAt: topic.createdAt,
+            updatedAt: topic.updatedAt,
         };
     }
 }

@@ -1,9 +1,9 @@
 import { genkit, z } from 'genkit';
-import { googleAI, gemini15Flash } from '@genkit-ai/googleai';
+import { googleAI, gemini } from '@genkit-ai/googleai';
 
 const ai = genkit({
     plugins: [googleAI()],
-    model: gemini15Flash,
+    model: gemini("gemini-2.5-flash"),
 });
 
 export const generateWordsFlow = ai.defineFlow(
@@ -11,7 +11,7 @@ export const generateWordsFlow = ai.defineFlow(
         name: 'generateWords',
         inputSchema: z.object({
             count: z.number().describe('Number of words to generate'),
-            categories: z.string().describe('Categories description'),
+            topics: z.string().describe('Topics description'),
             description: z.string().describe('Context or description for generation'),
             excludedWords: z.array(z.string()).optional().describe('List of words to exclude'),
         }),
@@ -28,16 +28,16 @@ export const generateWordsFlow = ai.defineFlow(
         })),
     },
     async (input) => {
-        const { count, categories, description, excludedWords = [] } = input;
+        const { count, topics, description, excludedWords = [] } = input;
 
         const prompt = `
-      Generate ${count} English vocabulary words related to the category: "${categories}".
+      Generate ${count} English vocabulary words related to the topic: "${topics}".
       Context/Description: ${description}.
       
       Constraints:
       - The output must be a valid JSON array of objects.
       - Do NOT include any of these words: ${excludedWords.join(', ')}.
-      - Ensure words are relevant to the provided categories and description.
+      - Ensure words are relevant to the provided topics and description.
       - "meaning" must be in Vietnamese.
       - "difficulty" must be one of: BEGINNER, INTERMEDIATE, ADVANCED.
     `;

@@ -46,19 +46,19 @@ model User {
 
   // Relations
   vocabularyProgress UserVocabularyProgress[]
-  userCategories     UserCategoryProgress[]
+  userTopics         UserTopicProgress[]
 
   @@map("users")
 }
 
-// ==================== VOCABULARY CATEGORY ====================
+// ==================== TOPIC ====================
 
-model VocabularyCategory {
+model Topic {
   id          String          @id @default(cuid())
   name        String          @unique
   nameVi      String?         // Tên tiếng Việt
   description String?
-  thumbnail   String?         // Ảnh đại diện cho category
+  thumbnail   String?         // Ảnh đại diện cho topic
   difficulty  DifficultyLevel @default(BEGINNER)
   order       Int             @default(0)   // Thứ tự hiển thị
   isActive    Boolean         @default(true)
@@ -67,9 +67,9 @@ model VocabularyCategory {
 
   // Relations
   vocabularies Vocabulary[]
-  userProgress UserCategoryProgress[]
+  userProgress UserTopicProgress[]
 
-  @@map("vocabulary_categories")
+  @@map("topics")
 }
 
 // ==================== VOCABULARY ====================
@@ -87,17 +87,17 @@ model Vocabulary {
   synonyms      String[]        // Từ đồng nghĩa
   antonyms      String[]        // Từ trái nghĩa
   difficulty    DifficultyLevel @default(BEGINNER)
-  categoryId    String
+  topicId       String
   isActive      Boolean         @default(true)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 
   // Relations
-  category     VocabularyCategory       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  topic        Topic              @relation(fields: [topicId], references: [id], onDelete: Cascade)
   userProgress UserVocabularyProgress[]
 
-  @@unique([word, categoryId])
-  @@index([categoryId])
+  @@unique([word, topicId])
+  @@index([topicId])
   @@index([difficulty])
   @@map("vocabularies")
 }
@@ -143,30 +143,30 @@ model UserVocabularyProgress {
   @@map("user_vocabulary_progress")
 }
 
-// ==================== USER CATEGORY PROGRESS ====================
-// Tiến trình học của user theo từng category
+// ==================== USER TOPIC PROGRESS ====================
+// Tiến trình học của user theo từng topic
 
-model UserCategoryProgress {
+model UserTopicProgress {
   id              String   @id @default(cuid())
   userId          String
-  categoryId      String
+  topicId         String
   
-  totalWords      Int      @default(0)     // Tổng số từ trong category
+  totalWords      Int      @default(0)     // Tổng số từ trong topic
   learnedWords    Int      @default(0)     // Số từ đã học
   masteredWords   Int      @default(0)     // Số từ đã thành thạo
   
   lastStudiedAt   DateTime?               // Lần học cuối
-  completedAt     DateTime?               // Thời điểm hoàn thành category
+  completedAt     DateTime?               // Thời điểm hoàn thành topic
   
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
   // Relations
-  user     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category VocabularyCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  user     User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic    Topic @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, categoryId])
+  @@unique([userId, topicId])
   @@index([userId])
-  @@index([categoryId])
-  @@map("user_category_progress")
+  @@index([topicId])
+  @@map("user_topic_progress")
 }

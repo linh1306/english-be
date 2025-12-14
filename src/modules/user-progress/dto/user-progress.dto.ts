@@ -12,7 +12,7 @@ export class BodyReviewAnswer {
 // ==================== QUERY ====================
 export class QueryFindAllUserProgress {
     userId?: string;
-    categoryId?: string;
+    topicId?: string;
     proficiency?: ProficiencyLevel;
     dueForReview?: boolean; // Lấy các từ cần ôn tập
     page?: number;
@@ -72,13 +72,13 @@ export interface ResGetStatistics {
     totalReviews: number;
     currentStreak: number;
     longestStreak: number;
-    categoryProgress: ResCategoryProgressItem[];
+    topicProgress: ResTopicProgressItem[];
 }
 
-export interface ResCategoryProgressItem {
-    categoryId: string;
-    categoryName: string;
-    categoryNameVi: string | null;
+export interface ResTopicProgressItem {
+    topicId: string;
+    topicName: string;
+    topicNameVi: string | null;
     totalWords: number;
     learnedWords: number;
     masteredWords: number;
@@ -89,7 +89,7 @@ export interface ResCategoryProgressItem {
 // ==================== STUDY SESSION ====================
 // ==================== STUDY SESSION ====================
 export class BodyStartStudySession {
-    categoryId?: string;
+    topicId?: string;
     mode!: 'new' | 'review' | 'mixed';
     wordCount?: number; // Số từ muốn học, default 10
 }
@@ -131,4 +131,4 @@ export interface ResSubmitStudyResult {
 export type ResGetOrCreateProgress = ResUserVocabularyProgress;
 export type ResRecordReview = ResUserVocabularyProgress;
 export type ResGetDueForReview = ResUserVocabularyProgress[];
-export type ResGetCategoryProgress = ResCategoryProgressItem[];
+export type ResGetTopicProgress = ResTopicProgressItem[];

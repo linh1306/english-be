@@ -2,7 +2,7 @@ import { DifficultyLevel } from '../../../generated/prisma/enums';
 
 // ==================== CREATE ====================
 // ==================== CREATE ====================
-export class BodyCreateVocabularyCategory {
+export class BodyCreateTopic {
     name!: string;
     nameVi?: string;
     description?: string;
@@ -13,7 +13,7 @@ export class BodyCreateVocabularyCategory {
 
 // ==================== UPDATE ====================
 // ==================== UPDATE ====================
-export class BodyUpdateVocabularyCategory {
+export class BodyUpdateTopic {
     name?: string;
     nameVi?: string;
     description?: string;
@@ -25,7 +25,7 @@ export class BodyUpdateVocabularyCategory {
 
 // ==================== QUERY ====================
 // ==================== QUERY ====================
-export class QueryFindAllVocabularyCategory {
+export class QueryFindAllTopic {
     search?: string;
     difficulty?: DifficultyLevel;
     isActive?: boolean;
@@ -37,7 +37,7 @@ export class QueryFindAllVocabularyCategory {
 
 // ==================== RESPONSE ====================
 // ==================== RESPONSE ====================
-export interface ResVocabularyCategory {
+export interface ResTopic {
     id: string;
     name: string;
     nameVi: string | null;
@@ -51,8 +51,8 @@ export interface ResVocabularyCategory {
     updatedAt: Date;
 }
 
-export interface ResFindAllVocabularyCategory {
-    data: ResVocabularyCategory[];
+export interface ResFindAllTopic {
+    data: ResTopic[];
     meta: {
         total: number;
         page: number;
@@ -61,8 +61,8 @@ export interface ResFindAllVocabularyCategory {
     };
 }
 
-export type ResCreateVocabularyCategory = ResVocabularyCategory;
-export type ResUpdateVocabularyCategory = ResVocabularyCategory;
-export type ResFindOneVocabularyCategory = ResVocabularyCategory;
-export type ResRemoveVocabularyCategory = ResVocabularyCategory;
-export type ResHardDeleteVocabularyCategory = ResVocabularyCategory;
+export type ResCreateTopic = ResTopic;
+export type ResUpdateTopic = ResTopic;
+export type ResFindOneTopic = ResTopic;
+export type ResRemoveTopic = ResTopic;
+export type ResHardDeleteTopic = ResTopic;

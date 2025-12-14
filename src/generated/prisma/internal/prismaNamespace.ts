@@ -385,10 +385,10 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  VocabularyCategory: 'VocabularyCategory',
+  Topic: 'Topic',
   Vocabulary: 'Vocabulary',
   UserVocabularyProgress: 'UserVocabularyProgress',
-  UserCategoryProgress: 'UserCategoryProgress'
+  UserTopicProgress: 'UserTopicProgress'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "vocabularyCategory" | "vocabulary" | "userVocabularyProgress" | "userCategoryProgress"
+    modelProps: "user" | "topic" | "vocabulary" | "userVocabularyProgress" | "userTopicProgress"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -482,77 +482,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    VocabularyCategory: {
-      payload: Prisma.$VocabularyCategoryPayload<ExtArgs>
-      fields: Prisma.VocabularyCategoryFieldRefs
+    Topic: {
+      payload: Prisma.$TopicPayload<ExtArgs>
+      fields: Prisma.TopicFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.VocabularyCategoryFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload> | null
+          args: Prisma.TopicFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.VocabularyCategoryFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>
+          args: Prisma.TopicFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>
         }
         findFirst: {
-          args: Prisma.VocabularyCategoryFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload> | null
+          args: Prisma.TopicFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.VocabularyCategoryFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>
+          args: Prisma.TopicFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>
         }
         findMany: {
-          args: Prisma.VocabularyCategoryFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>[]
+          args: Prisma.TopicFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>[]
         }
         create: {
-          args: Prisma.VocabularyCategoryCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>
+          args: Prisma.TopicCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>
         }
         createMany: {
-          args: Prisma.VocabularyCategoryCreateManyArgs<ExtArgs>
+          args: Prisma.TopicCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.VocabularyCategoryCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>[]
+          args: Prisma.TopicCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>[]
         }
         delete: {
-          args: Prisma.VocabularyCategoryDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>
+          args: Prisma.TopicDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>
         }
         update: {
-          args: Prisma.VocabularyCategoryUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>
+          args: Prisma.TopicUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>
         }
         deleteMany: {
-          args: Prisma.VocabularyCategoryDeleteManyArgs<ExtArgs>
+          args: Prisma.TopicDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.VocabularyCategoryUpdateManyArgs<ExtArgs>
+          args: Prisma.TopicUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.VocabularyCategoryUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>[]
+          args: Prisma.TopicUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>[]
         }
         upsert: {
-          args: Prisma.VocabularyCategoryUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VocabularyCategoryPayload>
+          args: Prisma.TopicUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicPayload>
         }
         aggregate: {
-          args: Prisma.VocabularyCategoryAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateVocabularyCategory>
+          args: Prisma.TopicAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTopic>
         }
         groupBy: {
-          args: Prisma.VocabularyCategoryGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VocabularyCategoryGroupByOutputType>[]
+          args: Prisma.TopicGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TopicGroupByOutputType>[]
         }
         count: {
-          args: Prisma.VocabularyCategoryCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VocabularyCategoryCountAggregateOutputType> | number
+          args: Prisma.TopicCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TopicCountAggregateOutputType> | number
         }
       }
     }
@@ -704,77 +704,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    UserCategoryProgress: {
-      payload: Prisma.$UserCategoryProgressPayload<ExtArgs>
-      fields: Prisma.UserCategoryProgressFieldRefs
+    UserTopicProgress: {
+      payload: Prisma.$UserTopicProgressPayload<ExtArgs>
+      fields: Prisma.UserTopicProgressFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.UserCategoryProgressFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload> | null
+          args: Prisma.UserTopicProgressFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.UserCategoryProgressFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>
+          args: Prisma.UserTopicProgressFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>
         }
         findFirst: {
-          args: Prisma.UserCategoryProgressFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload> | null
+          args: Prisma.UserTopicProgressFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.UserCategoryProgressFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>
+          args: Prisma.UserTopicProgressFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>
         }
         findMany: {
-          args: Prisma.UserCategoryProgressFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>[]
+          args: Prisma.UserTopicProgressFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>[]
         }
         create: {
-          args: Prisma.UserCategoryProgressCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>
+          args: Prisma.UserTopicProgressCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>
         }
         createMany: {
-          args: Prisma.UserCategoryProgressCreateManyArgs<ExtArgs>
+          args: Prisma.UserTopicProgressCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.UserCategoryProgressCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>[]
+          args: Prisma.UserTopicProgressCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>[]
         }
         delete: {
-          args: Prisma.UserCategoryProgressDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>
+          args: Prisma.UserTopicProgressDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>
         }
         update: {
-          args: Prisma.UserCategoryProgressUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>
+          args: Prisma.UserTopicProgressUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>
         }
         deleteMany: {
-          args: Prisma.UserCategoryProgressDeleteManyArgs<ExtArgs>
+          args: Prisma.UserTopicProgressDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.UserCategoryProgressUpdateManyArgs<ExtArgs>
+          args: Prisma.UserTopicProgressUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.UserCategoryProgressUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>[]
+          args: Prisma.UserTopicProgressUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>[]
         }
         upsert: {
-          args: Prisma.UserCategoryProgressUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserCategoryProgressPayload>
+          args: Prisma.UserTopicProgressUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTopicProgressPayload>
         }
         aggregate: {
-          args: Prisma.UserCategoryProgressAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUserCategoryProgress>
+          args: Prisma.UserTopicProgressAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserTopicProgress>
         }
         groupBy: {
-          args: Prisma.UserCategoryProgressGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserCategoryProgressGroupByOutputType>[]
+          args: Prisma.UserTopicProgressGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserTopicProgressGroupByOutputType>[]
         }
         count: {
-          args: Prisma.UserCategoryProgressCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserCategoryProgressCountAggregateOutputType> | number
+          args: Prisma.UserTopicProgressCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserTopicProgressCountAggregateOutputType> | number
         }
       }
     }
@@ -832,7 +832,7 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const VocabularyCategoryScalarFieldEnum = {
+export const TopicScalarFieldEnum = {
   id: 'id',
   name: 'name',
   nameVi: 'nameVi',
@@ -845,7 +845,7 @@ export const VocabularyCategoryScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type VocabularyCategoryScalarFieldEnum = (typeof VocabularyCategoryScalarFieldEnum)[keyof typeof VocabularyCategoryScalarFieldEnum]
+export type TopicScalarFieldEnum = (typeof TopicScalarFieldEnum)[keyof typeof TopicScalarFieldEnum]
 
 
 export const VocabularyScalarFieldEnum = {
@@ -861,7 +861,7 @@ export const VocabularyScalarFieldEnum = {
   synonyms: 'synonyms',
   antonyms: 'antonyms',
   difficulty: 'difficulty',
-  categoryId: 'categoryId',
+  topicId: 'topicId',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -893,10 +893,10 @@ export const UserVocabularyProgressScalarFieldEnum = {
 export type UserVocabularyProgressScalarFieldEnum = (typeof UserVocabularyProgressScalarFieldEnum)[keyof typeof UserVocabularyProgressScalarFieldEnum]
 
 
-export const UserCategoryProgressScalarFieldEnum = {
+export const UserTopicProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  categoryId: 'categoryId',
+  topicId: 'topicId',
   totalWords: 'totalWords',
   learnedWords: 'learnedWords',
   masteredWords: 'masteredWords',
@@ -906,7 +906,7 @@ export const UserCategoryProgressScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type UserCategoryProgressScalarFieldEnum = (typeof UserCategoryProgressScalarFieldEnum)[keyof typeof UserCategoryProgressScalarFieldEnum]
+export type UserTopicProgressScalarFieldEnum = (typeof UserTopicProgressScalarFieldEnum)[keyof typeof UserTopicProgressScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1139,10 +1139,10 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
-  vocabularyCategory?: Prisma.VocabularyCategoryOmit
+  topic?: Prisma.TopicOmit
   vocabulary?: Prisma.VocabularyOmit
   userVocabularyProgress?: Prisma.UserVocabularyProgressOmit
-  userCategoryProgress?: Prisma.UserCategoryProgressOmit
+  userTopicProgress?: Prisma.UserTopicProgressOmit
 }
 
 /* Types for Logging */

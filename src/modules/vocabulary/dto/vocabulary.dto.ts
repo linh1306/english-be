@@ -5,7 +5,7 @@ import { DifficultyLevel } from '../../../generated/prisma/enums';
 export class BodyCreateVocabulary {
     word!: string;
     meaning!: string;
-    categoryId!: string;
+    topicId!: string;
     pronunciation?: string;
     audioUrl?: string;
     partOfSpeech?: string;
@@ -22,7 +22,7 @@ export class BodyCreateVocabulary {
 export class BodyUpdateVocabulary {
     word?: string;
     meaning?: string;
-    categoryId?: string;
+    topicId?: string;
     pronunciation?: string;
     audioUrl?: string;
     partOfSpeech?: string;
@@ -39,7 +39,7 @@ export class BodyUpdateVocabulary {
 // ==================== QUERY ====================
 export class QueryFindAllVocabulary {
     search?: string;
-    categoryId?: string;
+    topicId?: string;
     difficulty?: DifficultyLevel;
     partOfSpeech?: string;
     isActive?: boolean;
@@ -64,8 +64,8 @@ export interface ResVocabulary {
     synonyms: string[];
     antonyms: string[];
     difficulty: DifficultyLevel;
-    categoryId: string;
-    category?: {
+    topicId: string;
+    topic?: {
         id: string;
         name: string;
         nameVi: string | null;
@@ -102,6 +102,15 @@ export interface ResBulkCreateVocabulary {
 export type ResCreateVocabulary = ResVocabulary;
 export type ResUpdateVocabulary = ResVocabulary;
 export type ResFindOneVocabulary = ResVocabulary;
-export type ResGetRandomByCategory = ResVocabulary[];
+export type ResGetRandomByTopic = ResVocabulary[];
 export type ResRemoveVocabulary = ResVocabulary;
 export type ResHardDeleteVocabulary = ResVocabulary;
+
+// ==================== GENERATE ====================
+export class BodyGenerateVocabulary {
+    count!: number;
+}
+
+export interface ResGenerateVocabulary {
+    message: string;
+}

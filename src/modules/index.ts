@@ -1,3 +1,3 @@
 export * from './vocabulary';
-export * from './vocabulary-category';
+export * from './topic';
 export * from './user-progress';

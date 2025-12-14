@@ -52,10 +52,10 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  VocabularyCategory: 'VocabularyCategory',
+  Topic: 'Topic',
   Vocabulary: 'Vocabulary',
   UserVocabularyProgress: 'UserVocabularyProgress',
-  UserCategoryProgress: 'UserCategoryProgress'
+  UserTopicProgress: 'UserTopicProgress'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -89,7 +89,7 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const VocabularyCategoryScalarFieldEnum = {
+export const TopicScalarFieldEnum = {
   id: 'id',
   name: 'name',
   nameVi: 'nameVi',
@@ -102,7 +102,7 @@ export const VocabularyCategoryScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type VocabularyCategoryScalarFieldEnum = (typeof VocabularyCategoryScalarFieldEnum)[keyof typeof VocabularyCategoryScalarFieldEnum]
+export type TopicScalarFieldEnum = (typeof TopicScalarFieldEnum)[keyof typeof TopicScalarFieldEnum]
 
 
 export const VocabularyScalarFieldEnum = {
@@ -118,7 +118,7 @@ export const VocabularyScalarFieldEnum = {
   synonyms: 'synonyms',
   antonyms: 'antonyms',
   difficulty: 'difficulty',
-  categoryId: 'categoryId',
+  topicId: 'topicId',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -150,10 +150,10 @@ export const UserVocabularyProgressScalarFieldEnum = {
 export type UserVocabularyProgressScalarFieldEnum = (typeof UserVocabularyProgressScalarFieldEnum)[keyof typeof UserVocabularyProgressScalarFieldEnum]
 
 
-export const UserCategoryProgressScalarFieldEnum = {
+export const UserTopicProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  categoryId: 'categoryId',
+  topicId: 'topicId',
   totalWords: 'totalWords',
   learnedWords: 'learnedWords',
   masteredWords: 'masteredWords',
@@ -163,7 +163,7 @@ export const UserCategoryProgressScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type UserCategoryProgressScalarFieldEnum = (typeof UserCategoryProgressScalarFieldEnum)[keyof typeof UserCategoryProgressScalarFieldEnum]
+export type UserTopicProgressScalarFieldEnum = (typeof UserTopicProgressScalarFieldEnum)[keyof typeof UserTopicProgressScalarFieldEnum]
 
 
 export const SortOrder = {

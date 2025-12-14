@@ -1,15 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../core/database/prisma.service';
-import { ResGetProfile, ResRevokeRefreshToken } from './dto';
-import { User } from '../../generated/prisma/client';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async getProfile(id: string): Promise<ResGetProfile> {
+    async getProfile(id: string) {
         const user = await this.prisma.user.findUnique({
             where: { id },
+            select: {
+                name: true,
+                email: true,
+                avatar: true,
+                role: true,
+                isActive: true,
+                canRefreshToken: true,
+            },
         });
 
         if (!user) {
@@ -19,12 +25,14 @@ export class AuthService {
         return user;
     }
 
-    async revokeRefreshToken(id: string): Promise<ResRevokeRefreshToken> {
+    async revokeRefreshToken(id: string) {
         const user = await this.prisma.user.update({
             where: { id },
             data: { canRefreshToken: false },
         });
 
-        return user;
+        return {
+            message: "oke"
+        };
     }
 }

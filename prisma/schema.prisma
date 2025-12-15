@@ -82,29 +82,15 @@ model Vocabulary {
 }
 
 // ==================== USER VOCABULARY PROGRESS ====================
-// Theo dõi tiến trình học từng từ vựng của user (Spaced Repetition)
 
 model UserVocabularyProgress {
   id           String @id @default(cuid())
   userId       String
   vocabularyId String
 
-  // Spaced Repetition System (SRS) fields
-  easeFactor  Float @default(2.5) // Hệ số dễ (SM-2 algorithm)
-  interval    Int   @default(0) // Khoảng cách ôn tập (ngày)
-  repetitions Int   @default(0) // Số lần ôn tập thành công liên tiếp
-
-  // Thống kê học tập
-  correctCount   Int @default(0) // Số lần trả lời đúng
-  incorrectCount Int @default(0) // Số lần trả lời sai
-  streak         Int @default(0) // Chuỗi đúng liên tiếp hiện tại
-  bestStreak     Int @default(0) // Chuỗi đúng dài nhất
-
-  // Thời gian
-  lastReviewedAt DateTime? // Lần ôn tập cuối
-  nextReviewAt   DateTime? // Lần ôn tập tiếp theo (SRS)
-  firstLearnedAt DateTime  @default(now()) // Lần đầu học
-  masteredAt     DateTime? // Thời điểm thành thạo
+  lastReviewedAt DateTime?
+  halfLife       Float     @default(1.0) // Thời gian để retention = 50% (ngày)
+  nextReviewAt   DateTime? // Cache để query hiệu quả
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -116,24 +102,19 @@ model UserVocabularyProgress {
   @@unique([userId, vocabularyId])
   @@index([userId])
   @@index([vocabularyId])
-  @@index([nextReviewAt])
+  @@index([userId, nextReviewAt])
   @@map("user_vocabulary_progress")
 }
 
 // ==================== USER TOPIC PROGRESS ====================
-// Tiến trình học của user theo từng topic
 
 model UserTopicProgress {
   id      String @id @default(cuid())
   userId  String
   topicId String
 
-  totalWords    Int @default(0) // Tổng số từ trong topic
-  learnedWords  Int @default(0) // Số từ đã học
-  masteredWords Int @default(0) // Số từ đã thành thạo
-
-  lastStudiedAt DateTime? // Lần học cuối
-  completedAt   DateTime? // Thời điểm hoàn thành topic
+  learnedWords  Int @default(0)
+  masteredWords Int @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

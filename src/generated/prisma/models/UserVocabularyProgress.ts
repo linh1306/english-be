@@ -27,40 +27,20 @@ export type AggregateUserVocabularyProgress = {
 }
 
 export type UserVocabularyProgressAvgAggregateOutputType = {
-  easeFactor: number | null
-  interval: number | null
-  repetitions: number | null
-  correctCount: number | null
-  incorrectCount: number | null
-  streak: number | null
-  bestStreak: number | null
+  halfLife: number | null
 }
 
 export type UserVocabularyProgressSumAggregateOutputType = {
-  easeFactor: number | null
-  interval: number | null
-  repetitions: number | null
-  correctCount: number | null
-  incorrectCount: number | null
-  streak: number | null
-  bestStreak: number | null
+  halfLife: number | null
 }
 
 export type UserVocabularyProgressMinAggregateOutputType = {
   id: string | null
   userId: string | null
   vocabularyId: string | null
-  easeFactor: number | null
-  interval: number | null
-  repetitions: number | null
-  correctCount: number | null
-  incorrectCount: number | null
-  streak: number | null
-  bestStreak: number | null
   lastReviewedAt: Date | null
+  halfLife: number | null
   nextReviewAt: Date | null
-  firstLearnedAt: Date | null
-  masteredAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -69,17 +49,9 @@ export type UserVocabularyProgressMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   vocabularyId: string | null
-  easeFactor: number | null
-  interval: number | null
-  repetitions: number | null
-  correctCount: number | null
-  incorrectCount: number | null
-  streak: number | null
-  bestStreak: number | null
   lastReviewedAt: Date | null
+  halfLife: number | null
   nextReviewAt: Date | null
-  firstLearnedAt: Date | null
-  masteredAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -88,17 +60,9 @@ export type UserVocabularyProgressCountAggregateOutputType = {
   id: number
   userId: number
   vocabularyId: number
-  easeFactor: number
-  interval: number
-  repetitions: number
-  correctCount: number
-  incorrectCount: number
-  streak: number
-  bestStreak: number
   lastReviewedAt: number
+  halfLife: number
   nextReviewAt: number
-  firstLearnedAt: number
-  masteredAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -106,40 +70,20 @@ export type UserVocabularyProgressCountAggregateOutputType = {
 
 
 export type UserVocabularyProgressAvgAggregateInputType = {
-  easeFactor?: true
-  interval?: true
-  repetitions?: true
-  correctCount?: true
-  incorrectCount?: true
-  streak?: true
-  bestStreak?: true
+  halfLife?: true
 }
 
 export type UserVocabularyProgressSumAggregateInputType = {
-  easeFactor?: true
-  interval?: true
-  repetitions?: true
-  correctCount?: true
-  incorrectCount?: true
-  streak?: true
-  bestStreak?: true
+  halfLife?: true
 }
 
 export type UserVocabularyProgressMinAggregateInputType = {
   id?: true
   userId?: true
   vocabularyId?: true
-  easeFactor?: true
-  interval?: true
-  repetitions?: true
-  correctCount?: true
-  incorrectCount?: true
-  streak?: true
-  bestStreak?: true
   lastReviewedAt?: true
+  halfLife?: true
   nextReviewAt?: true
-  firstLearnedAt?: true
-  masteredAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -148,17 +92,9 @@ export type UserVocabularyProgressMaxAggregateInputType = {
   id?: true
   userId?: true
   vocabularyId?: true
-  easeFactor?: true
-  interval?: true
-  repetitions?: true
-  correctCount?: true
-  incorrectCount?: true
-  streak?: true
-  bestStreak?: true
   lastReviewedAt?: true
+  halfLife?: true
   nextReviewAt?: true
-  firstLearnedAt?: true
-  masteredAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -167,17 +103,9 @@ export type UserVocabularyProgressCountAggregateInputType = {
   id?: true
   userId?: true
   vocabularyId?: true
-  easeFactor?: true
-  interval?: true
-  repetitions?: true
-  correctCount?: true
-  incorrectCount?: true
-  streak?: true
-  bestStreak?: true
   lastReviewedAt?: true
+  halfLife?: true
   nextReviewAt?: true
-  firstLearnedAt?: true
-  masteredAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -273,17 +201,9 @@ export type UserVocabularyProgressGroupByOutputType = {
   id: string
   userId: string
   vocabularyId: string
-  easeFactor: number
-  interval: number
-  repetitions: number
-  correctCount: number
-  incorrectCount: number
-  streak: number
-  bestStreak: number
   lastReviewedAt: Date | null
+  halfLife: number
   nextReviewAt: Date | null
-  firstLearnedAt: Date
-  masteredAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserVocabularyProgressCountAggregateOutputType | null
@@ -315,17 +235,9 @@ export type UserVocabularyProgressWhereInput = {
   id?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   userId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   vocabularyId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
-  easeFactor?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
-  interval?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  repetitions?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  correctCount?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  incorrectCount?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  streak?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  bestStreak?: Prisma.IntFilter<"UserVocabularyProgress"> | number
   lastReviewedAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
+  halfLife?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
   nextReviewAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
-  masteredAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -336,17 +248,9 @@ export type UserVocabularyProgressOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  repetitions?: Prisma.SortOrder
-  correctCount?: Prisma.SortOrder
-  incorrectCount?: Prisma.SortOrder
-  streak?: Prisma.SortOrder
-  bestStreak?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  halfLife?: Prisma.SortOrder
   nextReviewAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  firstLearnedAt?: Prisma.SortOrder
-  masteredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -361,17 +265,9 @@ export type UserVocabularyProgressWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserVocabularyProgressWhereInput | Prisma.UserVocabularyProgressWhereInput[]
   userId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   vocabularyId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
-  easeFactor?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
-  interval?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  repetitions?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  correctCount?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  incorrectCount?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  streak?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  bestStreak?: Prisma.IntFilter<"UserVocabularyProgress"> | number
   lastReviewedAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
+  halfLife?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
   nextReviewAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
-  masteredAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -382,17 +278,9 @@ export type UserVocabularyProgressOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  repetitions?: Prisma.SortOrder
-  correctCount?: Prisma.SortOrder
-  incorrectCount?: Prisma.SortOrder
-  streak?: Prisma.SortOrder
-  bestStreak?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  halfLife?: Prisma.SortOrder
   nextReviewAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  firstLearnedAt?: Prisma.SortOrder
-  masteredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserVocabularyProgressCountOrderByAggregateInput
@@ -409,34 +297,18 @@ export type UserVocabularyProgressScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"UserVocabularyProgress"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserVocabularyProgress"> | string
   vocabularyId?: Prisma.StringWithAggregatesFilter<"UserVocabularyProgress"> | string
-  easeFactor?: Prisma.FloatWithAggregatesFilter<"UserVocabularyProgress"> | number
-  interval?: Prisma.IntWithAggregatesFilter<"UserVocabularyProgress"> | number
-  repetitions?: Prisma.IntWithAggregatesFilter<"UserVocabularyProgress"> | number
-  correctCount?: Prisma.IntWithAggregatesFilter<"UserVocabularyProgress"> | number
-  incorrectCount?: Prisma.IntWithAggregatesFilter<"UserVocabularyProgress"> | number
-  streak?: Prisma.IntWithAggregatesFilter<"UserVocabularyProgress"> | number
-  bestStreak?: Prisma.IntWithAggregatesFilter<"UserVocabularyProgress"> | number
   lastReviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserVocabularyProgress"> | Date | string | null
+  halfLife?: Prisma.FloatWithAggregatesFilter<"UserVocabularyProgress"> | number
   nextReviewAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserVocabularyProgress"> | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeWithAggregatesFilter<"UserVocabularyProgress"> | Date | string
-  masteredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UserVocabularyProgress"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserVocabularyProgress"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserVocabularyProgress"> | Date | string
 }
 
 export type UserVocabularyProgressCreateInput = {
   id?: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutVocabularyProgressInput
@@ -447,34 +319,18 @@ export type UserVocabularyProgressUncheckedCreateInput = {
   id?: string
   userId: string
   vocabularyId: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserVocabularyProgressUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutVocabularyProgressNestedInput
@@ -485,17 +341,9 @@ export type UserVocabularyProgressUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   vocabularyId?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -504,34 +352,18 @@ export type UserVocabularyProgressCreateManyInput = {
   id?: string
   userId: string
   vocabularyId: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserVocabularyProgressUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -540,17 +372,9 @@ export type UserVocabularyProgressUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   vocabularyId?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -574,46 +398,24 @@ export type UserVocabularyProgressCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  repetitions?: Prisma.SortOrder
-  correctCount?: Prisma.SortOrder
-  incorrectCount?: Prisma.SortOrder
-  streak?: Prisma.SortOrder
-  bestStreak?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrder
+  halfLife?: Prisma.SortOrder
   nextReviewAt?: Prisma.SortOrder
-  firstLearnedAt?: Prisma.SortOrder
-  masteredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserVocabularyProgressAvgOrderByAggregateInput = {
-  easeFactor?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  repetitions?: Prisma.SortOrder
-  correctCount?: Prisma.SortOrder
-  incorrectCount?: Prisma.SortOrder
-  streak?: Prisma.SortOrder
-  bestStreak?: Prisma.SortOrder
+  halfLife?: Prisma.SortOrder
 }
 
 export type UserVocabularyProgressMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  repetitions?: Prisma.SortOrder
-  correctCount?: Prisma.SortOrder
-  incorrectCount?: Prisma.SortOrder
-  streak?: Prisma.SortOrder
-  bestStreak?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrder
+  halfLife?: Prisma.SortOrder
   nextReviewAt?: Prisma.SortOrder
-  firstLearnedAt?: Prisma.SortOrder
-  masteredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -622,29 +424,15 @@ export type UserVocabularyProgressMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  repetitions?: Prisma.SortOrder
-  correctCount?: Prisma.SortOrder
-  incorrectCount?: Prisma.SortOrder
-  streak?: Prisma.SortOrder
-  bestStreak?: Prisma.SortOrder
   lastReviewedAt?: Prisma.SortOrder
+  halfLife?: Prisma.SortOrder
   nextReviewAt?: Prisma.SortOrder
-  firstLearnedAt?: Prisma.SortOrder
-  masteredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserVocabularyProgressSumOrderByAggregateInput = {
-  easeFactor?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  repetitions?: Prisma.SortOrder
-  correctCount?: Prisma.SortOrder
-  incorrectCount?: Prisma.SortOrder
-  streak?: Prisma.SortOrder
-  bestStreak?: Prisma.SortOrder
+  halfLife?: Prisma.SortOrder
 }
 
 export type UserVocabularyProgressCreateNestedManyWithoutUserInput = {
@@ -731,6 +519,10 @@ export type UserVocabularyProgressUncheckedUpdateManyWithoutVocabularyNestedInpu
   deleteMany?: Prisma.UserVocabularyProgressScalarWhereInput | Prisma.UserVocabularyProgressScalarWhereInput[]
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -739,31 +531,11 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type UserVocabularyProgressCreateWithoutUserInput = {
   id?: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   vocabulary: Prisma.VocabularyCreateNestedOneWithoutUserProgressInput
@@ -772,17 +544,9 @@ export type UserVocabularyProgressCreateWithoutUserInput = {
 export type UserVocabularyProgressUncheckedCreateWithoutUserInput = {
   id?: string
   vocabularyId: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -820,34 +584,18 @@ export type UserVocabularyProgressScalarWhereInput = {
   id?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   userId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   vocabularyId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
-  easeFactor?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
-  interval?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  repetitions?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  correctCount?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  incorrectCount?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  streak?: Prisma.IntFilter<"UserVocabularyProgress"> | number
-  bestStreak?: Prisma.IntFilter<"UserVocabularyProgress"> | number
   lastReviewedAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
+  halfLife?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
   nextReviewAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
-  masteredAt?: Prisma.DateTimeNullableFilter<"UserVocabularyProgress"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserVocabularyProgress"> | Date | string
 }
 
 export type UserVocabularyProgressCreateWithoutVocabularyInput = {
   id?: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutVocabularyProgressInput
@@ -856,17 +604,9 @@ export type UserVocabularyProgressCreateWithoutVocabularyInput = {
 export type UserVocabularyProgressUncheckedCreateWithoutVocabularyInput = {
   id?: string
   userId: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -900,34 +640,18 @@ export type UserVocabularyProgressUpdateManyWithWhereWithoutVocabularyInput = {
 export type UserVocabularyProgressCreateManyUserInput = {
   id?: string
   vocabularyId: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserVocabularyProgressUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vocabulary?: Prisma.VocabularyUpdateOneRequiredWithoutUserProgressNestedInput
@@ -936,17 +660,9 @@ export type UserVocabularyProgressUpdateWithoutUserInput = {
 export type UserVocabularyProgressUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vocabularyId?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -954,17 +670,9 @@ export type UserVocabularyProgressUncheckedUpdateWithoutUserInput = {
 export type UserVocabularyProgressUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vocabularyId?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -972,34 +680,18 @@ export type UserVocabularyProgressUncheckedUpdateManyWithoutUserInput = {
 export type UserVocabularyProgressCreateManyVocabularyInput = {
   id?: string
   userId: string
-  easeFactor?: number
-  interval?: number
-  repetitions?: number
-  correctCount?: number
-  incorrectCount?: number
-  streak?: number
-  bestStreak?: number
   lastReviewedAt?: Date | string | null
+  halfLife?: number
   nextReviewAt?: Date | string | null
-  firstLearnedAt?: Date | string
-  masteredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserVocabularyProgressUpdateWithoutVocabularyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutVocabularyProgressNestedInput
@@ -1008,17 +700,9 @@ export type UserVocabularyProgressUpdateWithoutVocabularyInput = {
 export type UserVocabularyProgressUncheckedUpdateWithoutVocabularyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1026,17 +710,9 @@ export type UserVocabularyProgressUncheckedUpdateWithoutVocabularyInput = {
 export type UserVocabularyProgressUncheckedUpdateManyWithoutVocabularyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  interval?: Prisma.IntFieldUpdateOperationsInput | number
-  repetitions?: Prisma.IntFieldUpdateOperationsInput | number
-  correctCount?: Prisma.IntFieldUpdateOperationsInput | number
-  incorrectCount?: Prisma.IntFieldUpdateOperationsInput | number
-  streak?: Prisma.IntFieldUpdateOperationsInput | number
-  bestStreak?: Prisma.IntFieldUpdateOperationsInput | number
   lastReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  halfLife?: Prisma.FloatFieldUpdateOperationsInput | number
   nextReviewAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  firstLearnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  masteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1047,17 +723,9 @@ export type UserVocabularyProgressSelect<ExtArgs extends runtime.Types.Extension
   id?: boolean
   userId?: boolean
   vocabularyId?: boolean
-  easeFactor?: boolean
-  interval?: boolean
-  repetitions?: boolean
-  correctCount?: boolean
-  incorrectCount?: boolean
-  streak?: boolean
-  bestStreak?: boolean
   lastReviewedAt?: boolean
+  halfLife?: boolean
   nextReviewAt?: boolean
-  firstLearnedAt?: boolean
-  masteredAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1068,17 +736,9 @@ export type UserVocabularyProgressSelectCreateManyAndReturn<ExtArgs extends runt
   id?: boolean
   userId?: boolean
   vocabularyId?: boolean
-  easeFactor?: boolean
-  interval?: boolean
-  repetitions?: boolean
-  correctCount?: boolean
-  incorrectCount?: boolean
-  streak?: boolean
-  bestStreak?: boolean
   lastReviewedAt?: boolean
+  halfLife?: boolean
   nextReviewAt?: boolean
-  firstLearnedAt?: boolean
-  masteredAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1089,17 +749,9 @@ export type UserVocabularyProgressSelectUpdateManyAndReturn<ExtArgs extends runt
   id?: boolean
   userId?: boolean
   vocabularyId?: boolean
-  easeFactor?: boolean
-  interval?: boolean
-  repetitions?: boolean
-  correctCount?: boolean
-  incorrectCount?: boolean
-  streak?: boolean
-  bestStreak?: boolean
   lastReviewedAt?: boolean
+  halfLife?: boolean
   nextReviewAt?: boolean
-  firstLearnedAt?: boolean
-  masteredAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1110,22 +762,14 @@ export type UserVocabularyProgressSelectScalar = {
   id?: boolean
   userId?: boolean
   vocabularyId?: boolean
-  easeFactor?: boolean
-  interval?: boolean
-  repetitions?: boolean
-  correctCount?: boolean
-  incorrectCount?: boolean
-  streak?: boolean
-  bestStreak?: boolean
   lastReviewedAt?: boolean
+  halfLife?: boolean
   nextReviewAt?: boolean
-  firstLearnedAt?: boolean
-  masteredAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserVocabularyProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "vocabularyId" | "easeFactor" | "interval" | "repetitions" | "correctCount" | "incorrectCount" | "streak" | "bestStreak" | "lastReviewedAt" | "nextReviewAt" | "firstLearnedAt" | "masteredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["userVocabularyProgress"]>
+export type UserVocabularyProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "vocabularyId" | "lastReviewedAt" | "halfLife" | "nextReviewAt" | "createdAt" | "updatedAt", ExtArgs["result"]["userVocabularyProgress"]>
 export type UserVocabularyProgressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   vocabulary?: boolean | Prisma.VocabularyDefaultArgs<ExtArgs>
@@ -1149,17 +793,9 @@ export type $UserVocabularyProgressPayload<ExtArgs extends runtime.Types.Extensi
     id: string
     userId: string
     vocabularyId: string
-    easeFactor: number
-    interval: number
-    repetitions: number
-    correctCount: number
-    incorrectCount: number
-    streak: number
-    bestStreak: number
     lastReviewedAt: Date | null
+    halfLife: number
     nextReviewAt: Date | null
-    firstLearnedAt: Date
-    masteredAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["userVocabularyProgress"]>
@@ -1590,17 +1226,9 @@ export interface UserVocabularyProgressFieldRefs {
   readonly id: Prisma.FieldRef<"UserVocabularyProgress", 'String'>
   readonly userId: Prisma.FieldRef<"UserVocabularyProgress", 'String'>
   readonly vocabularyId: Prisma.FieldRef<"UserVocabularyProgress", 'String'>
-  readonly easeFactor: Prisma.FieldRef<"UserVocabularyProgress", 'Float'>
-  readonly interval: Prisma.FieldRef<"UserVocabularyProgress", 'Int'>
-  readonly repetitions: Prisma.FieldRef<"UserVocabularyProgress", 'Int'>
-  readonly correctCount: Prisma.FieldRef<"UserVocabularyProgress", 'Int'>
-  readonly incorrectCount: Prisma.FieldRef<"UserVocabularyProgress", 'Int'>
-  readonly streak: Prisma.FieldRef<"UserVocabularyProgress", 'Int'>
-  readonly bestStreak: Prisma.FieldRef<"UserVocabularyProgress", 'Int'>
   readonly lastReviewedAt: Prisma.FieldRef<"UserVocabularyProgress", 'DateTime'>
+  readonly halfLife: Prisma.FieldRef<"UserVocabularyProgress", 'Float'>
   readonly nextReviewAt: Prisma.FieldRef<"UserVocabularyProgress", 'DateTime'>
-  readonly firstLearnedAt: Prisma.FieldRef<"UserVocabularyProgress", 'DateTime'>
-  readonly masteredAt: Prisma.FieldRef<"UserVocabularyProgress", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"UserVocabularyProgress", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserVocabularyProgress", 'DateTime'>
 }

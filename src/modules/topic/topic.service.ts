@@ -109,16 +109,6 @@ export class TopicService {
     }
 
     async deleteTopic(id: string) {
-        await this.prisma.topic.update({
-            where: { id },
-            data: { isActive: false },
-        });
-        return {
-            message: "oke"
-        };
-    }
-
-    async hardDeleteTopic(id: string) {
         await this.prisma.topic.delete({
             where: { id },
         });

@@ -869,17 +869,9 @@ export const UserVocabularyProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   vocabularyId: 'vocabularyId',
-  easeFactor: 'easeFactor',
-  interval: 'interval',
-  repetitions: 'repetitions',
-  correctCount: 'correctCount',
-  incorrectCount: 'incorrectCount',
-  streak: 'streak',
-  bestStreak: 'bestStreak',
   lastReviewedAt: 'lastReviewedAt',
+  halfLife: 'halfLife',
   nextReviewAt: 'nextReviewAt',
-  firstLearnedAt: 'firstLearnedAt',
-  masteredAt: 'masteredAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -891,11 +883,8 @@ export const UserTopicProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   topicId: 'topicId',
-  totalWords: 'totalWords',
   learnedWords: 'learnedWords',
   masteredWords: 'masteredWords',
-  lastStudiedAt: 'lastStudiedAt',
-  completedAt: 'completedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

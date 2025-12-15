@@ -2,23 +2,11 @@ import { Injectable, NotFoundException, ConflictException, Logger } from '@nestj
 import { generateWordsFlow } from '../../flows/generate-words.flow';
 import { Queued } from '../../core/queue/queued.decorator';
 import { PrismaService } from '../../core/database/prisma.service';
-import { DifficultyLevel } from '../../generated/prisma/enums';
 import {
     BodyCreateVocabulary,
     BodyUpdateVocabulary,
     QueryFindAllVocabulary,
-    ResVocabulary,
-    ResFindAllVocabulary,
-    BodyBulkCreateVocabulary,
-    ResBulkCreateVocabulary,
-    ResCreateVocabulary,
-    ResUpdateVocabulary,
-    ResFindOneVocabulary,
-    ResGetRandomByTopic,
-    ResRemoveVocabulary,
-    ResHardDeleteVocabulary,
     BodyGenerateVocabulary,
-    ResGenerateVocabulary,
 } from './dto/vocabulary.dto';
 
 @Injectable()
@@ -30,7 +18,7 @@ export class VocabularyService {
     /**
      * Tạo từ vựng mới
      */
-    async createVocabulary(dto: BodyCreateVocabulary): Promise<ResCreateVocabulary> {
+    async createVocabulary(dto: BodyCreateVocabulary) {
         // Kiểm tra topic tồn tại
         const topic = await this.prisma.topic.findUnique({
             where: { id: dto.topicId },
@@ -67,58 +55,29 @@ export class VocabularyService {
                 imageUrl: dto.imageUrl,
                 synonyms: dto.synonyms ?? [],
                 antonyms: dto.antonyms ?? [],
-                difficulty: dto.difficulty ?? 'BEGINNER',
             },
             include: {
                 topic: {
-                    select: { id: true, name: true, nameVi: true },
+                    select: { id: true, name: true },
                 },
             },
         });
 
-        return this.toResponse(vocabulary);
+        return vocabulary;
     }
 
-    /**
-     * Tạo nhiều từ vựng cùng lúc
-     */
-    async bulkCreateVocabularies(dto: BodyBulkCreateVocabulary): Promise<ResBulkCreateVocabulary> {
-        const result: ResBulkCreateVocabulary = {
-            created: 0,
-            failed: 0,
-            errors: [],
-        };
-
-        for (const vocab of dto.vocabularies) {
-            try {
-                await this.createVocabulary(vocab);
-                result.created++;
-            } catch (error: any) {
-                result.failed++;
-                result.errors.push({
-                    word: vocab.word,
-                    error: error.message,
-                });
-            }
-        }
-
-        return result;
-    }
 
     /**
      * Lấy danh sách từ vựng với phân trang và filter
      */
-    async getVocabularies(query: QueryFindAllVocabulary): Promise<ResFindAllVocabulary> {
+    async getVocabularies(query: QueryFindAllVocabulary) {
         const {
             search,
             topicId,
-            difficulty,
             partOfSpeech,
-            isActive = true,
             page = 1,
             limit = 20,
-            sortBy = 'word',
-            sortOrder = 'asc',
+            orderBy,
         } = query;
 
         const where: any = {};
@@ -134,16 +93,8 @@ export class VocabularyService {
             where.topicId = topicId;
         }
 
-        if (difficulty) {
-            where.difficulty = difficulty;
-        }
-
         if (partOfSpeech) {
             where.partOfSpeech = partOfSpeech;
-        }
-
-        if (isActive !== undefined) {
-            where.isActive = isActive;
         }
 
         const [vocabularies, total] = await Promise.all([
@@ -151,10 +102,16 @@ export class VocabularyService {
                 where,
                 skip: (page - 1) * limit,
                 take: limit,
-                orderBy: { [sortBy]: sortOrder },
+                orderBy: orderBy ? (Array.isArray(orderBy) ? orderBy.map(o => {
+                    if (o.startsWith('-')) return { [o.substring(1)]: 'desc' };
+                    return { [o]: 'asc' };
+                }) : [orderBy].map((o: string) => {
+                    if (o.startsWith('-')) return { [o.substring(1)]: 'desc' };
+                    return { [o]: 'asc' };
+                })) : { word: 'asc' },
                 include: {
                     topic: {
-                        select: { id: true, name: true, nameVi: true },
+                        select: { id: true, name: true },
                     },
                 },
             }),
@@ -162,7 +119,7 @@ export class VocabularyService {
         ]);
 
         return {
-            data: vocabularies.map((v) => this.toResponse(v)),
+            data: vocabularies,
             meta: {
                 total,
                 page,
@@ -173,142 +130,42 @@ export class VocabularyService {
     }
 
     /**
-     * Lấy chi tiết một từ vựng
-     */
-    async getVocabulary(id: string): Promise<ResFindOneVocabulary> {
-        const vocabulary = await this.prisma.vocabulary.findUnique({
-            where: { id },
-            include: {
-                topic: {
-                    select: { id: true, name: true, nameVi: true },
-                },
-            },
-        });
-
-        if (!vocabulary) {
-            throw new NotFoundException(`Vocabulary with id "${id}" not found`);
-        }
-
-        return this.toResponse(vocabulary);
-    }
-
-    /**
-     * Lấy từ vựng ngẫu nhiên theo topic
-     */
-    async getRandomVocabulariesByTopic(topicId: string, count: number = 10): Promise<ResGetRandomByTopic> {
-        const vocabularies = await this.prisma.$queryRaw`
-      SELECT * FROM vocabularies 
-      WHERE "topicId" = ${topicId} AND "isActive" = true
-      ORDER BY RANDOM() 
-      LIMIT ${count}
-    `;
-
-        return (vocabularies as any[]).map((v) => this.toResponse(v));
-    }
-
-    /**
      * Cập nhật từ vựng
      */
-    async updateVocabulary(id: string, dto: BodyUpdateVocabulary): Promise<ResUpdateVocabulary> {
-        // Kiểm tra từ vựng tồn tại
-        const existing = await this.getVocabulary(id);
-
-        // Kiểm tra từ trùng lặp nếu đổi từ hoặc topic
-        if (dto.word || dto.topicId) {
-            const word = dto.word ?? existing.word;
-            const topicId = dto.topicId ?? existing.topicId;
-
-            const duplicate = await this.prisma.vocabulary.findFirst({
-                where: {
-                    word,
-                    topicId,
-                    NOT: { id },
-                },
-            });
-
-            if (duplicate) {
-                throw new ConflictException(`Word "${word}" already exists in this topic`);
-            }
-        }
-
+    async updateVocabulary(id: string, dto: BodyUpdateVocabulary) {
         const vocabulary = await this.prisma.vocabulary.update({
             where: { id },
             data: dto,
             include: {
                 topic: {
-                    select: { id: true, name: true, nameVi: true },
+                    select: { id: true, name: true },
                 },
             },
         });
 
-        return this.toResponse(vocabulary);
-    }
-
-    /**
-     * Xóa từ vựng (soft delete)
-     */
-    async deleteVocabulary(id: string): Promise<ResRemoveVocabulary> {
-        await this.getVocabulary(id);
-
-        const updated = await this.prisma.vocabulary.update({
-            where: { id },
-            data: { isActive: false },
-            include: {
-                topic: {
-                    select: { id: true, name: true, nameVi: true },
-                },
-            },
-        });
-
-        return this.toResponse(updated);
+        return vocabulary;
     }
 
     /**
      * Xóa vĩnh viễn từ vựng
      */
-    async hardDeleteVocabulary(id: string): Promise<ResHardDeleteVocabulary> {
-        await this.getVocabulary(id);
-
+    async hardDeleteVocabulary(id: string) {
         const deleted = await this.prisma.vocabulary.delete({
             where: { id },
             include: {
                 topic: {
-                    select: { id: true, name: true, nameVi: true },
+                    select: { id: true, name: true },
                 },
             },
         });
 
-        return this.toResponse(deleted);
+        return deleted;
     }
 
     /**
-     * Convert entity to response
-     */
-    private toResponse(vocabulary: any): ResVocabulary {
-        return {
-            id: vocabulary.id,
-            word: vocabulary.word,
-            pronunciation: vocabulary.pronunciation,
-            audioUrl: vocabulary.audioUrl,
-            meaning: vocabulary.meaning,
-            partOfSpeech: vocabulary.partOfSpeech,
-            exampleEn: vocabulary.exampleEn,
-            exampleVi: vocabulary.exampleVi,
-            imageUrl: vocabulary.imageUrl,
-            synonyms: vocabulary.synonyms ?? [],
-            antonyms: vocabulary.antonyms ?? [],
-            difficulty: vocabulary.difficulty,
-            topicId: vocabulary.topicId,
-            topic: vocabulary.topic,
-            isActive: vocabulary.isActive,
-            createdAt: vocabulary.createdAt,
-            updatedAt: vocabulary.updatedAt,
-        };
-    }
-    /**
      * Generate vocabularies using AI flow (Queued)
      */
-    async generateVocabularies(topicId: string, dto: BodyGenerateVocabulary): Promise<ResGenerateVocabulary> {
+    async generateVocabularies(topicId: string, dto: BodyGenerateVocabulary) {
         // Validate topic exists
         const topic = await this.prisma.topic.findUnique({
             where: { id: topicId },
@@ -354,13 +211,14 @@ export class VocabularyService {
                         word: item.word,
                         meaning: item.meaning,
                         topicId,
-                        pronunciation: item.pronunciation,
-                        partOfSpeech: item.partOfSpeech,
-                        exampleEn: item.exampleEn,
-                        exampleVi: item.exampleVi,
-                        synonyms: item.synonyms,
-                        antonyms: item.antonyms,
-                        difficulty: item.difficulty as DifficultyLevel,
+                        pronunciation: item.pronunciation ?? null,
+                        partOfSpeech: item.partOfSpeech ?? null,
+                        exampleEn: item.exampleEn ?? null,
+                        exampleVi: item.exampleVi ?? null,
+                        imageUrl: null,
+                        audioUrl: null,
+                        synonyms: item.synonyms ?? [],
+                        antonyms: item.antonyms ?? [],
                     });
                     successCount++;
                 } catch (error: any) {

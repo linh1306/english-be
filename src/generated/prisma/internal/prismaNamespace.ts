@@ -835,11 +835,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const TopicScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  nameVi: 'nameVi',
   description: 'description',
   thumbnail: 'thumbnail',
-  difficulty: 'difficulty',
-  order: 'order',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -860,9 +857,7 @@ export const VocabularyScalarFieldEnum = {
   imageUrl: 'imageUrl',
   synonyms: 'synonyms',
   antonyms: 'antonyms',
-  difficulty: 'difficulty',
   topicId: 'topicId',
-  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -874,7 +869,6 @@ export const UserVocabularyProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   vocabularyId: 'vocabularyId',
-  proficiency: 'proficiency',
   easeFactor: 'easeFactor',
   interval: 'interval',
   repetitions: 'repetitions',
@@ -989,16 +983,16 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'DifficultyLevel'
+ * Reference to a field of type 'Float'
  */
-export type EnumDifficultyLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DifficultyLevel'>
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
 /**
- * Reference to a field of type 'DifficultyLevel[]'
+ * Reference to a field of type 'Float[]'
  */
-export type ListEnumDifficultyLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DifficultyLevel[]'>
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -1013,34 +1007,6 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
- * Reference to a field of type 'ProficiencyLevel'
- */
-export type EnumProficiencyLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProficiencyLevel'>
-    
-
-
-/**
- * Reference to a field of type 'ProficiencyLevel[]'
- */
-export type ListEnumProficiencyLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProficiencyLevel[]'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**

@@ -20,28 +20,15 @@ export type TopicModel = runtime.Types.Result.DefaultSelection<Prisma.$TopicPayl
 
 export type AggregateTopic = {
   _count: TopicCountAggregateOutputType | null
-  _avg: TopicAvgAggregateOutputType | null
-  _sum: TopicSumAggregateOutputType | null
   _min: TopicMinAggregateOutputType | null
   _max: TopicMaxAggregateOutputType | null
-}
-
-export type TopicAvgAggregateOutputType = {
-  order: number | null
-}
-
-export type TopicSumAggregateOutputType = {
-  order: number | null
 }
 
 export type TopicMinAggregateOutputType = {
   id: string | null
   name: string | null
-  nameVi: string | null
   description: string | null
   thumbnail: string | null
-  difficulty: $Enums.DifficultyLevel | null
-  order: number | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -50,11 +37,8 @@ export type TopicMinAggregateOutputType = {
 export type TopicMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  nameVi: string | null
   description: string | null
   thumbnail: string | null
-  difficulty: $Enums.DifficultyLevel | null
-  order: number | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -63,11 +47,8 @@ export type TopicMaxAggregateOutputType = {
 export type TopicCountAggregateOutputType = {
   id: number
   name: number
-  nameVi: number
   description: number
   thumbnail: number
-  difficulty: number
-  order: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -75,22 +56,11 @@ export type TopicCountAggregateOutputType = {
 }
 
 
-export type TopicAvgAggregateInputType = {
-  order?: true
-}
-
-export type TopicSumAggregateInputType = {
-  order?: true
-}
-
 export type TopicMinAggregateInputType = {
   id?: true
   name?: true
-  nameVi?: true
   description?: true
   thumbnail?: true
-  difficulty?: true
-  order?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -99,11 +69,8 @@ export type TopicMinAggregateInputType = {
 export type TopicMaxAggregateInputType = {
   id?: true
   name?: true
-  nameVi?: true
   description?: true
   thumbnail?: true
-  difficulty?: true
-  order?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -112,11 +79,8 @@ export type TopicMaxAggregateInputType = {
 export type TopicCountAggregateInputType = {
   id?: true
   name?: true
-  nameVi?: true
   description?: true
   thumbnail?: true
-  difficulty?: true
-  order?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -161,18 +125,6 @@ export type TopicAggregateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: TopicAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: TopicSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: TopicMinAggregateInputType
@@ -203,8 +155,6 @@ export type TopicGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   _count?: TopicCountAggregateInputType | true
-  _avg?: TopicAvgAggregateInputType
-  _sum?: TopicSumAggregateInputType
   _min?: TopicMinAggregateInputType
   _max?: TopicMaxAggregateInputType
 }
@@ -212,17 +162,12 @@ export type TopicGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type TopicGroupByOutputType = {
   id: string
   name: string
-  nameVi: string | null
   description: string | null
   thumbnail: string | null
-  difficulty: $Enums.DifficultyLevel
-  order: number
   isActive: boolean
   createdAt: Date
   updatedAt: Date
   _count: TopicCountAggregateOutputType | null
-  _avg: TopicAvgAggregateOutputType | null
-  _sum: TopicSumAggregateOutputType | null
   _min: TopicMinAggregateOutputType | null
   _max: TopicMaxAggregateOutputType | null
 }
@@ -248,11 +193,8 @@ export type TopicWhereInput = {
   NOT?: Prisma.TopicWhereInput | Prisma.TopicWhereInput[]
   id?: Prisma.StringFilter<"Topic"> | string
   name?: Prisma.StringFilter<"Topic"> | string
-  nameVi?: Prisma.StringNullableFilter<"Topic"> | string | null
   description?: Prisma.StringNullableFilter<"Topic"> | string | null
   thumbnail?: Prisma.StringNullableFilter<"Topic"> | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFilter<"Topic"> | $Enums.DifficultyLevel
-  order?: Prisma.IntFilter<"Topic"> | number
   isActive?: Prisma.BoolFilter<"Topic"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Topic"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Topic"> | Date | string
@@ -263,11 +205,8 @@ export type TopicWhereInput = {
 export type TopicOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  nameVi?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -281,11 +220,8 @@ export type TopicWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TopicWhereInput | Prisma.TopicWhereInput[]
   OR?: Prisma.TopicWhereInput[]
   NOT?: Prisma.TopicWhereInput | Prisma.TopicWhereInput[]
-  nameVi?: Prisma.StringNullableFilter<"Topic"> | string | null
   description?: Prisma.StringNullableFilter<"Topic"> | string | null
   thumbnail?: Prisma.StringNullableFilter<"Topic"> | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFilter<"Topic"> | $Enums.DifficultyLevel
-  order?: Prisma.IntFilter<"Topic"> | number
   isActive?: Prisma.BoolFilter<"Topic"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Topic"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Topic"> | Date | string
@@ -296,19 +232,14 @@ export type TopicWhereUniqueInput = Prisma.AtLeast<{
 export type TopicOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  nameVi?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TopicCountOrderByAggregateInput
-  _avg?: Prisma.TopicAvgOrderByAggregateInput
   _max?: Prisma.TopicMaxOrderByAggregateInput
   _min?: Prisma.TopicMinOrderByAggregateInput
-  _sum?: Prisma.TopicSumOrderByAggregateInput
 }
 
 export type TopicScalarWhereWithAggregatesInput = {
@@ -317,11 +248,8 @@ export type TopicScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TopicScalarWhereWithAggregatesInput | Prisma.TopicScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Topic"> | string
   name?: Prisma.StringWithAggregatesFilter<"Topic"> | string
-  nameVi?: Prisma.StringNullableWithAggregatesFilter<"Topic"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Topic"> | string | null
   thumbnail?: Prisma.StringNullableWithAggregatesFilter<"Topic"> | string | null
-  difficulty?: Prisma.EnumDifficultyLevelWithAggregatesFilter<"Topic"> | $Enums.DifficultyLevel
-  order?: Prisma.IntWithAggregatesFilter<"Topic"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"Topic"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Topic"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Topic"> | Date | string
@@ -330,11 +258,8 @@ export type TopicScalarWhereWithAggregatesInput = {
 export type TopicCreateInput = {
   id?: string
   name: string
-  nameVi?: string | null
   description?: string | null
   thumbnail?: string | null
-  difficulty?: $Enums.DifficultyLevel
-  order?: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -345,11 +270,8 @@ export type TopicCreateInput = {
 export type TopicUncheckedCreateInput = {
   id?: string
   name: string
-  nameVi?: string | null
   description?: string | null
   thumbnail?: string | null
-  difficulty?: $Enums.DifficultyLevel
-  order?: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -360,11 +282,8 @@ export type TopicUncheckedCreateInput = {
 export type TopicUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  nameVi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,11 +294,8 @@ export type TopicUpdateInput = {
 export type TopicUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  nameVi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -390,11 +306,8 @@ export type TopicUncheckedUpdateInput = {
 export type TopicCreateManyInput = {
   id?: string
   name: string
-  nameVi?: string | null
   description?: string | null
   thumbnail?: string | null
-  difficulty?: $Enums.DifficultyLevel
-  order?: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -403,11 +316,8 @@ export type TopicCreateManyInput = {
 export type TopicUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  nameVi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -416,11 +326,8 @@ export type TopicUpdateManyMutationInput = {
 export type TopicUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  nameVi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -429,28 +336,18 @@ export type TopicUncheckedUpdateManyInput = {
 export type TopicCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  nameVi?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type TopicAvgOrderByAggregateInput = {
-  order?: Prisma.SortOrder
-}
-
 export type TopicMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  nameVi?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -459,35 +356,16 @@ export type TopicMaxOrderByAggregateInput = {
 export type TopicMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  nameVi?: Prisma.SortOrder
   description?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type TopicSumOrderByAggregateInput = {
-  order?: Prisma.SortOrder
-}
-
 export type TopicScalarRelationFilter = {
   is?: Prisma.TopicWhereInput
   isNot?: Prisma.TopicWhereInput
-}
-
-export type EnumDifficultyLevelFieldUpdateOperationsInput = {
-  set?: $Enums.DifficultyLevel
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type TopicCreateNestedOneWithoutVocabulariesInput = {
@@ -521,11 +399,8 @@ export type TopicUpdateOneRequiredWithoutUserProgressNestedInput = {
 export type TopicCreateWithoutVocabulariesInput = {
   id?: string
   name: string
-  nameVi?: string | null
   description?: string | null
   thumbnail?: string | null
-  difficulty?: $Enums.DifficultyLevel
-  order?: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -535,11 +410,8 @@ export type TopicCreateWithoutVocabulariesInput = {
 export type TopicUncheckedCreateWithoutVocabulariesInput = {
   id?: string
   name: string
-  nameVi?: string | null
   description?: string | null
   thumbnail?: string | null
-  difficulty?: $Enums.DifficultyLevel
-  order?: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -565,11 +437,8 @@ export type TopicUpdateToOneWithWhereWithoutVocabulariesInput = {
 export type TopicUpdateWithoutVocabulariesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  nameVi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -579,11 +448,8 @@ export type TopicUpdateWithoutVocabulariesInput = {
 export type TopicUncheckedUpdateWithoutVocabulariesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  nameVi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -593,11 +459,8 @@ export type TopicUncheckedUpdateWithoutVocabulariesInput = {
 export type TopicCreateWithoutUserProgressInput = {
   id?: string
   name: string
-  nameVi?: string | null
   description?: string | null
   thumbnail?: string | null
-  difficulty?: $Enums.DifficultyLevel
-  order?: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -607,11 +470,8 @@ export type TopicCreateWithoutUserProgressInput = {
 export type TopicUncheckedCreateWithoutUserProgressInput = {
   id?: string
   name: string
-  nameVi?: string | null
   description?: string | null
   thumbnail?: string | null
-  difficulty?: $Enums.DifficultyLevel
-  order?: number
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -637,11 +497,8 @@ export type TopicUpdateToOneWithWhereWithoutUserProgressInput = {
 export type TopicUpdateWithoutUserProgressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  nameVi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -651,11 +508,8 @@ export type TopicUpdateWithoutUserProgressInput = {
 export type TopicUncheckedUpdateWithoutUserProgressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  nameVi?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -705,11 +559,8 @@ export type TopicCountOutputTypeCountUserProgressArgs<ExtArgs extends runtime.Ty
 export type TopicSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  nameVi?: boolean
   description?: boolean
   thumbnail?: boolean
-  difficulty?: boolean
-  order?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -721,11 +572,8 @@ export type TopicSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type TopicSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  nameVi?: boolean
   description?: boolean
   thumbnail?: boolean
-  difficulty?: boolean
-  order?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -734,11 +582,8 @@ export type TopicSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type TopicSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  nameVi?: boolean
   description?: boolean
   thumbnail?: boolean
-  difficulty?: boolean
-  order?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -747,17 +592,14 @@ export type TopicSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type TopicSelectScalar = {
   id?: boolean
   name?: boolean
-  nameVi?: boolean
   description?: boolean
   thumbnail?: boolean
-  difficulty?: boolean
-  order?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TopicOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "nameVi" | "description" | "thumbnail" | "difficulty" | "order" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["topic"]>
+export type TopicOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "thumbnail" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["topic"]>
 export type TopicInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vocabularies?: boolean | Prisma.Topic$vocabulariesArgs<ExtArgs>
   userProgress?: boolean | Prisma.Topic$userProgressArgs<ExtArgs>
@@ -775,11 +617,8 @@ export type $TopicPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    nameVi: string | null
     description: string | null
     thumbnail: string | null
-    difficulty: $Enums.DifficultyLevel
-    order: number
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1210,11 +1049,8 @@ export interface Prisma__TopicClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface TopicFieldRefs {
   readonly id: Prisma.FieldRef<"Topic", 'String'>
   readonly name: Prisma.FieldRef<"Topic", 'String'>
-  readonly nameVi: Prisma.FieldRef<"Topic", 'String'>
   readonly description: Prisma.FieldRef<"Topic", 'String'>
   readonly thumbnail: Prisma.FieldRef<"Topic", 'String'>
-  readonly difficulty: Prisma.FieldRef<"Topic", 'DifficultyLevel'>
-  readonly order: Prisma.FieldRef<"Topic", 'Int'>
   readonly isActive: Prisma.FieldRef<"Topic", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Topic", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Topic", 'DateTime'>

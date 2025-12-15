@@ -34,9 +34,7 @@ export type VocabularyMinAggregateOutputType = {
   exampleEn: string | null
   exampleVi: string | null
   imageUrl: string | null
-  difficulty: $Enums.DifficultyLevel | null
   topicId: string | null
-  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,9 +49,7 @@ export type VocabularyMaxAggregateOutputType = {
   exampleEn: string | null
   exampleVi: string | null
   imageUrl: string | null
-  difficulty: $Enums.DifficultyLevel | null
   topicId: string | null
-  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,9 +66,7 @@ export type VocabularyCountAggregateOutputType = {
   imageUrl: number
   synonyms: number
   antonyms: number
-  difficulty: number
   topicId: number
-  isActive: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -89,9 +83,7 @@ export type VocabularyMinAggregateInputType = {
   exampleEn?: true
   exampleVi?: true
   imageUrl?: true
-  difficulty?: true
   topicId?: true
-  isActive?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,9 +98,7 @@ export type VocabularyMaxAggregateInputType = {
   exampleEn?: true
   exampleVi?: true
   imageUrl?: true
-  difficulty?: true
   topicId?: true
-  isActive?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -125,9 +115,7 @@ export type VocabularyCountAggregateInputType = {
   imageUrl?: true
   synonyms?: true
   antonyms?: true
-  difficulty?: true
   topicId?: true
-  isActive?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -217,9 +205,7 @@ export type VocabularyGroupByOutputType = {
   imageUrl: string | null
   synonyms: string[]
   antonyms: string[]
-  difficulty: $Enums.DifficultyLevel
   topicId: string
-  isActive: boolean
   createdAt: Date
   updatedAt: Date
   _count: VocabularyCountAggregateOutputType | null
@@ -257,9 +243,7 @@ export type VocabularyWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Vocabulary"> | string | null
   synonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   antonyms?: Prisma.StringNullableListFilter<"Vocabulary">
-  difficulty?: Prisma.EnumDifficultyLevelFilter<"Vocabulary"> | $Enums.DifficultyLevel
   topicId?: Prisma.StringFilter<"Vocabulary"> | string
-  isActive?: Prisma.BoolFilter<"Vocabulary"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
   topic?: Prisma.XOR<Prisma.TopicScalarRelationFilter, Prisma.TopicWhereInput>
@@ -278,9 +262,7 @@ export type VocabularyOrderByWithRelationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   synonyms?: Prisma.SortOrder
   antonyms?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   topic?: Prisma.TopicOrderByWithRelationInput
@@ -303,9 +285,7 @@ export type VocabularyWhereUniqueInput = Prisma.AtLeast<{
   imageUrl?: Prisma.StringNullableFilter<"Vocabulary"> | string | null
   synonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   antonyms?: Prisma.StringNullableListFilter<"Vocabulary">
-  difficulty?: Prisma.EnumDifficultyLevelFilter<"Vocabulary"> | $Enums.DifficultyLevel
   topicId?: Prisma.StringFilter<"Vocabulary"> | string
-  isActive?: Prisma.BoolFilter<"Vocabulary"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
   topic?: Prisma.XOR<Prisma.TopicScalarRelationFilter, Prisma.TopicWhereInput>
@@ -324,9 +304,7 @@ export type VocabularyOrderByWithAggregationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   synonyms?: Prisma.SortOrder
   antonyms?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.VocabularyCountOrderByAggregateInput
@@ -349,9 +327,7 @@ export type VocabularyScalarWhereWithAggregatesInput = {
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Vocabulary"> | string | null
   synonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   antonyms?: Prisma.StringNullableListFilter<"Vocabulary">
-  difficulty?: Prisma.EnumDifficultyLevelWithAggregatesFilter<"Vocabulary"> | $Enums.DifficultyLevel
   topicId?: Prisma.StringWithAggregatesFilter<"Vocabulary"> | string
-  isActive?: Prisma.BoolWithAggregatesFilter<"Vocabulary"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Vocabulary"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Vocabulary"> | Date | string
 }
@@ -368,8 +344,6 @@ export type VocabularyCreateInput = {
   imageUrl?: string | null
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
-  difficulty?: $Enums.DifficultyLevel
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   topic: Prisma.TopicCreateNestedOneWithoutVocabulariesInput
@@ -388,9 +362,7 @@ export type VocabularyUncheckedCreateInput = {
   imageUrl?: string | null
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
-  difficulty?: $Enums.DifficultyLevel
   topicId: string
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   userProgress?: Prisma.UserVocabularyProgressUncheckedCreateNestedManyWithoutVocabularyInput
@@ -408,8 +380,6 @@ export type VocabularyUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   topic?: Prisma.TopicUpdateOneRequiredWithoutVocabulariesNestedInput
@@ -428,9 +398,7 @@ export type VocabularyUncheckedUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
   topicId?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProgress?: Prisma.UserVocabularyProgressUncheckedUpdateManyWithoutVocabularyNestedInput
@@ -448,9 +416,7 @@ export type VocabularyCreateManyInput = {
   imageUrl?: string | null
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
-  difficulty?: $Enums.DifficultyLevel
   topicId: string
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -467,8 +433,6 @@ export type VocabularyUpdateManyMutationInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -485,9 +449,7 @@ export type VocabularyUncheckedUpdateManyInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
   topicId?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -527,9 +489,7 @@ export type VocabularyCountOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   synonyms?: Prisma.SortOrder
   antonyms?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -544,9 +504,7 @@ export type VocabularyMaxOrderByAggregateInput = {
   exampleEn?: Prisma.SortOrder
   exampleVi?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -561,9 +519,7 @@ export type VocabularyMinOrderByAggregateInput = {
   exampleEn?: Prisma.SortOrder
   exampleVi?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
-  difficulty?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -659,8 +615,6 @@ export type VocabularyCreateWithoutTopicInput = {
   imageUrl?: string | null
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
-  difficulty?: $Enums.DifficultyLevel
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   userProgress?: Prisma.UserVocabularyProgressCreateNestedManyWithoutVocabularyInput
@@ -678,8 +632,6 @@ export type VocabularyUncheckedCreateWithoutTopicInput = {
   imageUrl?: string | null
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
-  difficulty?: $Enums.DifficultyLevel
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   userProgress?: Prisma.UserVocabularyProgressUncheckedCreateNestedManyWithoutVocabularyInput
@@ -726,9 +678,7 @@ export type VocabularyScalarWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Vocabulary"> | string | null
   synonyms?: Prisma.StringNullableListFilter<"Vocabulary">
   antonyms?: Prisma.StringNullableListFilter<"Vocabulary">
-  difficulty?: Prisma.EnumDifficultyLevelFilter<"Vocabulary"> | $Enums.DifficultyLevel
   topicId?: Prisma.StringFilter<"Vocabulary"> | string
-  isActive?: Prisma.BoolFilter<"Vocabulary"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vocabulary"> | Date | string
 }
@@ -745,8 +695,6 @@ export type VocabularyCreateWithoutUserProgressInput = {
   imageUrl?: string | null
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
-  difficulty?: $Enums.DifficultyLevel
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   topic: Prisma.TopicCreateNestedOneWithoutVocabulariesInput
@@ -764,9 +712,7 @@ export type VocabularyUncheckedCreateWithoutUserProgressInput = {
   imageUrl?: string | null
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
-  difficulty?: $Enums.DifficultyLevel
   topicId: string
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -799,8 +745,6 @@ export type VocabularyUpdateWithoutUserProgressInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   topic?: Prisma.TopicUpdateOneRequiredWithoutVocabulariesNestedInput
@@ -818,9 +762,7 @@ export type VocabularyUncheckedUpdateWithoutUserProgressInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
   topicId?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -837,8 +779,6 @@ export type VocabularyCreateManyTopicInput = {
   imageUrl?: string | null
   synonyms?: Prisma.VocabularyCreatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyCreateantonymsInput | string[]
-  difficulty?: $Enums.DifficultyLevel
-  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -855,8 +795,6 @@ export type VocabularyUpdateWithoutTopicInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProgress?: Prisma.UserVocabularyProgressUpdateManyWithoutVocabularyNestedInput
@@ -874,8 +812,6 @@ export type VocabularyUncheckedUpdateWithoutTopicInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProgress?: Prisma.UserVocabularyProgressUncheckedUpdateManyWithoutVocabularyNestedInput
@@ -893,8 +829,6 @@ export type VocabularyUncheckedUpdateManyWithoutTopicInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   synonyms?: Prisma.VocabularyUpdatesynonymsInput | string[]
   antonyms?: Prisma.VocabularyUpdateantonymsInput | string[]
-  difficulty?: Prisma.EnumDifficultyLevelFieldUpdateOperationsInput | $Enums.DifficultyLevel
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -942,9 +876,7 @@ export type VocabularySelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   imageUrl?: boolean
   synonyms?: boolean
   antonyms?: boolean
-  difficulty?: boolean
   topicId?: boolean
-  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
@@ -964,9 +896,7 @@ export type VocabularySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   imageUrl?: boolean
   synonyms?: boolean
   antonyms?: boolean
-  difficulty?: boolean
   topicId?: boolean
-  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
@@ -984,9 +914,7 @@ export type VocabularySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   imageUrl?: boolean
   synonyms?: boolean
   antonyms?: boolean
-  difficulty?: boolean
   topicId?: boolean
-  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
@@ -1004,14 +932,12 @@ export type VocabularySelectScalar = {
   imageUrl?: boolean
   synonyms?: boolean
   antonyms?: boolean
-  difficulty?: boolean
   topicId?: boolean
-  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type VocabularyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "word" | "pronunciation" | "audioUrl" | "meaning" | "partOfSpeech" | "exampleEn" | "exampleVi" | "imageUrl" | "synonyms" | "antonyms" | "difficulty" | "topicId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["vocabulary"]>
+export type VocabularyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "word" | "pronunciation" | "audioUrl" | "meaning" | "partOfSpeech" | "exampleEn" | "exampleVi" | "imageUrl" | "synonyms" | "antonyms" | "topicId" | "createdAt" | "updatedAt", ExtArgs["result"]["vocabulary"]>
 export type VocabularyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
   userProgress?: boolean | Prisma.Vocabulary$userProgressArgs<ExtArgs>
@@ -1042,9 +968,7 @@ export type $VocabularyPayload<ExtArgs extends runtime.Types.Extensions.Internal
     imageUrl: string | null
     synonyms: string[]
     antonyms: string[]
-    difficulty: $Enums.DifficultyLevel
     topicId: string
-    isActive: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["vocabulary"]>
@@ -1483,9 +1407,7 @@ export interface VocabularyFieldRefs {
   readonly imageUrl: Prisma.FieldRef<"Vocabulary", 'String'>
   readonly synonyms: Prisma.FieldRef<"Vocabulary", 'String[]'>
   readonly antonyms: Prisma.FieldRef<"Vocabulary", 'String[]'>
-  readonly difficulty: Prisma.FieldRef<"Vocabulary", 'DifficultyLevel'>
   readonly topicId: Prisma.FieldRef<"Vocabulary", 'String'>
-  readonly isActive: Prisma.FieldRef<"Vocabulary", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Vocabulary", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Vocabulary", 'DateTime'>
 }

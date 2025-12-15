@@ -92,11 +92,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const TopicScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  nameVi: 'nameVi',
   description: 'description',
   thumbnail: 'thumbnail',
-  difficulty: 'difficulty',
-  order: 'order',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -117,9 +114,7 @@ export const VocabularyScalarFieldEnum = {
   imageUrl: 'imageUrl',
   synonyms: 'synonyms',
   antonyms: 'antonyms',
-  difficulty: 'difficulty',
   topicId: 'topicId',
-  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -131,7 +126,6 @@ export const UserVocabularyProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   vocabularyId: 'vocabularyId',
-  proficiency: 'proficiency',
   easeFactor: 'easeFactor',
   interval: 'interval',
   repetitions: 'repetitions',

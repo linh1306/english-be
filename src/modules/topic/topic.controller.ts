@@ -1,17 +1,10 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { TypedQuery } from '@nestia/core';
 import { TopicService } from './topic.service';
 import {
     BodyCreateTopic,
     BodyUpdateTopic,
     QueryFindAllTopic,
-    ResTopic,
-    ResFindAllTopic,
-    ResCreateTopic,
-    ResUpdateTopic,
-    ResFindOneTopic,
-    ResRemoveTopic,
-    ResHardDeleteTopic,
 } from './dto/topic.dto';
 
 @Controller('topics')
@@ -24,7 +17,7 @@ export class TopicController {
      */
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async createTopic(@Body() dto: BodyCreateTopic): Promise<ResCreateTopic> {
+    async createTopic(@Body() dto: BodyCreateTopic) {
         return this.topicService.createTopic(dto);
     }
 
@@ -33,7 +26,7 @@ export class TopicController {
      * GET /topics
      */
     @Get()
-    async getTopics(@TypedQuery() query: QueryFindAllTopic): Promise<ResFindAllTopic> {
+    async getTopics(@TypedQuery() query: QueryFindAllTopic) {
         return this.topicService.getTopics(query);
     }
 
@@ -42,7 +35,7 @@ export class TopicController {
      * GET /topics/:id
      */
     @Get(':id')
-    async getTopic(@Param('id') id: string): Promise<ResFindOneTopic> {
+    async getTopic(@Param('id') id: string) {
         return this.topicService.getTopic(id);
     }
 
@@ -54,7 +47,7 @@ export class TopicController {
     async updateTopic(
         @Param('id') id: string,
         @Body() dto: BodyUpdateTopic,
-    ): Promise<ResUpdateTopic> {
+    ) {
         return this.topicService.updateTopic(id, dto);
     }
 
@@ -63,7 +56,7 @@ export class TopicController {
      * DELETE /topics/:id
      */
     @Delete(':id')
-    async deleteTopic(@Param('id') id: string): Promise<ResRemoveTopic> {
+    async deleteTopic(@Param('id') id: string) {
         return this.topicService.deleteTopic(id);
     }
 
@@ -72,7 +65,7 @@ export class TopicController {
      * DELETE /topics/:id/hard
      */
     @Delete(':id/hard')
-    async hardDeleteTopic(@Param('id') id: string): Promise<ResHardDeleteTopic> {
+    async hardDeleteTopic(@Param('id') id: string) {
         return this.topicService.hardDeleteTopic(id);
     }
 }

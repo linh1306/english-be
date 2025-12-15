@@ -4,19 +4,8 @@ import { ProficiencyLevel } from '../../generated/prisma/enums';
 import {
     BodyReviewAnswer,
     QueryFindAllUserProgress,
-    ResUserVocabularyProgress,
-    ResFindAllUserProgress,
-    ResGetStatistics,
-    ResTopicProgressItem,
     BodyStartStudySession,
-    ResStartStudySession,
-    ResStudyWordItem,
     BodySubmitStudyResult,
-    ResSubmitStudyResult,
-    ResGetOrCreateProgress,
-    ResRecordReview,
-    ResGetDueForReview,
-    ResGetTopicProgress,
 } from './dto/user-progress.dto';
 
 @Injectable()
@@ -82,7 +71,7 @@ export class UserProgressService {
     /**
      * Lấy hoặc tạo progress cho một từ vựng
      */
-    async getOrCreateProgress(userId: string, vocabularyId: string): Promise<ResGetOrCreateProgress> {
+    async getOrCreateProgress(userId: string, vocabularyId: string) {
         let progress = await this.prisma.userVocabularyProgress.findUnique({
             where: {
                 userId_vocabularyId: { userId, vocabularyId },
@@ -135,13 +124,13 @@ export class UserProgressService {
             await this.updateTopicProgress(userId, vocabulary.topicId);
         }
 
-        return this.toProgressResponse(progress);
+        return progress;
     }
 
     /**
      * Ghi nhận kết quả ôn tập một từ
      */
-    async recordReview(userId: string, dto: BodyReviewAnswer): Promise<ResRecordReview> {
+    async recordReview(userId: string, dto: BodyReviewAnswer) {
         const progress = await this.getOrCreateProgress(userId, dto.vocabularyId);
 
         // Tính quality score (0-5)
@@ -202,21 +191,20 @@ export class UserProgressService {
         // Update topic progress
         await this.updateTopicProgress(userId, (updated.vocabulary as any).topicId);
 
-        return this.toProgressResponse(updated);
+        return updated
     }
 
     /**
      * Lấy danh sách progress của user
      */
-    async getUserProgresses(userId: string, query: QueryFindAllUserProgress): Promise<ResFindAllUserProgress> {
+    async getUserProgresses(userId: string, query: QueryFindAllUserProgress) {
         const {
             topicId,
             proficiency,
             dueForReview,
             page = 1,
             limit = 20,
-            sortBy = 'nextReviewAt',
-            sortOrder = 'asc',
+            orderBy,
         } = query;
 
         const where: any = { userId };
@@ -239,7 +227,13 @@ export class UserProgressService {
                 where,
                 skip: (page - 1) * limit,
                 take: limit,
-                orderBy: { [sortBy]: sortOrder },
+                orderBy: orderBy ? (Array.isArray(orderBy) ? orderBy.map(o => {
+                    if (o.startsWith('-')) return { [o.substring(1)]: 'desc' };
+                    return { [o]: 'asc' };
+                }) : [orderBy].map((o: string) => {
+                    if (o.startsWith('-')) return { [o.substring(1)]: 'desc' };
+                    return { [o]: 'asc' };
+                })) : { nextReviewAt: 'asc' },
                 include: {
                     vocabulary: {
                         select: {
@@ -257,7 +251,7 @@ export class UserProgressService {
         ]);
 
         return {
-            data: progresses.map((p) => this.toProgressResponse(p)),
+            data: progresses,
             meta: {
                 total,
                 page,
@@ -270,7 +264,7 @@ export class UserProgressService {
     /**
      * Lấy các từ cần ôn tập hôm nay
      */
-    async getDueForReview(userId: string, limit: number = 20): Promise<ResGetDueForReview> {
+    async getDueForReview(userId: string, limit: number = 20) {
         const progresses = await this.prisma.userVocabularyProgress.findMany({
             where: {
                 userId,
@@ -293,7 +287,7 @@ export class UserProgressService {
             },
         });
 
-        return progresses.map((p) => this.toProgressResponse(p));
+        return progresses;
     }
 
     // ==================== STATISTICS ====================
@@ -301,7 +295,7 @@ export class UserProgressService {
     /**
      * Lấy thống kê học tập của user
      */
-    async getUserStatistics(userId: string): Promise<ResGetStatistics> {
+    async getUserStatistics(userId: string) {
         const [progressStats, topicProgress, dueCount] = await Promise.all([
             this.prisma.userVocabularyProgress.groupBy({
                 by: ['proficiency'],
@@ -368,7 +362,7 @@ export class UserProgressService {
     /**
      * Lấy tiến trình theo từng topic
      */
-    async getUserTopicProgress(userId: string): Promise<ResGetTopicProgress> {
+    async getUserTopicProgress(userId: string) {
         const topicProgresses = await this.prisma.userTopicProgress.findMany({
             where: { userId },
             include: {
@@ -455,7 +449,7 @@ export class UserProgressService {
     /**
      * Bắt đầu phiên học mới
      */
-    async startStudySession(userId: string, dto: BodyStartStudySession): Promise<ResStartStudySession> {
+    async startStudySession(userId: string, dto: BodyStartStudySession) {
         const { topicId, mode, wordCount = 10 } = dto;
 
         let words: any[] = [];
@@ -579,7 +573,7 @@ export class UserProgressService {
     /**
      * Submit kết quả học tập
      */
-    async submitStudyResult(userId: string, dto: BodySubmitStudyResult): Promise<ResSubmitStudyResult> {
+    async submitStudyResult(userId: string, dto: BodySubmitStudyResult) {
         let correctCount = 0;
         let incorrectCount = 0;
         let newWordsMastered = 0;
@@ -633,29 +627,5 @@ export class UserProgressService {
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
-    }
-
-    /**
-     * Convert entity to response
-     */
-    private toProgressResponse(progress: any): ResUserVocabularyProgress {
-        return {
-            id: progress.id,
-            userId: progress.userId,
-            vocabularyId: progress.vocabularyId,
-            vocabulary: progress.vocabulary,
-            proficiency: progress.proficiency,
-            easeFactor: progress.easeFactor,
-            interval: progress.interval,
-            repetitions: progress.repetitions,
-            correctCount: progress.correctCount,
-            incorrectCount: progress.incorrectCount,
-            streak: progress.streak,
-            bestStreak: progress.bestStreak,
-            lastReviewedAt: progress.lastReviewedAt,
-            nextReviewAt: progress.nextReviewAt,
-            firstLearnedAt: progress.firstLearnedAt,
-            masteredAt: progress.masteredAt,
-        };
     }
 }

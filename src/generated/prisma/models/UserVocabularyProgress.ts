@@ -50,7 +50,6 @@ export type UserVocabularyProgressMinAggregateOutputType = {
   id: string | null
   userId: string | null
   vocabularyId: string | null
-  proficiency: $Enums.ProficiencyLevel | null
   easeFactor: number | null
   interval: number | null
   repetitions: number | null
@@ -70,7 +69,6 @@ export type UserVocabularyProgressMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   vocabularyId: string | null
-  proficiency: $Enums.ProficiencyLevel | null
   easeFactor: number | null
   interval: number | null
   repetitions: number | null
@@ -90,7 +88,6 @@ export type UserVocabularyProgressCountAggregateOutputType = {
   id: number
   userId: number
   vocabularyId: number
-  proficiency: number
   easeFactor: number
   interval: number
   repetitions: number
@@ -132,7 +129,6 @@ export type UserVocabularyProgressMinAggregateInputType = {
   id?: true
   userId?: true
   vocabularyId?: true
-  proficiency?: true
   easeFactor?: true
   interval?: true
   repetitions?: true
@@ -152,7 +148,6 @@ export type UserVocabularyProgressMaxAggregateInputType = {
   id?: true
   userId?: true
   vocabularyId?: true
-  proficiency?: true
   easeFactor?: true
   interval?: true
   repetitions?: true
@@ -172,7 +167,6 @@ export type UserVocabularyProgressCountAggregateInputType = {
   id?: true
   userId?: true
   vocabularyId?: true
-  proficiency?: true
   easeFactor?: true
   interval?: true
   repetitions?: true
@@ -279,7 +273,6 @@ export type UserVocabularyProgressGroupByOutputType = {
   id: string
   userId: string
   vocabularyId: string
-  proficiency: $Enums.ProficiencyLevel
   easeFactor: number
   interval: number
   repetitions: number
@@ -322,7 +315,6 @@ export type UserVocabularyProgressWhereInput = {
   id?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   userId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   vocabularyId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
-  proficiency?: Prisma.EnumProficiencyLevelFilter<"UserVocabularyProgress"> | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
   interval?: Prisma.IntFilter<"UserVocabularyProgress"> | number
   repetitions?: Prisma.IntFilter<"UserVocabularyProgress"> | number
@@ -344,7 +336,6 @@ export type UserVocabularyProgressOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  proficiency?: Prisma.SortOrder
   easeFactor?: Prisma.SortOrder
   interval?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -370,7 +361,6 @@ export type UserVocabularyProgressWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserVocabularyProgressWhereInput | Prisma.UserVocabularyProgressWhereInput[]
   userId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   vocabularyId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
-  proficiency?: Prisma.EnumProficiencyLevelFilter<"UserVocabularyProgress"> | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
   interval?: Prisma.IntFilter<"UserVocabularyProgress"> | number
   repetitions?: Prisma.IntFilter<"UserVocabularyProgress"> | number
@@ -392,7 +382,6 @@ export type UserVocabularyProgressOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  proficiency?: Prisma.SortOrder
   easeFactor?: Prisma.SortOrder
   interval?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -420,7 +409,6 @@ export type UserVocabularyProgressScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"UserVocabularyProgress"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserVocabularyProgress"> | string
   vocabularyId?: Prisma.StringWithAggregatesFilter<"UserVocabularyProgress"> | string
-  proficiency?: Prisma.EnumProficiencyLevelWithAggregatesFilter<"UserVocabularyProgress"> | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatWithAggregatesFilter<"UserVocabularyProgress"> | number
   interval?: Prisma.IntWithAggregatesFilter<"UserVocabularyProgress"> | number
   repetitions?: Prisma.IntWithAggregatesFilter<"UserVocabularyProgress"> | number
@@ -438,7 +426,6 @@ export type UserVocabularyProgressScalarWhereWithAggregatesInput = {
 
 export type UserVocabularyProgressCreateInput = {
   id?: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -460,7 +447,6 @@ export type UserVocabularyProgressUncheckedCreateInput = {
   id?: string
   userId: string
   vocabularyId: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -478,7 +464,6 @@ export type UserVocabularyProgressUncheckedCreateInput = {
 
 export type UserVocabularyProgressUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -500,7 +485,6 @@ export type UserVocabularyProgressUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   vocabularyId?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -520,7 +504,6 @@ export type UserVocabularyProgressCreateManyInput = {
   id?: string
   userId: string
   vocabularyId: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -538,7 +521,6 @@ export type UserVocabularyProgressCreateManyInput = {
 
 export type UserVocabularyProgressUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -558,7 +540,6 @@ export type UserVocabularyProgressUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   vocabularyId?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -593,7 +574,6 @@ export type UserVocabularyProgressCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  proficiency?: Prisma.SortOrder
   easeFactor?: Prisma.SortOrder
   interval?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -623,7 +603,6 @@ export type UserVocabularyProgressMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  proficiency?: Prisma.SortOrder
   easeFactor?: Prisma.SortOrder
   interval?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -643,7 +622,6 @@ export type UserVocabularyProgressMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   vocabularyId?: Prisma.SortOrder
-  proficiency?: Prisma.SortOrder
   easeFactor?: Prisma.SortOrder
   interval?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
@@ -753,11 +731,15 @@ export type UserVocabularyProgressUncheckedUpdateManyWithoutVocabularyNestedInpu
   deleteMany?: Prisma.UserVocabularyProgressScalarWhereInput | Prisma.UserVocabularyProgressScalarWhereInput[]
 }
 
-export type EnumProficiencyLevelFieldUpdateOperationsInput = {
-  set?: $Enums.ProficiencyLevel
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
-export type FloatFieldUpdateOperationsInput = {
+export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
@@ -771,7 +753,6 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type UserVocabularyProgressCreateWithoutUserInput = {
   id?: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -791,7 +772,6 @@ export type UserVocabularyProgressCreateWithoutUserInput = {
 export type UserVocabularyProgressUncheckedCreateWithoutUserInput = {
   id?: string
   vocabularyId: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -840,7 +820,6 @@ export type UserVocabularyProgressScalarWhereInput = {
   id?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   userId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
   vocabularyId?: Prisma.StringFilter<"UserVocabularyProgress"> | string
-  proficiency?: Prisma.EnumProficiencyLevelFilter<"UserVocabularyProgress"> | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFilter<"UserVocabularyProgress"> | number
   interval?: Prisma.IntFilter<"UserVocabularyProgress"> | number
   repetitions?: Prisma.IntFilter<"UserVocabularyProgress"> | number
@@ -858,7 +837,6 @@ export type UserVocabularyProgressScalarWhereInput = {
 
 export type UserVocabularyProgressCreateWithoutVocabularyInput = {
   id?: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -878,7 +856,6 @@ export type UserVocabularyProgressCreateWithoutVocabularyInput = {
 export type UserVocabularyProgressUncheckedCreateWithoutVocabularyInput = {
   id?: string
   userId: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -923,7 +900,6 @@ export type UserVocabularyProgressUpdateManyWithWhereWithoutVocabularyInput = {
 export type UserVocabularyProgressCreateManyUserInput = {
   id?: string
   vocabularyId: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -941,7 +917,6 @@ export type UserVocabularyProgressCreateManyUserInput = {
 
 export type UserVocabularyProgressUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -961,7 +936,6 @@ export type UserVocabularyProgressUpdateWithoutUserInput = {
 export type UserVocabularyProgressUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vocabularyId?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -980,7 +954,6 @@ export type UserVocabularyProgressUncheckedUpdateWithoutUserInput = {
 export type UserVocabularyProgressUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vocabularyId?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -999,7 +972,6 @@ export type UserVocabularyProgressUncheckedUpdateManyWithoutUserInput = {
 export type UserVocabularyProgressCreateManyVocabularyInput = {
   id?: string
   userId: string
-  proficiency?: $Enums.ProficiencyLevel
   easeFactor?: number
   interval?: number
   repetitions?: number
@@ -1017,7 +989,6 @@ export type UserVocabularyProgressCreateManyVocabularyInput = {
 
 export type UserVocabularyProgressUpdateWithoutVocabularyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1037,7 +1008,6 @@ export type UserVocabularyProgressUpdateWithoutVocabularyInput = {
 export type UserVocabularyProgressUncheckedUpdateWithoutVocabularyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1056,7 +1026,6 @@ export type UserVocabularyProgressUncheckedUpdateWithoutVocabularyInput = {
 export type UserVocabularyProgressUncheckedUpdateManyWithoutVocabularyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  proficiency?: Prisma.EnumProficiencyLevelFieldUpdateOperationsInput | $Enums.ProficiencyLevel
   easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
   interval?: Prisma.IntFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1078,7 +1047,6 @@ export type UserVocabularyProgressSelect<ExtArgs extends runtime.Types.Extension
   id?: boolean
   userId?: boolean
   vocabularyId?: boolean
-  proficiency?: boolean
   easeFactor?: boolean
   interval?: boolean
   repetitions?: boolean
@@ -1100,7 +1068,6 @@ export type UserVocabularyProgressSelectCreateManyAndReturn<ExtArgs extends runt
   id?: boolean
   userId?: boolean
   vocabularyId?: boolean
-  proficiency?: boolean
   easeFactor?: boolean
   interval?: boolean
   repetitions?: boolean
@@ -1122,7 +1089,6 @@ export type UserVocabularyProgressSelectUpdateManyAndReturn<ExtArgs extends runt
   id?: boolean
   userId?: boolean
   vocabularyId?: boolean
-  proficiency?: boolean
   easeFactor?: boolean
   interval?: boolean
   repetitions?: boolean
@@ -1144,7 +1110,6 @@ export type UserVocabularyProgressSelectScalar = {
   id?: boolean
   userId?: boolean
   vocabularyId?: boolean
-  proficiency?: boolean
   easeFactor?: boolean
   interval?: boolean
   repetitions?: boolean
@@ -1160,7 +1125,7 @@ export type UserVocabularyProgressSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserVocabularyProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "vocabularyId" | "proficiency" | "easeFactor" | "interval" | "repetitions" | "correctCount" | "incorrectCount" | "streak" | "bestStreak" | "lastReviewedAt" | "nextReviewAt" | "firstLearnedAt" | "masteredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["userVocabularyProgress"]>
+export type UserVocabularyProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "vocabularyId" | "easeFactor" | "interval" | "repetitions" | "correctCount" | "incorrectCount" | "streak" | "bestStreak" | "lastReviewedAt" | "nextReviewAt" | "firstLearnedAt" | "masteredAt" | "createdAt" | "updatedAt", ExtArgs["result"]["userVocabularyProgress"]>
 export type UserVocabularyProgressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   vocabulary?: boolean | Prisma.VocabularyDefaultArgs<ExtArgs>
@@ -1184,7 +1149,6 @@ export type $UserVocabularyProgressPayload<ExtArgs extends runtime.Types.Extensi
     id: string
     userId: string
     vocabularyId: string
-    proficiency: $Enums.ProficiencyLevel
     easeFactor: number
     interval: number
     repetitions: number
@@ -1626,7 +1590,6 @@ export interface UserVocabularyProgressFieldRefs {
   readonly id: Prisma.FieldRef<"UserVocabularyProgress", 'String'>
   readonly userId: Prisma.FieldRef<"UserVocabularyProgress", 'String'>
   readonly vocabularyId: Prisma.FieldRef<"UserVocabularyProgress", 'String'>
-  readonly proficiency: Prisma.FieldRef<"UserVocabularyProgress", 'ProficiencyLevel'>
   readonly easeFactor: Prisma.FieldRef<"UserVocabularyProgress", 'Float'>
   readonly interval: Prisma.FieldRef<"UserVocabularyProgress", 'Int'>
   readonly repetitions: Prisma.FieldRef<"UserVocabularyProgress", 'Int'>

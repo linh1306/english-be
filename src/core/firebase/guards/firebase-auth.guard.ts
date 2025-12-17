@@ -46,7 +46,7 @@ export class FirebaseAuthGuard implements CanActivate {
         try {
             const decodedToken = await this.firebaseService.verifyIdToken(token);
 
-            console.log('Decoded token:', decodedToken);
+            // console.log('Decoded token:', decodedToken);
             if (!decodedToken.email) {
                 throw new UnauthorizedException('Token does not contain email');
             }

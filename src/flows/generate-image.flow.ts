@@ -1,6 +1,10 @@
 import { GoogleGenAI } from '@google/genai';
+import "dotenv/config";
 
-const ai = new GoogleGenAI({});
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+console.log(process.env.GEMINI_API_KEY);
+
 
 export type AspectRatio =
     | '16:9'
@@ -21,34 +25,37 @@ export async function generateGhibliImage(
 ): Promise<Buffer> {
     const { prompt, aspectRatio } = input;
 
-    const fullPrompt = `${prompt}
-
-STRICT STYLE REQUIREMENTS - Studio Ghibli art style:
-- Soft, watercolor-like backgrounds with gentle gradients
-- Vibrant but natural, earthy color palette
-- Detailed hand-drawn textures and organic linework
-- Dreamy, nostalgic, and peaceful atmosphere
-- Warm, inviting natural lighting
-- Whimsical details and magical realism
-- NO text, logos, or watermarks`;
+    const fullPrompt = `Studio Ghibli inspired realistic illustration of ${prompt}.
+Soft watercolor tones, natural lighting, detailed and grounded in reality.
+NO text, logos, or watermarks.`;
 
     const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-preview-05-20',
-        contents: fullPrompt,
+        model: 'gemini-2.5-flash-image',
+        contents: {
+            parts: [{ text: fullPrompt }],
+        },
         config: {
-            responseModalities: ['image', 'text'],
             imageConfig: {
                 aspectRatio,
             },
         },
     });
+    console.log(response);
 
-    for (const part of response.candidates![0].content!.parts!) {
-        if (part.inlineData) {
-            const imageData = part.inlineData.data!;
-            return Buffer.from(imageData, 'base64');
+    if (!response.candidates || response.candidates.length === 0) {
+        throw new Error('No candidates returned from Gemini API');
+    }
+
+    const content = response.candidates[0].content;
+    if (!content?.parts) {
+        throw new Error('No content parts in response');
+    }
+
+    for (const part of content.parts) {
+        if (part.inlineData?.data) {
+            return Buffer.from(part.inlineData.data, 'base64');
         }
     }
 
-    throw new Error('Failed to generate image');
+    throw new Error('No image data found in the response');
 }

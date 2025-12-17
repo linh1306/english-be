@@ -7,6 +7,9 @@ import {
 } from './dto/topic.dto';
 import { TopicSelect } from '@/generated/prisma/models';
 import { parseQuery } from '@/core';
+import { CloudinaryService } from '@/core/cloudinary/cloudinary.service';
+import { generateGhibliImage } from '@/flows/generate-image.flow';
+import { Queued } from '@/core/queue/queued.decorator';
 
 const selectTopic: TopicSelect = {
     id: true,
@@ -24,7 +27,33 @@ const selectTopic: TopicSelect = {
 
 @Injectable()
 export class TopicService {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(
+        private readonly prisma: PrismaService,
+        private readonly cloudinaryService: CloudinaryService,
+    ) { }
+
+    /**
+     * Tạo thumbnail từ topic name và description, upload lên Cloudinary và cập nhật topic.
+     * Chạy trong background queue nên không block request.
+     */
+    @Queued({ maxRetries: 2, retryDelay: 2000 })
+    async generateAndUpdateThumbnail(topicId: string, name: string, description: string | null) {
+        const prompt = `A beautiful thumbnail illustration for an English learning topic: "${name}"${description ? `. Description: ${description}` : ''}. Educational and visually appealing.`;
+
+        const imageBuffer = await generateGhibliImage({
+            prompt,
+            aspectRatio: '16:9',
+        });
+
+        const { large } = await this.cloudinaryService.uploadImage(imageBuffer, 'topics');
+
+        await this.prisma.topic.update({
+            where: { id: topicId },
+            data: { thumbnail: large },
+        });
+
+        console.log(`[TopicService] Thumbnail updated for topic ${topicId}`);
+    }
 
     async createTopic(dto: BodyCreateTopic) {
         const existing = await this.prisma.topic.findUnique({
@@ -42,6 +71,9 @@ export class TopicService {
             },
             select: selectTopic,
         });
+
+        // Generate thumbnail trong background
+        this.generateAndUpdateThumbnail(topic.id, dto.name, dto.description ?? null);
 
         return topic;
     }

@@ -10,7 +10,6 @@ import { Roles } from '@/core';
 import { UserRole } from '@/generated/prisma/enums';
 
 @Controller('topics')
-@Roles(UserRole.ADMIN)
 export class TopicController {
     constructor(private readonly topicService: TopicService) { }
 

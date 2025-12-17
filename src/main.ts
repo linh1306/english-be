@@ -16,6 +16,8 @@ async function bootstrap() {
   await app.register(import('@fastify/cors'), {
     origin: [process.env.FRONTEND_URL || '*'],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   });
   await app.listen(process.env.PORT ?? 8000);
 }

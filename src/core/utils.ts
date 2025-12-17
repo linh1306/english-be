@@ -1,7 +1,7 @@
 
 import { Query } from "./types";
 
-export function parseQuery(query: Query<any, any, any>, defaultSort: object = { order: 'asc' }) {
+export function parseQuery(query: Query<any, any, any>, defaultSort: object = {}) {
     const page = query.page && Number(query.page) > 0 ? Number(query.page) : 1;
     const limit = query.limit && Number(query.limit) > 0 ? Number(query.limit) : 10;
     const orderBy = query.orderBy as any;

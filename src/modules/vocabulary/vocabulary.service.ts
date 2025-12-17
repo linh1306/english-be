@@ -1,7 +1,9 @@
 import { Injectable, NotFoundException, ConflictException, Logger } from '@nestjs/common';
 import { generateWordsFlow } from '../../flows/generate-words.flow';
+import { generateGhibliImage } from '../../flows/generate-image.flow';
 import { Queued } from '../../core/queue/queued.decorator';
 import { PrismaService } from '../../core/database/prisma.service';
+import { CloudinaryService } from '../../core/cloudinary/cloudinary.service';
 import {
     BodyCreateVocabulary,
     BodyUpdateVocabulary,
@@ -13,7 +15,35 @@ import {
 export class VocabularyService {
     private readonly logger = new Logger(VocabularyService.name);
 
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(
+        private readonly prisma: PrismaService,
+        private readonly cloudinaryService: CloudinaryService,
+    ) { }
+
+    /**
+     * Tạo ảnh từ vocabulary word và meaning, upload lên Cloudinary và cập nhật vocabulary.
+     * Chạy trong background queue nên không block request.
+     */
+    @Queued({ maxRetries: 2, retryDelay: 2000 })
+    async generateAndUpdateImage(vocabularyId: string, word: string) {
+        this.logger.log(`Starting image generation for vocabulary ${vocabularyId}: "${word}"`);
+
+        const prompt = `Create an illustration image for the vocabulary word '${word}' in a Van Gogh style, with no text, moderately detailed, and clearly highlighting the meaning of the word.`;
+
+        const imageBuffer = await generateGhibliImage({
+            prompt,
+            aspectRatio: '3:4',
+        });
+
+        const { large } = await this.cloudinaryService.uploadImage(imageBuffer, 'vocabularies');
+
+        await this.prisma.vocabulary.update({
+            where: { id: vocabularyId },
+            data: { imageUrl: large },
+        });
+
+        this.logger.log(`Image updated for vocabulary ${vocabularyId}`);
+    }
 
     /**
      * Tạo từ vựng mới
@@ -207,7 +237,7 @@ export class VocabularyService {
             let successCount = 0;
             for (const item of result) {
                 try {
-                    await this.createVocabulary({
+                    const vocabulary = await this.createVocabulary({
                         word: item.word,
                         meaning: item.meaning,
                         topicId,
@@ -221,6 +251,9 @@ export class VocabularyService {
                         antonyms: item.antonyms ?? [],
                     });
                     successCount++;
+
+                    // Trigger background job để generate ảnh
+                    this.generateAndUpdateImage(vocabulary.id, item.word);
                 } catch (error: any) {
                     this.logger.warn(`Failed to save word "${item.word}": ${error.message}`);
                 }

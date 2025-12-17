@@ -38,7 +38,7 @@ export class TopicService {
      */
     @Queued({ maxRetries: 2, retryDelay: 2000 })
     async generateAndUpdateThumbnail(topicId: string, name: string, description: string | null) {
-        const prompt = `A beautiful thumbnail illustration for an English learning topic: "${name}"${description ? `. Description: ${description}` : ''}. Educational and visually appealing.`;
+        const prompt = `Create an illustrative image representing the topic '${name}', inspired by the style of Vincent van Gogh. The image should visually convey the essence and emotion of the topic based on the following description: ${description}. No text included, moderate level of detail, with strong visual elements that clearly highlight and symbolize the topic.`;
 
         const imageBuffer = await generateGhibliImage({
             prompt,

@@ -25,14 +25,10 @@ export async function generateGhibliImage(
 ): Promise<Buffer> {
     const { prompt, aspectRatio } = input;
 
-    const fullPrompt = `Studio Ghibli inspired realistic illustration of ${prompt}.
-Soft watercolor tones, natural lighting, detailed and grounded in reality.
-NO text, logos, or watermarks.`;
-
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image',
         contents: {
-            parts: [{ text: fullPrompt }],
+            parts: [{ text: prompt }],
         },
         config: {
             imageConfig: {
@@ -40,7 +36,6 @@ NO text, logos, or watermarks.`;
             },
         },
     });
-    console.log(response);
 
     if (!response.candidates || response.candidates.length === 0) {
         throw new Error('No candidates returned from Gemini API');

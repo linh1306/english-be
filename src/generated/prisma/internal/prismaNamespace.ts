@@ -883,8 +883,8 @@ export const UserTopicProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   topicId: 'topicId',
+  learningWords: 'learningWords',
   learnedWords: 'learnedWords',
-  masteredWords: 'masteredWords',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

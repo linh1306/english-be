@@ -46,9 +46,19 @@ export class UserProgressService {
             where: { userId_vocabularyId: { userId, vocabularyId } }
         });
 
+        const now = new Date();
+
+        // Kiểm tra nếu đã ôn trong ngày hôm nay thì bỏ qua
+        if (existing?.lastReviewedAt) {
+            const lastReviewDate = existing.lastReviewedAt.toDateString();
+            const todayDate = now.toDateString();
+            if (lastReviewDate === todayDate) {
+                return existing; // Đã ôn hôm nay rồi, bỏ qua
+            }
+        }
         const retention = calculateRetention(existing?.lastReviewedAt ?? null, existing?.halfLife ?? 1.0);
         const halfLife = adjustHalfLife(existing?.halfLife ?? 1.0, retention, isCorrect);
-        const lastReviewedAt = new Date();
+        const lastReviewedAt = now;
         const nextReviewAt = calculateNextReviewAt(lastReviewedAt, halfLife);
 
         const result = await this.prisma.userVocabularyProgress.upsert({
@@ -78,10 +88,14 @@ export class UserProgressService {
     async getDueReviews(userId: string, query: QueryDueReviews) {
         const { page = 1, limit = 20, topicId } = query;
         const now = new Date();
+        const todayStart = new Date(now.toDateString()); // 00:00:00 hôm nay
 
         const where: any = {
             userId,
-            nextReviewAt: { lte: now }
+            OR: [
+                { nextReviewAt: { lte: now } }, // Đến lúc ôn
+                { lastReviewedAt: { gte: todayStart } } // Mới học hôm nay
+            ]
         };
         if (topicId) {
             where.vocabulary = { topicId };

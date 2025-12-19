@@ -10,6 +10,7 @@ import {
     QueryFindAllVocabulary,
     BodyGenerateVocabulary,
 } from './dto/vocabulary.dto';
+import { parseQuery } from '@/core';
 
 @Injectable()
 export class VocabularyService {
@@ -100,15 +101,15 @@ export class VocabularyService {
     /**
      * Lấy danh sách từ vựng với phân trang và filter
      */
-    async getVocabularies(query: QueryFindAllVocabulary) {
+    async getVocabularies(userId: string, query: QueryFindAllVocabulary) {
         const {
             search,
             topicId,
             partOfSpeech,
             page = 1,
             limit = 20,
-            orderBy,
         } = query;
+        const options = parseQuery(query)
 
         const where: any = {};
 
@@ -130,20 +131,7 @@ export class VocabularyService {
         const [vocabularies, total] = await Promise.all([
             this.prisma.vocabulary.findMany({
                 where,
-                skip: (page - 1) * limit,
-                take: limit,
-                orderBy: orderBy ? (Array.isArray(orderBy) ? orderBy.map(o => {
-                    if (o.startsWith('-')) return { [o.substring(1)]: 'desc' };
-                    return { [o]: 'asc' };
-                }) : [orderBy].map((o: string) => {
-                    if (o.startsWith('-')) return { [o.substring(1)]: 'desc' };
-                    return { [o]: 'asc' };
-                })) : { word: 'asc' },
-                include: {
-                    topic: {
-                        select: { id: true, name: true },
-                    },
-                },
+                ...options
             }),
             this.prisma.vocabulary.count({ where }),
         ]);
@@ -166,11 +154,6 @@ export class VocabularyService {
         const vocabulary = await this.prisma.vocabulary.update({
             where: { id },
             data: dto,
-            include: {
-                topic: {
-                    select: { id: true, name: true },
-                },
-            },
         });
 
         return vocabulary;

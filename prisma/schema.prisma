@@ -113,8 +113,8 @@ model UserTopicProgress {
   userId  String
   topicId String
 
+  learningWords Int @default(0)
   learnedWords  Int @default(0)
-  masteredWords Int @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

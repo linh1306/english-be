@@ -8,6 +8,7 @@ import {
     BodyGenerateVocabulary,
     BodyDeleteVocabularies,
 } from './dto/vocabulary.dto';
+import { CurrentUser } from '@/core';
 
 @Controller('vocabularies')
 export class VocabularyController {
@@ -35,8 +36,8 @@ export class VocabularyController {
      * Lấy danh sách từ vựng với phân trang
      */
     @Get()
-    async getVocabularies(@TypedQuery() query: QueryFindAllVocabulary) {
-        return this.vocabularyService.getVocabularies(query);
+    async getVocabularies(@CurrentUser('id') userId: string, @TypedQuery() query: QueryFindAllVocabulary) {
+        return this.vocabularyService.getVocabularies(userId, query);
     }
 
     /**
@@ -46,6 +47,7 @@ export class VocabularyController {
     @Put(':id')
     async updateVocabulary(
         @Param('id') id: string,
+
         @Body() dto: BodyUpdateVocabulary,
     ) {
         return this.vocabularyService.updateVocabulary(id, dto);

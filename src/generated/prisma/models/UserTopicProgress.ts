@@ -27,21 +27,21 @@ export type AggregateUserTopicProgress = {
 }
 
 export type UserTopicProgressAvgAggregateOutputType = {
+  learningWords: number | null
   learnedWords: number | null
-  masteredWords: number | null
 }
 
 export type UserTopicProgressSumAggregateOutputType = {
+  learningWords: number | null
   learnedWords: number | null
-  masteredWords: number | null
 }
 
 export type UserTopicProgressMinAggregateOutputType = {
   id: string | null
   userId: string | null
   topicId: string | null
+  learningWords: number | null
   learnedWords: number | null
-  masteredWords: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,8 +50,8 @@ export type UserTopicProgressMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   topicId: string | null
+  learningWords: number | null
   learnedWords: number | null
-  masteredWords: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,8 +60,8 @@ export type UserTopicProgressCountAggregateOutputType = {
   id: number
   userId: number
   topicId: number
+  learningWords: number
   learnedWords: number
-  masteredWords: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -69,21 +69,21 @@ export type UserTopicProgressCountAggregateOutputType = {
 
 
 export type UserTopicProgressAvgAggregateInputType = {
+  learningWords?: true
   learnedWords?: true
-  masteredWords?: true
 }
 
 export type UserTopicProgressSumAggregateInputType = {
+  learningWords?: true
   learnedWords?: true
-  masteredWords?: true
 }
 
 export type UserTopicProgressMinAggregateInputType = {
   id?: true
   userId?: true
   topicId?: true
+  learningWords?: true
   learnedWords?: true
-  masteredWords?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -92,8 +92,8 @@ export type UserTopicProgressMaxAggregateInputType = {
   id?: true
   userId?: true
   topicId?: true
+  learningWords?: true
   learnedWords?: true
-  masteredWords?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,8 +102,8 @@ export type UserTopicProgressCountAggregateInputType = {
   id?: true
   userId?: true
   topicId?: true
+  learningWords?: true
   learnedWords?: true
-  masteredWords?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -199,8 +199,8 @@ export type UserTopicProgressGroupByOutputType = {
   id: string
   userId: string
   topicId: string
+  learningWords: number
   learnedWords: number
-  masteredWords: number
   createdAt: Date
   updatedAt: Date
   _count: UserTopicProgressCountAggregateOutputType | null
@@ -232,8 +232,8 @@ export type UserTopicProgressWhereInput = {
   id?: Prisma.StringFilter<"UserTopicProgress"> | string
   userId?: Prisma.StringFilter<"UserTopicProgress"> | string
   topicId?: Prisma.StringFilter<"UserTopicProgress"> | string
+  learningWords?: Prisma.IntFilter<"UserTopicProgress"> | number
   learnedWords?: Prisma.IntFilter<"UserTopicProgress"> | number
-  masteredWords?: Prisma.IntFilter<"UserTopicProgress"> | number
   createdAt?: Prisma.DateTimeFilter<"UserTopicProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserTopicProgress"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -244,8 +244,8 @@ export type UserTopicProgressOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
+  learningWords?: Prisma.SortOrder
   learnedWords?: Prisma.SortOrder
-  masteredWords?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -260,8 +260,8 @@ export type UserTopicProgressWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserTopicProgressWhereInput | Prisma.UserTopicProgressWhereInput[]
   userId?: Prisma.StringFilter<"UserTopicProgress"> | string
   topicId?: Prisma.StringFilter<"UserTopicProgress"> | string
+  learningWords?: Prisma.IntFilter<"UserTopicProgress"> | number
   learnedWords?: Prisma.IntFilter<"UserTopicProgress"> | number
-  masteredWords?: Prisma.IntFilter<"UserTopicProgress"> | number
   createdAt?: Prisma.DateTimeFilter<"UserTopicProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserTopicProgress"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -272,8 +272,8 @@ export type UserTopicProgressOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
+  learningWords?: Prisma.SortOrder
   learnedWords?: Prisma.SortOrder
-  masteredWords?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserTopicProgressCountOrderByAggregateInput
@@ -290,16 +290,16 @@ export type UserTopicProgressScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"UserTopicProgress"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserTopicProgress"> | string
   topicId?: Prisma.StringWithAggregatesFilter<"UserTopicProgress"> | string
+  learningWords?: Prisma.IntWithAggregatesFilter<"UserTopicProgress"> | number
   learnedWords?: Prisma.IntWithAggregatesFilter<"UserTopicProgress"> | number
-  masteredWords?: Prisma.IntWithAggregatesFilter<"UserTopicProgress"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserTopicProgress"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserTopicProgress"> | Date | string
 }
 
 export type UserTopicProgressCreateInput = {
   id?: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserTopicsInput
@@ -310,16 +310,16 @@ export type UserTopicProgressUncheckedCreateInput = {
   id?: string
   userId: string
   topicId: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserTopicProgressUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserTopicsNestedInput
@@ -330,8 +330,8 @@ export type UserTopicProgressUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   topicId?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -340,16 +340,16 @@ export type UserTopicProgressCreateManyInput = {
   id?: string
   userId: string
   topicId: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserTopicProgressUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -358,8 +358,8 @@ export type UserTopicProgressUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   topicId?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -383,23 +383,23 @@ export type UserTopicProgressCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
+  learningWords?: Prisma.SortOrder
   learnedWords?: Prisma.SortOrder
-  masteredWords?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserTopicProgressAvgOrderByAggregateInput = {
+  learningWords?: Prisma.SortOrder
   learnedWords?: Prisma.SortOrder
-  masteredWords?: Prisma.SortOrder
 }
 
 export type UserTopicProgressMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
+  learningWords?: Prisma.SortOrder
   learnedWords?: Prisma.SortOrder
-  masteredWords?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -408,15 +408,15 @@ export type UserTopicProgressMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
+  learningWords?: Prisma.SortOrder
   learnedWords?: Prisma.SortOrder
-  masteredWords?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserTopicProgressSumOrderByAggregateInput = {
+  learningWords?: Prisma.SortOrder
   learnedWords?: Prisma.SortOrder
-  masteredWords?: Prisma.SortOrder
 }
 
 export type UserTopicProgressCreateNestedManyWithoutUserInput = {
@@ -513,8 +513,8 @@ export type IntFieldUpdateOperationsInput = {
 
 export type UserTopicProgressCreateWithoutUserInput = {
   id?: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   topic: Prisma.TopicCreateNestedOneWithoutUserProgressInput
@@ -523,8 +523,8 @@ export type UserTopicProgressCreateWithoutUserInput = {
 export type UserTopicProgressUncheckedCreateWithoutUserInput = {
   id?: string
   topicId: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -562,16 +562,16 @@ export type UserTopicProgressScalarWhereInput = {
   id?: Prisma.StringFilter<"UserTopicProgress"> | string
   userId?: Prisma.StringFilter<"UserTopicProgress"> | string
   topicId?: Prisma.StringFilter<"UserTopicProgress"> | string
+  learningWords?: Prisma.IntFilter<"UserTopicProgress"> | number
   learnedWords?: Prisma.IntFilter<"UserTopicProgress"> | number
-  masteredWords?: Prisma.IntFilter<"UserTopicProgress"> | number
   createdAt?: Prisma.DateTimeFilter<"UserTopicProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserTopicProgress"> | Date | string
 }
 
 export type UserTopicProgressCreateWithoutTopicInput = {
   id?: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserTopicsInput
@@ -580,8 +580,8 @@ export type UserTopicProgressCreateWithoutTopicInput = {
 export type UserTopicProgressUncheckedCreateWithoutTopicInput = {
   id?: string
   userId: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -615,16 +615,16 @@ export type UserTopicProgressUpdateManyWithWhereWithoutTopicInput = {
 export type UserTopicProgressCreateManyUserInput = {
   id?: string
   topicId: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserTopicProgressUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   topic?: Prisma.TopicUpdateOneRequiredWithoutUserProgressNestedInput
@@ -633,8 +633,8 @@ export type UserTopicProgressUpdateWithoutUserInput = {
 export type UserTopicProgressUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   topicId?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -642,8 +642,8 @@ export type UserTopicProgressUncheckedUpdateWithoutUserInput = {
 export type UserTopicProgressUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   topicId?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -651,16 +651,16 @@ export type UserTopicProgressUncheckedUpdateManyWithoutUserInput = {
 export type UserTopicProgressCreateManyTopicInput = {
   id?: string
   userId: string
+  learningWords?: number
   learnedWords?: number
-  masteredWords?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserTopicProgressUpdateWithoutTopicInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserTopicsNestedInput
@@ -669,8 +669,8 @@ export type UserTopicProgressUpdateWithoutTopicInput = {
 export type UserTopicProgressUncheckedUpdateWithoutTopicInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -678,8 +678,8 @@ export type UserTopicProgressUncheckedUpdateWithoutTopicInput = {
 export type UserTopicProgressUncheckedUpdateManyWithoutTopicInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  learningWords?: Prisma.IntFieldUpdateOperationsInput | number
   learnedWords?: Prisma.IntFieldUpdateOperationsInput | number
-  masteredWords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -690,8 +690,8 @@ export type UserTopicProgressSelect<ExtArgs extends runtime.Types.Extensions.Int
   id?: boolean
   userId?: boolean
   topicId?: boolean
+  learningWords?: boolean
   learnedWords?: boolean
-  masteredWords?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -702,8 +702,8 @@ export type UserTopicProgressSelectCreateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   userId?: boolean
   topicId?: boolean
+  learningWords?: boolean
   learnedWords?: boolean
-  masteredWords?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -714,8 +714,8 @@ export type UserTopicProgressSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   userId?: boolean
   topicId?: boolean
+  learningWords?: boolean
   learnedWords?: boolean
-  masteredWords?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -726,13 +726,13 @@ export type UserTopicProgressSelectScalar = {
   id?: boolean
   userId?: boolean
   topicId?: boolean
+  learningWords?: boolean
   learnedWords?: boolean
-  masteredWords?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserTopicProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "topicId" | "learnedWords" | "masteredWords" | "createdAt" | "updatedAt", ExtArgs["result"]["userTopicProgress"]>
+export type UserTopicProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "topicId" | "learningWords" | "learnedWords" | "createdAt" | "updatedAt", ExtArgs["result"]["userTopicProgress"]>
 export type UserTopicProgressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
@@ -756,8 +756,8 @@ export type $UserTopicProgressPayload<ExtArgs extends runtime.Types.Extensions.I
     id: string
     userId: string
     topicId: string
+    learningWords: number
     learnedWords: number
-    masteredWords: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["userTopicProgress"]>
@@ -1188,8 +1188,8 @@ export interface UserTopicProgressFieldRefs {
   readonly id: Prisma.FieldRef<"UserTopicProgress", 'String'>
   readonly userId: Prisma.FieldRef<"UserTopicProgress", 'String'>
   readonly topicId: Prisma.FieldRef<"UserTopicProgress", 'String'>
+  readonly learningWords: Prisma.FieldRef<"UserTopicProgress", 'Int'>
   readonly learnedWords: Prisma.FieldRef<"UserTopicProgress", 'Int'>
-  readonly masteredWords: Prisma.FieldRef<"UserTopicProgress", 'Int'>
   readonly createdAt: Prisma.FieldRef<"UserTopicProgress", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserTopicProgress", 'DateTime'>
 }

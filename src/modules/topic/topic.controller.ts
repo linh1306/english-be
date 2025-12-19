@@ -25,8 +25,9 @@ export class TopicController {
     async getTopics(
         @TypedQuery() query: QueryFindAllTopic,
         @CurrentUser('role') role: UserRole,
+        @CurrentUser('id') userId: string,
     ) {
-        return this.topicService.getTopics(query, role);
+        return this.topicService.getTopics(query, role, userId);
     }
 
     @Patch()

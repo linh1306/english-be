@@ -6,6 +6,7 @@ const LN2 = Math.log(2);
 const REVIEW_THRESHOLD = 0.5;
 const MIN_HALF_LIFE = 1; // ngày
 const MAX_HALF_LIFE = 365; // ngày
+const LEARNED_HALF_LIFE_THRESHOLD = 30; // Từ được coi là "đã học thuộc" khi halfLife >= 7 ngày
 
 // Công thức decay đúng với half-life
 function calculateRetention(lastReviewedAt: Date | null, halfLife: number): number {
@@ -82,7 +83,50 @@ export class UserProgressService {
             },
         });
 
+        // Cập nhật UserTopicProgress
+        const topicId = result.vocabulary.topicId;
+        await this.updateTopicProgress(userId, topicId);
+
         return result;
+    }
+
+    /**
+     * Cập nhật learningWords và learnedWords trong UserTopicProgress
+     */
+    private async updateTopicProgress(userId: string, topicId: string) {
+        // Đếm số từ đang học và đã học thuộc trong topic này
+        const [learningWords, learnedWords] = await Promise.all([
+            // learningWords: tổng số từ đã có progress trong topic
+            this.prisma.userVocabularyProgress.count({
+                where: {
+                    userId,
+                    vocabulary: { topicId },
+                },
+            }),
+            // learnedWords: số từ có halfLife >= threshold (đã học thuộc)
+            this.prisma.userVocabularyProgress.count({
+                where: {
+                    userId,
+                    vocabulary: { topicId },
+                    halfLife: { gte: LEARNED_HALF_LIFE_THRESHOLD },
+                },
+            }),
+        ]);
+
+        // Upsert UserTopicProgress
+        await this.prisma.userTopicProgress.upsert({
+            where: { userId_topicId: { userId, topicId } },
+            create: {
+                userId,
+                topicId,
+                learningWords,
+                learnedWords,
+            },
+            update: {
+                learningWords,
+                learnedWords,
+            },
+        });
     }
 
     async getDueReviews(userId: string, query: QueryDueReviews) {

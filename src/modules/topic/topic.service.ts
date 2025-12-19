@@ -79,7 +79,7 @@ export class TopicService {
         return topic;
     }
 
-    async getTopics(query: QueryFindAllTopic, role: UserRole) {
+    async getTopics(query: QueryFindAllTopic, role: UserRole, userId: string) {
         const {
             search,
             isActive,
@@ -107,7 +107,28 @@ export class TopicService {
             this.prisma.topic.findMany({
                 where,
                 ...options,
-                select: selectTopic
+                select: {
+                    id: true,
+                    name: true,
+                    description: true,
+                    thumbnail: true,
+                    isActive: true,
+                    createdAt: true,
+                    _count: {
+                        select: {
+                            vocabularies: true,
+                        }
+                    },
+                    userProgress: {
+                        where: {
+                            userId,
+                        },
+                        select: {
+                            learnedWords: true,
+                            learningWords: true,
+                        }
+                    },
+                }
             }),
             this.prisma.topic.count({ where }),
         ]);

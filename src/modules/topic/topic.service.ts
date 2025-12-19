@@ -10,6 +10,7 @@ import { parseQuery } from '@/core';
 import { CloudinaryService } from '@/core/cloudinary/cloudinary.service';
 import { generateGhibliImage } from '@/flows/generate-image.flow';
 import { Queued } from '@/core/queue/queued.decorator';
+import { UserRole } from '@/generated/prisma/enums';
 
 const selectTopic: TopicSelect = {
     id: true,
@@ -78,7 +79,7 @@ export class TopicService {
         return topic;
     }
 
-    async getTopics(query: QueryFindAllTopic) {
+    async getTopics(query: QueryFindAllTopic, role: UserRole) {
         const {
             search,
             isActive,
@@ -93,8 +94,13 @@ export class TopicService {
             where.name = { contains: search, mode: 'insensitive' };
         }
 
-        if (isActive) {
-            where.isActive = isActive;
+        // Admin có thể filter theo isActive, user thường chỉ thấy topics active
+        if (role === UserRole.ADMIN) {
+            if (isActive !== undefined) {
+                where.isActive = isActive;
+            }
+        } else {
+            where.isActive = true;
         }
 
         const [topics, total] = await Promise.all([
@@ -140,13 +146,24 @@ export class TopicService {
         return topic;
     }
 
-    async deleteTopic(id: string) {
-        await this.prisma.topic.delete({
-            where: { id },
+    async deleteTopics(ids: string[]) {
+        const result = await this.prisma.topic.deleteMany({
+            where: { id: { in: ids } },
         });
 
         return {
-            message: "oke"
+            deletedCount: result.count,
+        };
+    }
+
+    async updateTopics(ids: string[], isActive: boolean) {
+        const result = await this.prisma.topic.updateMany({
+            where: { id: { in: ids } },
+            data: { isActive },
+        });
+
+        return {
+            updatedCount: result.count,
         };
     }
 }

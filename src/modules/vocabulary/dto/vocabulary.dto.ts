@@ -22,3 +22,7 @@ export type QueryFindAllVocabulary = Query<
 export type BodyGenerateVocabulary = {
     count: number;
 };
+
+export type BodyDeleteVocabularies = {
+    ids: string[];
+};

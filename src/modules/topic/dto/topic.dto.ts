@@ -6,3 +6,12 @@ export type BodyCreateTopic = Body<Topic, 'name' | 'description'>;
 export type BodyUpdateTopic = BodyPartial<Topic, 'name' | 'description' | 'isActive'>;
 
 export type QueryFindAllTopic = Query<Topic, 'isActive', 'name' | 'createdAt'>;
+
+export type BodyDeleteTopics = {
+    ids: string[];
+};
+
+export type BodyUpdateTopics = {
+    ids: string[];
+    isActive: boolean;
+};

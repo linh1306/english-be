@@ -6,6 +6,7 @@ import {
     BodyUpdateVocabulary,
     QueryFindAllVocabulary,
     BodyGenerateVocabulary,
+    BodyDeleteVocabularies,
 } from './dto/vocabulary.dto';
 
 @Controller('vocabularies')
@@ -50,11 +51,8 @@ export class VocabularyController {
         return this.vocabularyService.updateVocabulary(id, dto);
     }
 
-    /**
-     * Xóa vĩnh viễn từ vựng
-     */
-    @Delete(':id/hard')
-    async hardDeleteVocabulary(@Param('id') id: string) {
-        return this.vocabularyService.hardDeleteVocabulary(id);
+    @Delete()
+    async deleteVocabularies(@Body() dto: BodyDeleteVocabularies) {
+        return this.vocabularyService.deleteVocabularies(dto.ids);
     }
 }

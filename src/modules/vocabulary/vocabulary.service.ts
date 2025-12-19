@@ -177,19 +177,16 @@ export class VocabularyService {
     }
 
     /**
-     * Xóa vĩnh viễn từ vựng
+     * Xóa vĩnh viễn nhiều từ vựng
      */
-    async hardDeleteVocabulary(id: string) {
-        const deleted = await this.prisma.vocabulary.delete({
-            where: { id },
-            include: {
-                topic: {
-                    select: { id: true, name: true },
-                },
-            },
+    async deleteVocabularies(ids: string[]) {
+        const result = await this.prisma.vocabulary.deleteMany({
+            where: { id: { in: ids } },
         });
 
-        return deleted;
+        return {
+            deletedCount: result.count,
+        };
     }
 
     /**

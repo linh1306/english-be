@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Patch, Delete, Param, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { TypedQuery } from '@nestia/core';
 import { TopicService } from './topic.service';
 import {
     BodyCreateTopic,
     BodyUpdateTopic,
     QueryFindAllTopic,
+    BodyDeleteTopics,
+    BodyUpdateTopics,
 } from './dto/topic.dto';
-import { Roles } from '@/core';
+import { CurrentUser, Roles } from '@/core';
 import { UserRole } from '@/generated/prisma/enums';
 
 @Controller('topics')
@@ -20,8 +22,17 @@ export class TopicController {
     }
 
     @Get()
-    async getTopics(@TypedQuery() query: QueryFindAllTopic) {
-        return this.topicService.getTopics(query);
+    async getTopics(
+        @TypedQuery() query: QueryFindAllTopic,
+        @CurrentUser('role') role: UserRole,
+    ) {
+        return this.topicService.getTopics(query, role);
+    }
+
+    @Patch()
+    @Roles(UserRole.ADMIN)
+    async updateTopics(@Body() dto: BodyUpdateTopics) {
+        return this.topicService.updateTopics(dto.ids, dto.isActive);
     }
 
     @Get(':id')
@@ -37,8 +48,8 @@ export class TopicController {
         return this.topicService.updateTopic(id, dto);
     }
 
-    @Delete(':id')
-    async deleteTopic(@Param('id') id: string) {
-        return this.topicService.deleteTopic(id);
+    @Delete()
+    async deleteTopics(@Body() dto: BodyDeleteTopics) {
+        return this.topicService.deleteTopics(dto.ids);
     }
 }

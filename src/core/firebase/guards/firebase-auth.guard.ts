@@ -31,13 +31,7 @@ export class FirebaseAuthGuard implements CanActivate {
 
         const request = context.switchToHttp().getRequest<FastifyRequest>();
 
-        let token = this.extractTokenFromHeader(request);
-
-        // If no bearer token, check cookie
-        const cookies = (request as any).cookies;
-        if (!token && cookies && cookies['token']) {
-            token = cookies['token'];
-        }
+        const token = request.headers.authorization
 
         if (!token) {
             throw new UnauthorizedException('No authorization token provided');
@@ -95,10 +89,5 @@ export class FirebaseAuthGuard implements CanActivate {
                 `Invalid or expired token: ${error instanceof Error ? error.message : 'Unknown error'}`,
             );
         }
-    }
-
-    private extractTokenFromHeader(request: FastifyRequest): string | undefined {
-        const [type, token] = request.headers.authorization?.split(' ') ?? [];
-        return type === 'Bearer' ? token : undefined;
     }
 }

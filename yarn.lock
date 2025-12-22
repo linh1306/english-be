@@ -505,14 +505,6 @@
   resolved "https://registry.npmjs.org/@fastify/busboy/-/busboy-3.2.0.tgz"
   integrity sha512-m9FVDXU3GT2ITSe0UaMA5rU3QkfC/UXtCU8y0gSN/GugTqtVldOBWIB5V6V3sbmenVZUIpU6f+mPEO2+m5iTaA==
 
-"@fastify/cookie@^11.0.2":
-  version "11.0.2"
-  resolved "https://registry.npmjs.org/@fastify/cookie/-/cookie-11.0.2.tgz"
-  integrity sha512-GWdwdGlgJxyvNv+QcKiGNevSspMQXncjMZ1J8IvuDQk0jvkzgWWZFNC2En3s+nHndZBGV8IbLwOI/sxCZw/mzA==
-  dependencies:
-    cookie "^1.0.0"
-    fastify-plugin "^5.0.0"
-
 "@fastify/cors@11.1.0":
   version "11.1.0"
   resolved "https://registry.npmjs.org/@fastify/cors/-/cors-11.1.0.tgz"
@@ -4028,7 +4020,7 @@ cookie-signature@~1.0.6:
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.7.tgz#ab5dd7ab757c54e60f37ef6550f481c426d10454"
   integrity sha512-NXdYc3dLr47pBkpUCHtKSwIOQXLVn8dZEuywboCOJY/osA0wFSLlSawr3KN8qXJEyX66FcONTH8EIlVuK0yyFA==
 
-cookie@^1.0.0, cookie@^1.0.1:
+cookie@^1.0.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/cookie/-/cookie-1.1.1.tgz"
   integrity sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==
@@ -8073,7 +8065,7 @@ ts-node@>=10.6.0, ts-node@^10.9.2:
 
 ts-patch@^3.3.0:
   version "3.3.0"
-  resolved "https://registry.npmjs.org/ts-patch/-/ts-patch-3.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/ts-patch/-/ts-patch-3.3.0.tgz#a33a84b6c60c4b73848d7a7d95791722e1ee8e88"
   integrity sha512-zAOzDnd5qsfEnjd9IGy1IRuvA7ygyyxxdxesbhMdutt8AHFjD8Vw8hU2rMF89HX1BKRWFYqKHrO8Q6lw0NeUZg==
   dependencies:
     chalk "^4.1.2"

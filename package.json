@@ -20,10 +20,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "ts-patch install",
     "swagger": "nestia swagger && node scripts/patch-swagger.js",
-    "build:ncc": "yarn build && ncc build dist/src/main.js -o bundle -m"
+    "build:ncc": "yarn build && ncc build dist/src/main.js -o bundle -m",
+    "docker": "docker build -t english-be . && docker tag english-be:latest nguyenvanlinh1306/english-be:latest && docker push nguyenvanlinh1306/english-be:latest",
+    "render": "curl -X POST \"$RENDER_DEPLOY_HOOK\""
   },
   "dependencies": {
-    "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^11.2.0",
     "@genkit-ai/googleai": "^1.25.0",
     "@google/genai": "^1.33.0",

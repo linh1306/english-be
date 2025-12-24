@@ -1,11 +1,11 @@
 // ==================== UPDATE PROGRESS ====================
 export type BodyUpdateProgress = {
-    isCorrect: boolean;
+  isCorrect: boolean;
 };
 
 // ==================== QUERY DUE REVIEWS ====================
 export type QueryDueReviews = {
-    page?: number;
-    limit?: number;
-    topicId?: string;
+  page?: number;
+  limit?: number;
+  topicId?: string;
 };

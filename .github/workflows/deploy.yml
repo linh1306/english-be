@@ -51,7 +51,7 @@ jobs:
           script: |
             set -e
 
-            cd /home/app
+            cd ~
 
             # Pin image version for rollback
             export IMAGE_TAG=${{ github.sha }}

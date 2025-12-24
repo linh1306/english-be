@@ -7,6 +7,7 @@ import { CloudinaryModule } from './core/cloudinary';
 import { TopicModule } from './modules/topic';
 import { VocabularyModule } from './modules/vocabulary';
 import { UserProgressModule } from './modules/user-progress';
+import { HealthModule } from './modules/health';
 
 import { UserModule } from './modules/user';
 import { AuthModule } from './modules/auth/auth.module';
@@ -27,6 +28,7 @@ import { ConfigModule } from '@nestjs/config';
     TopicModule,
     VocabularyModule,
     UserProgressModule,
+    HealthModule,
 
     UserModule,
     AuthModule,

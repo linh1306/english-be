@@ -1,0 +1,76 @@
+name: Deploy NestJS via Docker Compose
+
+on:
+  push:
+    branches:
+      - deploy
+
+env:
+  IMAGE_NAME: english-be
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout source
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Setup Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 3. Login Docker Hub
+      - name: Login Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 4. Build & Push image (latest + commit SHA)
+      - name: Build & Push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # 5. Deploy on VPS
+      - name: Deploy on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          timeout: 60s
+          script: |
+            set -e
+
+            cd /home/app
+
+            # Pin image version for rollback
+            export IMAGE_TAG=${{ github.sha }}
+
+            docker compose pull
+            docker compose up -d
+
+            # Safe cleanup (keep recent images for rollback)
+            docker image prune -f --filter "until=72h"
+
+            # Health check with retry
+            for i in {1..5}; do
+              if curl -f http://localhost:8000/health; then
+                echo "✅ Health check passed"
+                exit 0
+              fi
+              echo "⏳ Waiting for app..."
+              sleep 5
+            done
+
+            echo "❌ Health check failed"
+            exit 1

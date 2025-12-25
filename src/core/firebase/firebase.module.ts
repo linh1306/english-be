@@ -5,8 +5,8 @@ import { PrismaModule } from '../database/prisma.module';
 
 @Global()
 @Module({
-    imports: [PrismaModule],
-    providers: [FirebaseService, FirebaseAuthGuard],
-    exports: [FirebaseService, FirebaseAuthGuard],
+  imports: [PrismaModule],
+  providers: [FirebaseService, FirebaseAuthGuard],
+  exports: [FirebaseService, FirebaseAuthGuard],
 })
-export class FirebaseModule { }
+export class FirebaseModule {}

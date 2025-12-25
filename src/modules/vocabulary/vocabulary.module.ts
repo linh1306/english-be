@@ -4,9 +4,9 @@ import { VocabularyService } from './vocabulary.service';
 import { CloudinaryModule } from '@/core/cloudinary/cloudinary.module';
 
 @Module({
-    imports: [CloudinaryModule],
-    controllers: [VocabularyController],
-    providers: [VocabularyService],
-    exports: [VocabularyService],
+  imports: [CloudinaryModule],
+  controllers: [VocabularyController],
+  providers: [VocabularyService],
+  exports: [VocabularyService],
 })
-export class VocabularyModule { }
+export class VocabularyModule {}

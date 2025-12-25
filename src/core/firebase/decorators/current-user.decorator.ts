@@ -29,17 +29,17 @@ export type FirebaseUser = admin.auth.DecodedIdToken;
  * ```
  */
 export const CurrentUser = createParamDecorator(
-    (
-        data: keyof FirebaseUser | undefined,
-        ctx: ExecutionContext,
-    ): FirebaseUser | unknown => {
-        const request = ctx.switchToHttp().getRequest<FastifyRequest>();
-        const user = (request as FastifyRequest & { user?: FirebaseUser }).user;
+  (
+    data: keyof FirebaseUser | undefined,
+    ctx: ExecutionContext,
+  ): FirebaseUser | unknown => {
+    const request = ctx.switchToHttp().getRequest<FastifyRequest>();
+    const user = (request as FastifyRequest & { user?: FirebaseUser }).user;
 
-        if (!user) {
-            return null;
-        }
+    if (!user) {
+      return null;
+    }
 
-        return data ? user[data] : user;
-    },
+    return data ? user[data] : user;
+  },
 );

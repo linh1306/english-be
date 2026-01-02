@@ -17,7 +17,7 @@ export class FirebaseAuthGuard implements CanActivate {
     private readonly firebaseService: FirebaseService,
     private readonly reflector: Reflector,
     private readonly prismaService: PrismaService,
-  ) {}
+  ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -80,6 +80,17 @@ export class FirebaseAuthGuard implements CanActivate {
         ...decodedToken,
       };
 
+      // Log login (fire and forget)
+      this.prismaService.loginLog
+        .create({
+          data: {
+            userId: decodedToken.uid,
+            userAgent: request.headers['user-agent'] || null,
+            ip: request.ip || null,
+          },
+        })
+        .catch((err) => console.error('Failed to log login:', err));
+
       return true;
     } catch (error) {
       console.error('Auth Error:', error);
@@ -89,3 +100,4 @@ export class FirebaseAuthGuard implements CanActivate {
     }
   }
 }
+

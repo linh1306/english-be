@@ -391,7 +391,9 @@ export const ModelName = {
   UserTopicProgress: 'UserTopicProgress',
   LoginLog: 'LoginLog',
   DailyStats: 'DailyStats',
-  DailyStatSlot: 'DailyStatSlot'
+  DailyStatSlot: 'DailyStatSlot',
+  PictureDescription: 'PictureDescription',
+  UserPictureAnswer: 'UserPictureAnswer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "topic" | "vocabulary" | "userVocabularyProgress" | "userTopicProgress" | "loginLog" | "dailyStats" | "dailyStatSlot"
+    modelProps: "user" | "topic" | "vocabulary" | "userVocabularyProgress" | "userTopicProgress" | "loginLog" | "dailyStats" | "dailyStatSlot" | "pictureDescription" | "userPictureAnswer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1003,6 +1005,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PictureDescription: {
+      payload: Prisma.$PictureDescriptionPayload<ExtArgs>
+      fields: Prisma.PictureDescriptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PictureDescriptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PictureDescriptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>
+        }
+        findFirst: {
+          args: Prisma.PictureDescriptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PictureDescriptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>
+        }
+        findMany: {
+          args: Prisma.PictureDescriptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>[]
+        }
+        create: {
+          args: Prisma.PictureDescriptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>
+        }
+        createMany: {
+          args: Prisma.PictureDescriptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PictureDescriptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>[]
+        }
+        delete: {
+          args: Prisma.PictureDescriptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>
+        }
+        update: {
+          args: Prisma.PictureDescriptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PictureDescriptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PictureDescriptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PictureDescriptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.PictureDescriptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PictureDescriptionPayload>
+        }
+        aggregate: {
+          args: Prisma.PictureDescriptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePictureDescription>
+        }
+        groupBy: {
+          args: Prisma.PictureDescriptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PictureDescriptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PictureDescriptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PictureDescriptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserPictureAnswer: {
+      payload: Prisma.$UserPictureAnswerPayload<ExtArgs>
+      fields: Prisma.UserPictureAnswerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserPictureAnswerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserPictureAnswerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>
+        }
+        findFirst: {
+          args: Prisma.UserPictureAnswerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserPictureAnswerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>
+        }
+        findMany: {
+          args: Prisma.UserPictureAnswerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>[]
+        }
+        create: {
+          args: Prisma.UserPictureAnswerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>
+        }
+        createMany: {
+          args: Prisma.UserPictureAnswerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserPictureAnswerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>[]
+        }
+        delete: {
+          args: Prisma.UserPictureAnswerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>
+        }
+        update: {
+          args: Prisma.UserPictureAnswerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserPictureAnswerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserPictureAnswerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserPictureAnswerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserPictureAnswerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPictureAnswerPayload>
+        }
+        aggregate: {
+          args: Prisma.UserPictureAnswerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserPictureAnswer>
+        }
+        groupBy: {
+          args: Prisma.UserPictureAnswerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPictureAnswerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserPictureAnswerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPictureAnswerCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1146,6 +1296,34 @@ export const DailyStatSlotScalarFieldEnum = {
 } as const
 
 export type DailyStatSlotScalarFieldEnum = (typeof DailyStatSlotScalarFieldEnum)[keyof typeof DailyStatSlotScalarFieldEnum]
+
+
+export const PictureDescriptionScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  description: 'description',
+  partsEn: 'partsEn',
+  partsVi: 'partsVi',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PictureDescriptionScalarFieldEnum = (typeof PictureDescriptionScalarFieldEnum)[keyof typeof PictureDescriptionScalarFieldEnum]
+
+
+export const UserPictureAnswerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  pictureDescriptionId: 'pictureDescriptionId',
+  answer: 'answer',
+  score: 'score',
+  feedback: 'feedback',
+  matchedParts: 'matchedParts',
+  createdAt: 'createdAt'
+} as const
+
+export type UserPictureAnswerScalarFieldEnum = (typeof UserPictureAnswerScalarFieldEnum)[keyof typeof UserPictureAnswerScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1357,6 +1535,8 @@ export type GlobalOmitConfig = {
   loginLog?: Prisma.LoginLogOmit
   dailyStats?: Prisma.DailyStatsOmit
   dailyStatSlot?: Prisma.DailyStatSlotOmit
+  pictureDescription?: Prisma.PictureDescriptionOmit
+  userPictureAnswer?: Prisma.UserPictureAnswerOmit
 }
 
 /* Types for Logging */

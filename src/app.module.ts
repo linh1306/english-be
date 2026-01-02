@@ -14,6 +14,7 @@ import { VocabularyModule } from './modules/vocabulary';
 import { UserProgressModule } from './modules/user-progress';
 import { HealthModule } from './modules/health';
 import { AnalyticsModule } from './modules/analytics';
+import { PictureDescriptionModule } from './modules/picture-description';
 
 import { UserModule } from './modules/user';
 import { AuthModule } from './modules/auth/auth.module';
@@ -38,6 +39,7 @@ import { ConfigModule } from '@nestjs/config';
     UserProgressModule,
     HealthModule,
     AnalyticsModule,
+    PictureDescriptionModule,
 
     UserModule,
     AuthModule,

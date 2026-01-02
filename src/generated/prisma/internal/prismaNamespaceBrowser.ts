@@ -58,7 +58,9 @@ export const ModelName = {
   UserTopicProgress: 'UserTopicProgress',
   LoginLog: 'LoginLog',
   DailyStats: 'DailyStats',
-  DailyStatSlot: 'DailyStatSlot'
+  DailyStatSlot: 'DailyStatSlot',
+  PictureDescription: 'PictureDescription',
+  UserPictureAnswer: 'UserPictureAnswer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -181,6 +183,34 @@ export const DailyStatSlotScalarFieldEnum = {
 } as const
 
 export type DailyStatSlotScalarFieldEnum = (typeof DailyStatSlotScalarFieldEnum)[keyof typeof DailyStatSlotScalarFieldEnum]
+
+
+export const PictureDescriptionScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  description: 'description',
+  partsEn: 'partsEn',
+  partsVi: 'partsVi',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PictureDescriptionScalarFieldEnum = (typeof PictureDescriptionScalarFieldEnum)[keyof typeof PictureDescriptionScalarFieldEnum]
+
+
+export const UserPictureAnswerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  pictureDescriptionId: 'pictureDescriptionId',
+  answer: 'answer',
+  score: 'score',
+  feedback: 'feedback',
+  matchedParts: 'matchedParts',
+  createdAt: 'createdAt'
+} as const
+
+export type UserPictureAnswerScalarFieldEnum = (typeof UserPictureAnswerScalarFieldEnum)[keyof typeof UserPictureAnswerScalarFieldEnum]
 
 
 export const SortOrder = {

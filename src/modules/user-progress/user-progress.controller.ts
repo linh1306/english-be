@@ -11,13 +11,8 @@ import {
 import { TypedQuery } from '@nestia/core';
 import { UserProgressService } from './user-progress.service';
 import { BodyUpdateProgress, QueryDueReviews } from './dto/user-progress.dto';
-import { FirebaseAuthGuard } from '../../core/firebase/guards/firebase-auth.guard';
-import { RolesGuard } from '../../core/firebase/guards/roles.guard';
 import { FirebaseId } from '../../core/firebase/decorators/firebase-id.decorator';
-import { Roles } from '../../core/firebase/decorators/roles.decorator';
-import { UserRole } from '../../generated/prisma/enums';
 
-@UseGuards(FirebaseAuthGuard, RolesGuard)
 @Controller('user-progress')
 export class UserProgressController {
   constructor(private readonly userProgressService: UserProgressService) { }

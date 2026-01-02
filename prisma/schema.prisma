@@ -32,6 +32,7 @@ model User {
   // Relations
   vocabularyProgress UserVocabularyProgress[]
   userTopics         UserTopicProgress[]
+  loginLogs          LoginLog[]
 
   @@map("users")
 }
@@ -127,4 +128,45 @@ model UserTopicProgress {
   @@index([userId])
   @@index([topicId])
   @@map("user_topic_progress")
+}
+
+// ==================== LOGIN LOG ====================
+
+model LoginLog {
+  id        String   @id @default(cuid())
+  userId    String
+  userAgent String?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("login_logs")
+}
+
+// ==================== DAILY STATS ====================
+
+model DailyStats {
+  id            String   @id @default(cuid())
+  date          DateTime @unique @db.Date
+  totalRequests Int      @default(0)
+  updatedAt     DateTime @updatedAt
+
+  slots DailyStatSlot[]
+
+  @@map("daily_stats")
+}
+
+model DailyStatSlot {
+  id           String @id @default(cuid())
+  dailyStatsId String
+  slot         Int // 0 → 47 (mỗi slot = 30 phút)
+  count        Int    @default(0)
+
+  dailyStats DailyStats @relation(fields: [dailyStatsId], references: [id], onDelete: Cascade)
+
+  @@unique([dailyStatsId, slot])
+  @@map("daily_stat_slots")
 }

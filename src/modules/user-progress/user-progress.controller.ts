@@ -18,10 +18,9 @@ import { Roles } from '../../core/firebase/decorators/roles.decorator';
 import { UserRole } from '../../generated/prisma/enums';
 
 @UseGuards(FirebaseAuthGuard, RolesGuard)
-@Roles(UserRole.USER)
 @Controller('user-progress')
 export class UserProgressController {
-  constructor(private readonly userProgressService: UserProgressService) {}
+  constructor(private readonly userProgressService: UserProgressService) { }
 
   /**
    * Cập nhật tiến trình ôn tập từ vựng

@@ -2,49 +2,49 @@ import { genkit, z } from 'genkit';
 import { googleAI, gemini } from '@genkit-ai/googleai';
 
 const ai = genkit({
-    plugins: [googleAI()],
-    model: gemini('gemini-2.5-flash'),
+  plugins: [googleAI()],
+  model: gemini('gemini-2.5-flash'),
 });
 
 export const generatePictureDescriptionFlow = ai.defineFlow(
-    {
-        name: 'generatePictureDescription',
-        inputSchema: z.object({
-            context: z
-                .string()
-                .optional()
-                .describe(
-                    'Chủ đề hoặc ngữ cảnh cho bức tranh. Nếu bỏ trống, AI sẽ tự động chọn một cảnh sinh hoạt đời thường (APTIS style).',
-                ),
-            count: z.number().default(1).describe('Số lượng descriptions cần tạo'),
-        }),
-        outputSchema: z.array(
-            z.object({
-                description: z
-                    .string()
-                    .describe('Đoạn mô tả chi tiết đầy đủ về bức tranh bằng tiếng Anh'),
-                partsEn: z
-                    .array(z.string())
-                    .describe(
-                        'Mảng các cụm từ/câu ngắn tiếng Anh, ghép lại thành đoạn mô tả hoàn chỉnh',
-                    ),
-                partsVi: z
-                    .array(z.string())
-                    .describe('Bản dịch tiếng Việt của partsEn, giữ nguyên thứ tự'),
-            }),
+  {
+    name: 'generatePictureDescription',
+    inputSchema: z.object({
+      context: z
+        .string()
+        .optional()
+        .describe(
+          'Chủ đề hoặc ngữ cảnh cho bức tranh. Nếu bỏ trống, AI sẽ tự động chọn một cảnh sinh hoạt đời thường (APTIS style).',
         ),
-    },
-    async (input) => {
-        const { context, count } = input;
+      count: z.number().default(1).describe('Số lượng descriptions cần tạo'),
+    }),
+    outputSchema: z.array(
+      z.object({
+        description: z
+          .string()
+          .describe('Đoạn mô tả chi tiết đầy đủ về bức tranh bằng tiếng Anh'),
+        partsEn: z
+          .array(z.string())
+          .describe(
+            'Mảng các cụm từ/câu ngắn tiếng Anh, ghép lại thành đoạn mô tả hoàn chỉnh',
+          ),
+        partsVi: z
+          .array(z.string())
+          .describe('Bản dịch tiếng Việt của partsEn, giữ nguyên thứ tự'),
+      }),
+    ),
+  },
+  async (input) => {
+    const { context, count } = input;
 
-        const contextPrompt = context
-            ? `Context/Theme: "${context}"`
-            : `Context/Theme: Auto-generate a daily life scene typical for APTIS speaking test. The scene MUST have:
+    const contextPrompt = context
+      ? `Context/Theme: "${context}"`
+      : `Context/Theme: Auto-generate a daily life scene typical for APTIS speaking test. The scene MUST have:
                - Multiple people doing different actions.
                - A clear setting (place and time).
                - Common daily activities (e.g., in a park, office, kitchen, street).`;
 
-        const prompt = `
+    const prompt = `
       Generate ${count} picture description(s) for English learning exercises.
       
       ${contextPrompt}
@@ -66,24 +66,24 @@ export const generatePictureDescriptionFlow = ai.defineFlow(
       ["In the picture", "there are three people", "sitting in a modern office", "A woman is typing on a laptop", "while a man is standing", "holding a cup of coffee", "They look busy", "and focused on their work"]
     `;
 
-        const { output } = await ai.generate({
-            prompt,
-            output: {
-                format: 'json',
-                schema: z.array(
-                    z.object({
-                        description: z.string(),
-                        partsEn: z.array(z.string()),
-                        partsVi: z.array(z.string()),
-                    }),
-                ),
-            },
-        });
+    const { output } = await ai.generate({
+      prompt,
+      output: {
+        format: 'json',
+        schema: z.array(
+          z.object({
+            description: z.string(),
+            partsEn: z.array(z.string()),
+            partsVi: z.array(z.string()),
+          }),
+        ),
+      },
+    });
 
-        if (!output) {
-            throw new Error('Failed to generate picture descriptions');
-        }
+    if (!output) {
+      throw new Error('Failed to generate picture descriptions');
+    }
 
-        return output;
-    },
+    return output;
+  },
 );

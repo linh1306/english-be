@@ -15,7 +15,7 @@ import { FirebaseId } from '../../core/firebase/decorators/firebase-id.decorator
 
 @Controller('user-progress')
 export class UserProgressController {
-  constructor(private readonly userProgressService: UserProgressService) { }
+  constructor(private readonly userProgressService: UserProgressService) {}
 
   /**
    * Cập nhật tiến trình ôn tập từ vựng

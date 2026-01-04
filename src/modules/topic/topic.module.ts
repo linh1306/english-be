@@ -9,5 +9,4 @@ import { ImageModule } from '../image/image.module';
   providers: [TopicService],
   exports: [TopicService],
 })
-export class TopicModule { }
-
+export class TopicModule {}

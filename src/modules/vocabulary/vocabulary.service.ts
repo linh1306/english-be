@@ -23,7 +23,7 @@ export class VocabularyService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly imageService: ImageService,
-  ) { }
+  ) {}
 
   /**
    * Tạo từ vựng mới

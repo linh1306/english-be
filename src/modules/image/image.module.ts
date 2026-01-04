@@ -3,8 +3,8 @@ import { ImageService } from './image.service';
 import { CloudinaryModule } from '@/core/cloudinary/cloudinary.module';
 
 @Module({
-    imports: [CloudinaryModule],
-    providers: [ImageService],
-    exports: [ImageService],
+  imports: [CloudinaryModule],
+  providers: [ImageService],
+  exports: [ImageService],
 })
-export class ImageModule { }
+export class ImageModule {}

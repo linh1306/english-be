@@ -33,7 +33,7 @@ export class TopicService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly imageService: ImageService,
-  ) { }
+  ) {}
 
   async createTopic(dto: BodyCreateTopic) {
     const existing = await this.prisma.topic.findUnique({

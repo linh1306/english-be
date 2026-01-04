@@ -4,10 +4,9 @@ import { PictureDescriptionService } from './picture-description.service';
 import { ImageModule } from '../image/image.module';
 
 @Module({
-    imports: [ImageModule],
-    controllers: [PictureDescriptionController],
-    providers: [PictureDescriptionService],
-    exports: [PictureDescriptionService],
+  imports: [ImageModule],
+  controllers: [PictureDescriptionController],
+  providers: [PictureDescriptionService],
+  exports: [PictureDescriptionService],
 })
-export class PictureDescriptionModule { }
-
+export class PictureDescriptionModule {}

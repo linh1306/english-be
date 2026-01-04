@@ -32,43 +32,43 @@ export class PictureDescriptionController {
      */
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async create(@Body() dto: BodyCreatePictureDescription) {
-        return this.pictureDescriptionService.create(dto);
+    async createPictureDescription(@Body() dto: BodyCreatePictureDescription) {
+        return this.pictureDescriptionService.createPictureDescription(dto);
     }
 
     /**
      * Lấy danh sách picture descriptions
      */
     @Get()
-    async findAll(@TypedQuery() query: QueryGetPicturesDescription) {
-        return this.pictureDescriptionService.findAll(query);
+    async getPictureDescriptions(@TypedQuery() query: QueryGetPicturesDescription) {
+        return this.pictureDescriptionService.getPictureDescriptions(query);
     }
 
     /**
      * Lấy chi tiết một picture description
      */
     @Get(':id')
-    async findOne(@Param('id') id: string) {
-        return this.pictureDescriptionService.findOne(id);
+    async getPictureDescription(@Param('id') id: string) {
+        return this.pictureDescriptionService.getPictureDescription(id);
     }
 
     /**
      * Cập nhật picture description
      */
     @Put(':id')
-    async update(
+    async updatePictureDescription(
         @Param('id') id: string,
         @Body() dto: BodyUpdatePictureDescription,
     ) {
-        return this.pictureDescriptionService.update(id, dto);
+        return this.pictureDescriptionService.updatePictureDescription(id, dto);
     }
 
     /**
      * Xóa nhiều picture descriptions
      */
     @Delete()
-    async delete(@Body() dto: BodyDeletePictureDescriptions) {
-        return this.pictureDescriptionService.delete(dto.ids);
+    async deletePictureDescriptions(@Body() dto: BodyDeletePictureDescriptions) {
+        return this.pictureDescriptionService.deletePictureDescriptions(dto.ids);
     }
 
     /**
@@ -76,8 +76,8 @@ export class PictureDescriptionController {
      */
     @Post('generate')
     @HttpCode(HttpStatus.OK)
-    async generate(@Body() dto: BodyGeneratePictureDescription) {
-        return this.pictureDescriptionService.generate(dto);
+    async generatePictureDescription(@Body() dto: BodyGeneratePictureDescription) {
+        return this.pictureDescriptionService.generatePictureDescription(dto);
     }
 
     /**
@@ -85,12 +85,12 @@ export class PictureDescriptionController {
      */
     @Post(':id/submit')
     @HttpCode(HttpStatus.OK)
-    async submitAnswer(
+    async submitPictureDescriptionAnswer(
         @CurrentUser('id') userId: string,
         @Param('id') pictureDescriptionId: string,
         @Body() dto: BodySubmitAnswer,
     ) {
-        return this.pictureDescriptionService.submitAnswer(
+        return this.pictureDescriptionService.submitPictureDescriptionAnswer(
             userId,
             pictureDescriptionId,
             dto,
@@ -101,11 +101,11 @@ export class PictureDescriptionController {
      * Lấy lịch sử câu trả lời của user cho một picture description
      */
     @Get(':id/my-answers')
-    async getMyAnswers(
+    async getMyPictureDescriptionAnswers(
         @CurrentUser('id') userId: string,
         @Param('id') pictureDescriptionId: string,
     ) {
-        return this.pictureDescriptionService.getUserAnswers(
+        return this.pictureDescriptionService.getPictureDescriptionUserAnswers(
             userId,
             pictureDescriptionId,
         );
@@ -115,11 +115,11 @@ export class PictureDescriptionController {
      * Lấy tất cả câu trả lời của user
      */
     @Get('my-answers/all')
-    async getAllMyAnswers(
+    async getAllMyPictureDescriptionAnswers(
         @CurrentUser('id') userId: string,
         @TypedQuery() query: { page?: number; limit?: number },
     ) {
-        return this.pictureDescriptionService.getAllUserAnswers(
+        return this.pictureDescriptionService.getAllPictureDescriptionUserAnswers(
             userId,
             query.page,
             query.limit,

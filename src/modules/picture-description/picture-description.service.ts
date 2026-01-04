@@ -5,10 +5,9 @@ import {
 } from '@nestjs/common';
 import { generatePictureDescriptionFlow } from '../../flows/generate-picture-description.flow';
 import { gradePictureAnswerFlow } from '../../flows/grade-picture-answer.flow';
-import { generateGhibliImage } from '../../flows/generate-image.flow';
 import { Queued } from '../../core/queue/queued.decorator';
 import { PrismaService } from '../../core/database/prisma.service';
-import { CloudinaryService } from '../../core/cloudinary/cloudinary.service';
+import { ImageService } from '../image/image.service';
 import {
     BodyCreatePictureDescription,
     BodyUpdatePictureDescription,
@@ -24,42 +23,13 @@ export class PictureDescriptionService {
 
     constructor(
         private readonly prisma: PrismaService,
-        private readonly cloudinaryService: CloudinaryService,
+        private readonly imageService: ImageService,
     ) { }
-
-    /**
-     * Tạo ảnh từ description và upload lên Cloudinary
-     */
-    @Queued({ maxRetries: 2, retryDelay: 2000 })
-    async generateAndUpdateImage(pictureDescriptionId: string, description: string) {
-        this.logger.log(
-            `Starting image generation for picture description ${pictureDescriptionId}`,
-        );
-
-        const prompt = `Create an illustration for the following scene description. The style should be clean, modern and suitable for English learning materials: "${description}"`;
-
-        const imageBuffer = await generateGhibliImage({
-            prompt,
-            aspectRatio: '4:3',
-        });
-
-        const { large } = await this.cloudinaryService.uploadImage(
-            imageBuffer,
-            'picture-descriptions',
-        );
-
-        await this.prisma.pictureDescription.update({
-            where: { id: pictureDescriptionId },
-            data: { imageUrl: large },
-        });
-
-        this.logger.log(`Image updated for picture description ${pictureDescriptionId}`);
-    }
 
     /**
      * Tạo picture description mới
      */
-    async create(dto: BodyCreatePictureDescription) {
+    async createPictureDescription(dto: BodyCreatePictureDescription) {
         const pictureDescription = await this.prisma.pictureDescription.create({
             data: {
                 description: dto.description,
@@ -71,7 +41,7 @@ export class PictureDescriptionService {
 
         // Nếu chưa có imageUrl, queue generate ảnh
         if (!dto.imageUrl) {
-            this.generateAndUpdateImage(pictureDescription.id, dto.description);
+            this.imageService.generateImagePictureDescription(pictureDescription.id, dto.description);
         }
 
         return pictureDescription;
@@ -80,7 +50,7 @@ export class PictureDescriptionService {
     /**
      * Lấy danh sách picture descriptions với phân trang
      */
-    async findAll(query: QueryGetPicturesDescription) {
+    async getPictureDescriptions(query: QueryGetPicturesDescription) {
         const { page = 1, limit = 20, isActive } = query;
         const options = parseQuery(query);
 
@@ -112,7 +82,7 @@ export class PictureDescriptionService {
     /**
      * Lấy chi tiết một picture description
      */
-    async findOne(id: string) {
+    async getPictureDescription(id: string) {
         const item = await this.prisma.pictureDescription.findUnique({
             where: { id },
         });
@@ -127,7 +97,7 @@ export class PictureDescriptionService {
     /**
      * Cập nhật picture description
      */
-    async update(id: string, dto: BodyUpdatePictureDescription) {
+    async updatePictureDescription(id: string, dto: BodyUpdatePictureDescription) {
         const item = await this.prisma.pictureDescription.update({
             where: { id },
             data: dto,
@@ -139,7 +109,7 @@ export class PictureDescriptionService {
     /**
      * Xóa nhiều picture descriptions
      */
-    async delete(ids: string[]) {
+    async deletePictureDescriptions(ids: string[]) {
         const result = await this.prisma.pictureDescription.deleteMany({
             where: { id: { in: ids } },
         });
@@ -152,7 +122,7 @@ export class PictureDescriptionService {
     /**
      * Generate picture descriptions bằng AI
      */
-    async generate(dto: BodyGeneratePictureDescription) {
+    async generatePictureDescription(dto: BodyGeneratePictureDescription) {
         this.processGeneration(dto.context, dto.count ?? 1);
 
         return {
@@ -172,7 +142,7 @@ export class PictureDescriptionService {
             let successCount = 0;
             for (const item of results) {
                 try {
-                    const pictureDescription = await this.create({
+                    const pictureDescription = await this.createPictureDescription({
                         description: item.description,
                         partsEn: item.partsEn,
                         partsVi: item.partsVi,
@@ -198,13 +168,13 @@ export class PictureDescriptionService {
     /**
      * Submit câu trả lời và chấm điểm
      */
-    async submitAnswer(
+    async submitPictureDescriptionAnswer(
         userId: string,
         pictureDescriptionId: string,
         dto: BodySubmitAnswer,
     ) {
         // Lấy picture description
-        const pictureDescription = await this.findOne(pictureDescriptionId);
+        const pictureDescription = await this.getPictureDescription(pictureDescriptionId);
 
         // Chấm điểm bằng AI
         const gradeResult = await gradePictureAnswerFlow({
@@ -240,7 +210,7 @@ export class PictureDescriptionService {
     /**
      * Lấy lịch sử câu trả lời của user cho một picture description
      */
-    async getUserAnswers(userId: string, pictureDescriptionId: string) {
+    async getPictureDescriptionUserAnswers(userId: string, pictureDescriptionId: string) {
         const answers = await this.prisma.userPictureAnswer.findMany({
             where: {
                 userId,
@@ -255,7 +225,7 @@ export class PictureDescriptionService {
     /**
      * Lấy tất cả câu trả lời của user (có phân trang)
      */
-    async getAllUserAnswers(userId: string, page = 1, limit = 20) {
+    async getAllPictureDescriptionUserAnswers(userId: string, page = 1, limit = 20) {
         const [items, total] = await Promise.all([
             this.prisma.userPictureAnswer.findMany({
                 where: { userId },

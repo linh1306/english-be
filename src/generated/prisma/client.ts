@@ -77,3 +77,18 @@ export type DailyStats = Prisma.DailyStatsModel
  * 
  */
 export type DailyStatSlot = Prisma.DailyStatSlotModel
+/**
+ * Model PictureDescription
+ * 
+ */
+export type PictureDescription = Prisma.PictureDescriptionModel
+/**
+ * Model UserPictureAnswer
+ * 
+ */
+export type UserPictureAnswer = Prisma.UserPictureAnswerModel
+/**
+ * Model Conversation
+ * 
+ */
+export type Conversation = Prisma.ConversationModel

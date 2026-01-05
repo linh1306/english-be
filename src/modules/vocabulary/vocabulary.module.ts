@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { VocabularyController } from './vocabulary.controller';
 import { VocabularyService } from './vocabulary.service';
-import { CloudinaryModule } from '@/core/cloudinary/cloudinary.module';
+import { ImageModule } from '../image/image.module';
 
 @Module({
-  imports: [CloudinaryModule],
+  imports: [ImageModule],
   controllers: [VocabularyController],
   providers: [VocabularyService],
   exports: [VocabularyService],

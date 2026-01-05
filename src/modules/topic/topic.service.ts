@@ -11,9 +11,7 @@ import {
 } from './dto/topic.dto';
 import { TopicSelect } from '@/generated/prisma/models';
 import { parseQuery } from '@/core';
-import { CloudinaryService } from '@/core/cloudinary/cloudinary.service';
-import { generateGhibliImage } from '@/flows/generate-image.flow';
-import { Queued } from '@/core/queue/queued.decorator';
+import { ImageService } from '../image/image.service';
 import { UserRole } from '@/generated/prisma/enums';
 
 const selectTopic: TopicSelect = {
@@ -34,38 +32,8 @@ const selectTopic: TopicSelect = {
 export class TopicService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly cloudinaryService: CloudinaryService,
+    private readonly imageService: ImageService,
   ) {}
-
-  /**
-   * Tạo thumbnail từ topic name và description, upload lên Cloudinary và cập nhật topic.
-   * Chạy trong background queue nên không block request.
-   */
-  @Queued({ maxRetries: 2, retryDelay: 2000 })
-  async generateAndUpdateThumbnail(
-    topicId: string,
-    name: string,
-    description: string | null,
-  ) {
-    const prompt = `Create an illustrative image representing the topic '${name}', inspired by the style of Vincent van Gogh. The image should visually convey the essence and emotion of the topic based on the following description: ${description}. No text included, moderate level of detail, with strong visual elements that clearly highlight and symbolize the topic.`;
-
-    const imageBuffer = await generateGhibliImage({
-      prompt,
-      aspectRatio: '16:9',
-    });
-
-    const { large } = await this.cloudinaryService.uploadImage(
-      imageBuffer,
-      'topics',
-    );
-
-    await this.prisma.topic.update({
-      where: { id: topicId },
-      data: { thumbnail: large },
-    });
-
-    console.log(`[TopicService] Thumbnail updated for topic ${topicId}`);
-  }
 
   async createTopic(dto: BodyCreateTopic) {
     const existing = await this.prisma.topic.findUnique({
@@ -87,7 +55,7 @@ export class TopicService {
     });
 
     // Generate thumbnail trong background
-    this.generateAndUpdateThumbnail(
+    this.imageService.generateImageTopic(
       topic.id,
       dto.name,
       dto.description ?? null,

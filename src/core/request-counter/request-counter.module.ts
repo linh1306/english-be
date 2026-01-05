@@ -4,7 +4,7 @@ import { RequestCounterMiddleware } from './request-counter.middleware';
 
 @Global()
 @Module({
-    providers: [RequestCounterService, RequestCounterMiddleware],
-    exports: [RequestCounterService, RequestCounterMiddleware],
+  providers: [RequestCounterService, RequestCounterMiddleware],
+  exports: [RequestCounterService, RequestCounterMiddleware],
 })
-export class RequestCounterModule { }
+export class RequestCounterModule {}

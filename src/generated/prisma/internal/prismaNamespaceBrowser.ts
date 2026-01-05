@@ -58,7 +58,10 @@ export const ModelName = {
   UserTopicProgress: 'UserTopicProgress',
   LoginLog: 'LoginLog',
   DailyStats: 'DailyStats',
-  DailyStatSlot: 'DailyStatSlot'
+  DailyStatSlot: 'DailyStatSlot',
+  PictureDescription: 'PictureDescription',
+  UserPictureAnswer: 'UserPictureAnswer',
+  Conversation: 'Conversation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -183,12 +186,61 @@ export const DailyStatSlotScalarFieldEnum = {
 export type DailyStatSlotScalarFieldEnum = (typeof DailyStatSlotScalarFieldEnum)[keyof typeof DailyStatSlotScalarFieldEnum]
 
 
+export const PictureDescriptionScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  description: 'description',
+  partsEn: 'partsEn',
+  partsVi: 'partsVi',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PictureDescriptionScalarFieldEnum = (typeof PictureDescriptionScalarFieldEnum)[keyof typeof PictureDescriptionScalarFieldEnum]
+
+
+export const UserPictureAnswerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  pictureDescriptionId: 'pictureDescriptionId',
+  answer: 'answer',
+  score: 'score',
+  feedback: 'feedback',
+  matchedParts: 'matchedParts',
+  createdAt: 'createdAt'
+} as const
+
+export type UserPictureAnswerScalarFieldEnum = (typeof UserPictureAnswerScalarFieldEnum)[keyof typeof UserPictureAnswerScalarFieldEnum]
+
+
+export const ConversationScalarFieldEnum = {
+  id: 'id',
+  topic: 'topic',
+  context: 'context',
+  dialogues: 'dialogues',
+  audioUrl: 'audioUrl',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -205,4 +257,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

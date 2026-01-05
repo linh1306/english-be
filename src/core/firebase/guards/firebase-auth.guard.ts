@@ -17,7 +17,7 @@ export class FirebaseAuthGuard implements CanActivate {
     private readonly firebaseService: FirebaseService,
     private readonly reflector: Reflector,
     private readonly prismaService: PrismaService,
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -100,4 +100,3 @@ export class FirebaseAuthGuard implements CanActivate {
     }
   }
 }
-

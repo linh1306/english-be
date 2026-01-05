@@ -6,23 +6,17 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "npx nest build",
+    "build:ncc": "yarn build && ncc build dist/src/main.js -o bundle -m -e better-queue -e better-queue-memory && mkdir -p bundle/node_modules && cp -r node_modules/better-queue node_modules/better-queue-memory node_modules/node-eta node_modules/uuid bundle/node_modules/",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main.js",
     "dev": "npx nest start --watch",
-    "start:debug": "npx nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "ts-patch install",
     "swagger": "nestia swagger && node scripts/patch-swagger.js",
-    "build:ncc": "yarn build && ncc build dist/src/main.js -o bundle -m -e better-queue -e better-queue-memory && mkdir -p bundle/node_modules && cp -r node_modules/better-queue node_modules/better-queue-memory node_modules/node-eta node_modules/uuid bundle/node_modules/",
     "docker": "docker build -t english-be . && docker tag english-be:latest nguyenvanlinh1306/english-be:latest && docker push nguyenvanlinh1306/english-be:latest",
-    "render": "curl -X POST \"$RENDER_DEPLOY_HOOK\""
+    "db": "prisma generate",
+    "db:push": "prisma db push"
   },
   "dependencies": {
     "@fastify/cors": "^11.2.0",

@@ -210,3 +210,18 @@ model UserPictureAnswer {
   @@index([pictureDescriptionId])
   @@map("user_picture_answers")
 }
+
+// ==================== CONVERSATION ====================
+
+model Conversation {
+  id        String   @id @default(cuid())
+  topic     String // Chủ đề của đoạn hội thoại
+  context   String   @db.Text // Mô tả ngữ cảnh tiếng Anh
+  dialogues Json // Mảng các câu thoại [{speaker, partsEn, timestamps?}]
+  audioUrl  String? // URL file audio của toàn bộ đoạn hội thoại
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("conversations")
+}

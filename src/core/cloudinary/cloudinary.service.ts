@@ -43,4 +43,23 @@ export class CloudinaryService {
         .end(buffer);
     });
   }
+
+  async uploadAudio(buffer: Buffer, folder: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          {
+            folder: `english-app/${folder}`,
+            resource_type: 'video', // Cloudinary uses 'video' for audio files
+            format: 'mp3',
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result!.secure_url);
+          },
+        )
+        .end(buffer);
+    });
+  }
 }
+

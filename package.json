@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "build": "npx nest build",
     "build:ncc": "yarn build && ncc build dist/src/main.js -o bundle -m -e better-queue -e better-queue-memory && mkdir -p bundle/node_modules && cp -r node_modules/better-queue node_modules/better-queue-memory node_modules/node-eta node_modules/uuid bundle/node_modules/",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main.js",
